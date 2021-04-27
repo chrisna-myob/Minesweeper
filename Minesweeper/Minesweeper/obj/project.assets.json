@@ -5106,14 +5106,14 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/Minesweeper/Minesweeper.csproj",
+      "projectUniqueName": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/Minesweeper/Minesweeper.csproj",
       "projectName": "Minesweeper",
-      "projectPath": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/Minesweeper/Minesweeper.csproj",
+      "projectPath": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/Minesweeper/Minesweeper.csproj",
       "packagesPath": "/Users/Chrisna.Meas/.nuget/packages/",
-      "outputPath": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/Minesweeper/obj/",
+      "outputPath": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/Minesweeper/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/Chrisna.Meas/.config/NuGet/NuGet.Config"
+        "/Users/Chrisna.Meas/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"

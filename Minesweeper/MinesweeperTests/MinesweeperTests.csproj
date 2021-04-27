@@ -23,4 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Minesweeper\Minesweeper.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" />
+  </ItemGroup>
 </Project>

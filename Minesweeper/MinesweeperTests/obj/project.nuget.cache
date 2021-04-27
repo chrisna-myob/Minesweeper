@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DrR+vddnvJ9NWA1USMl6V7oOmGW29LMBg5Xva1uJ2QKaxFA9bMoFiYpyLSC36noiwdKDPP6GHniOaTPiot1djw==",
+  "dgSpecHash": "pn3wdu3XKGltYt1zR7OS7E+AeIm7hB4788lyDBoKbaSTAlaaL9Eg7PjlyWebKlcru0YfIBenRch5xK6bpor9kw==",
   "success": true,
-  "projectFilePath": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/MinesweeperTests/MinesweeperTests.csproj",
+  "projectFilePath": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/MinesweeperTests/MinesweeperTests.csproj",
   "expectedPackageFiles": [
     "/Users/Chrisna.Meas/.nuget/packages/castle.core/4.4.0/castle.core.4.4.0.nupkg.sha512",
     "/Users/Chrisna.Meas/.nuget/packages/coverlet.collector/1.3.0/coverlet.collector.1.3.0.nupkg.sha512",

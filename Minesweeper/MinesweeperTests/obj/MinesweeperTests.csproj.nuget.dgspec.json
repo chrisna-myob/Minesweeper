@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/MinesweeperTests/MinesweeperTests.csproj": {}
+    "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/MinesweeperTests/MinesweeperTests.csproj": {}
   },
   "projects": {
-    "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/Minesweeper/Minesweeper.csproj": {
+    "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/Minesweeper/Minesweeper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/Minesweeper/Minesweeper.csproj",
+        "projectUniqueName": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/Minesweeper/Minesweeper.csproj",
         "projectName": "Minesweeper",
-        "projectPath": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/Minesweeper/Minesweeper.csproj",
+        "projectPath": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/Minesweeper/Minesweeper.csproj",
         "packagesPath": "/Users/Chrisna.Meas/.nuget/packages/",
-        "outputPath": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/Minesweeper/obj/",
+        "outputPath": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/Minesweeper/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/Chrisna.Meas/.config/NuGet/NuGet.Config"
+          "/Users/Chrisna.Meas/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -62,17 +62,17 @@
         }
       }
     },
-    "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/MinesweeperTests/MinesweeperTests.csproj": {
+    "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/MinesweeperTests/MinesweeperTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/MinesweeperTests/MinesweeperTests.csproj",
+        "projectUniqueName": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/MinesweeperTests/MinesweeperTests.csproj",
         "projectName": "MinesweeperTests",
-        "projectPath": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/MinesweeperTests/MinesweeperTests.csproj",
+        "projectPath": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/MinesweeperTests/MinesweeperTests.csproj",
         "packagesPath": "/Users/Chrisna.Meas/.nuget/packages/",
-        "outputPath": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/MinesweeperTests/obj/",
+        "outputPath": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/MinesweeperTests/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/Chrisna.Meas/.config/NuGet/NuGet.Config"
+          "/Users/Chrisna.Meas/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -84,8 +84,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/Minesweeper/Minesweeper.csproj": {
-                "projectPath": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/Minesweeper/Minesweeper.csproj"
+              "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/Minesweeper/Minesweeper.csproj": {
+                "projectPath": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/Minesweeper/Minesweeper.csproj"
               }
             }
           }

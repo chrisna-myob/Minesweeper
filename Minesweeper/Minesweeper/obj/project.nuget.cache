@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1tcZ2H/KPwNHQ7FPj5XgVDZAqr0Keg8UjBjtTjPg2e3X64MAf51dFS7DHcenNuiw6XP2579vz+HlcTrCEo2T5Q==",
+  "dgSpecHash": "fz/ChIYWflBI/s5bpnEid2cc+wfhGMApc0yjbwncHaSGDf4t+cwW9DMeAB1cDH9vy51UUA3MsSE7BuPsum0abg==",
   "success": true,
-  "projectFilePath": "/Users/Chrisna.Meas/Desktop/kata/Minesweeper/Minesweeper/Minesweeper.csproj",
+  "projectFilePath": "/Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/Minesweeper/Minesweeper.csproj",
   "expectedPackageFiles": [
     "/Users/Chrisna.Meas/.nuget/packages/castle.core/4.4.0/castle.core.4.4.0.nupkg.sha512",
     "/Users/Chrisna.Meas/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
