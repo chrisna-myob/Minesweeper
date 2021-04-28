@@ -30,15 +30,6 @@ namespace MinesweeperTests
 
         }
 
-        public static IEnumerable<object[]> GetFieldFromDataGenerator()
-        {
-            yield return new object[]
-            {
-                new ISquare[,] { { } }
-            };
-
-        }
-
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

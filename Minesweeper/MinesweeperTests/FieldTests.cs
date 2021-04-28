@@ -49,7 +49,7 @@ namespace MinesweeperTests
             var fieldBuild = FieldBuilder.MakeField(numRows, numCols, null, numMines);
             var field = new Field(numRows, numCols, numMines, fieldBuild);
 
-            field.SetSquareToShowUsingCoordinate(coordinate);
+            field.SetSquareToShowWithCoordinate(coordinate);
 
             var actual = field.GetSquareFromCoordinate(coordinate);
 

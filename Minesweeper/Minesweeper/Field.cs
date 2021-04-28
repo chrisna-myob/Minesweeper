@@ -32,7 +32,7 @@ namespace Minesweeper
             return _field[coord.X, coord.Y];
         }
 
-        public void SetSquareToShowUsingCoordinate(Coordinate coord)
+        public void SetSquareToShowWithCoordinate(Coordinate coord)
         {
             _field[coord.X, coord.Y].SetSquareToShow();
         }
