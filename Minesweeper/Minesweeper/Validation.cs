@@ -5,29 +5,33 @@ namespace Minesweeper
 {
     public static class Validation
     {
+        private const string QUIT_GAME = "q";
+
         public static bool IsFieldDimensionInputValid(String dimensions)
         {
             if (HasNegativeNumber(dimensions))
             {
                 return false;
             }
-
             if (!InCorrectFormat(dimensions)) return false;
 
             var coordinateArray = dimensions.Split(',');
 
-            int row, column;
+            int row;
+            int column;
 
             var rowResult = Int32.TryParse(coordinateArray[0], out row);
-            var columnResult = Int32.TryParse(coordinateArray[0], out column);
+            var columnResult = Int32.TryParse(coordinateArray[1], out column);
 
-            if (rowResult == false && columnResult == false) return false;
+            if (rowResult == false || columnResult == false) return false;
 
             return HasCorrectIntegerDimensions(row, column);
         }
 
-        public static bool IsCoordinateInputValid(Field fieldObject, string coordinate)
+        public static bool IsCoordinateInputValid(Dimension dimension, string coordinate)
         {
+            if (coordinate == QUIT_GAME) return true;
+
             if (HasNegativeNumber(coordinate))
             {
                 return false;
@@ -40,16 +44,17 @@ namespace Minesweeper
             int x, y;
 
             var xResult = Int32.TryParse(coordinateArray[0], out x);
-            var yResult = Int32.TryParse(coordinateArray[0], out y);
+            var yResult = Int32.TryParse(coordinateArray[1], out y);
 
-            if (xResult == false && yResult == false) return false;
+            if (xResult == false || yResult == false) return false;
 
-            return HasCoordinateWithinFieldBounds(fieldObject, x, y);
+            return HasCoordinateWithinFieldBounds(dimension, x, y);
         }
 
-        private static bool HasCoordinateWithinFieldBounds(Field fieldObject, int x, int y)
+        private static bool HasCoordinateWithinFieldBounds(Dimension dimension, int x, int y)
         {
-            if (x >= 0 && x < fieldObject.NumberOfRows && y >= 0 && y < fieldObject.NumberOfColumns)
+
+            if (x > 0 && x <= dimension.NumRows && y > 0 && y <= dimension.NumCols)
             {
                 return true;
             }
@@ -64,7 +69,8 @@ namespace Minesweeper
 
         private static bool HasCorrectIntegerDimensions(int x, int y)
         {
-            return x > 0 && y > 0;
+            if (x - 1 < 0 || y - 1 < 0) return false;
+            return true;
         }
 
         private static bool InCorrectFormat(string input)
@@ -72,6 +78,17 @@ namespace Minesweeper
             var correctFormatRegex = @"\d+,\d+";
             MatchCollection validInput = Regex.Matches(input, correctFormatRegex);
             return validInput.Count > 0;
+        }
+
+        private static bool ValidateInputParse(string input)
+        {
+            var inputArray = input.Split(',');
+
+            var firstResult = Int32.TryParse(inputArray[0], out _);
+            var secondResult = Int32.TryParse(inputArray[1], out _);
+
+            if (firstResult == false || secondResult == false) return false;
+            else return true;
         }
     }
 }

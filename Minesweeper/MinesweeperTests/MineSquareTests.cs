@@ -5,18 +5,7 @@ namespace MinesweeperTests
 {
     public class MineSquareTests
     {
-        private const string INITIAL_CHARACTER = ".";
         private const string MINE_CHARACTER = "*";
-
-        [Fact]
-        public void MineSquare_ReturnInititalCharacter()
-        {
-            var square = new MineSquare();
-
-            var actual = square.InitialCharacter;
-
-            Assert.Equal(INITIAL_CHARACTER, actual);
-        }
 
         [Fact]
         public void ShowSquare_ReturnFalse()

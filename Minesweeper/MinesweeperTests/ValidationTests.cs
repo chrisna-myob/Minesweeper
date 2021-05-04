@@ -7,7 +7,6 @@ namespace MinesweeperTests
 {
     public class ValidationTests
     {
-
         [Fact]
         public void IsFieldDimensionInputValid_InputValidStringDimensionOfField_ReturnTrue()
         {
@@ -24,6 +23,7 @@ namespace MinesweeperTests
         [InlineData("ab")]
         [InlineData("1212")]
         [InlineData("0,0")]
+        [InlineData("8,0")]
         public void IsFieldDimensionInputValid_InputInvalidStringDimensionOfField_ReturnFalse(string dimension)
         {
             var actual = Validation.IsFieldDimensionInputValid(dimension);
@@ -34,8 +34,10 @@ namespace MinesweeperTests
         [Fact]
         public void IsCoordinateInputValid_InputValidCoordinate_ReturnTrue()
         {
-            var field = new Field(3, 3, 1, null);
-            var actual = Validation.IsCoordinateInputValid(field, "0,0");
+            var dimension = new Dimension(3, 3);
+            var field = new Field(dimension, 1, null);
+
+            var actual = Validation.IsCoordinateInputValid(dimension, "1,1");
 
             Assert.True(actual);
         }
@@ -45,11 +47,15 @@ namespace MinesweeperTests
         [InlineData("4,5")]
         [InlineData("ab")]
         [InlineData("a,b")]
+        [InlineData("0,0")]
+        [InlineData("0,1")]
+        [InlineData("1,0")]
         public void IsCoordinateInputValid_InputInvalidCoordinate_ReturnFalse(string coordinate)
         {
-            var field = new Field(3, 3, 1, null);
+            var dimension = new Dimension(3, 3);
+            var field = new Field(dimension, 1, null);
 
-            var actual = Validation.IsCoordinateInputValid(field, coordinate);
+            var actual = Validation.IsCoordinateInputValid(dimension, coordinate);
 
             Assert.False(actual);
         }

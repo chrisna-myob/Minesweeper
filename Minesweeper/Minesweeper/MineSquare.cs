@@ -6,7 +6,6 @@ namespace Minesweeper
         private string _character = "*";
         private bool _show = false;
 
-        public string InitialCharacter => ".";
         public bool CanShow => _show;
 
         public void SetSquareToShow()

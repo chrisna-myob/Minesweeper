@@ -11,43 +11,56 @@ namespace MinesweeperTests
         [Fact]
         public void Field_InputRowsColumnsListOfMineCoordinatesAndNumberOfMines_ReturnFieldObject()
         {
-            var numRows = 1;
-            var numCols = 2;
-            var numMines = 1;
-            var field = FieldBuilder.MakeField(numRows, numCols, new List<Coordinate> { new Coordinate(0, 0) }, numMines);
+            var dimensions = new Dimension(2, 2);
+            var expected = new Field(dimensions, 1, null);
+            var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(1)
+                .Returns(0)
+                .Returns(0);
 
-            var actual = new Field(numRows, numCols, numMines, field);
+            var builder = new FieldBuilder(rng.Object);
+            var actual = builder.CreateField(dimensions);
 
-            Assert.Equal(numRows, actual.NumberOfRows);
-            Assert.Equal(numCols, actual.NumberOfColumns);
-            Assert.Equal(numMines, actual.NumberOfMines);
-            Assert.Equal(field, actual.GetField());
+            Assert.Equal(2, actual.Dimension.NumRows);
+            Assert.Equal(2, actual.Dimension.NumCols);
+            Assert.Equal(1, actual.NumberOfMines);
         }
 
         [Fact]
         public void GetSquareFromCoordinate_InputCoordinate_ReturnSquare()
         {
-            var coordinate = new Coordinate(0,0);
-            var numRows = 1;
-            var numCols = 2;
-            var numMines = 1;
-            var fieldBuild = FieldBuilder.MakeField(numRows, numCols, null, numMines);
-            var field = new Field(numRows, numCols, numMines, fieldBuild);
+            var coordinate = new Coordinate(0, 0);
+            var dimensions = new Dimension(2, 2);
+            var expected = new Field(dimensions, 1, null);
+            var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(1)
+                .Returns(0)
+                .Returns(0);
+
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.CreateField(dimensions);
 
             var actual = field.GetSquareFromCoordinate(coordinate);
 
-            Assert.False(actual.HasMine());
+            Assert.True(actual.HasMine());
         }
 
         [Fact]
         public void SetSquareToShowUsingCoordinate_InputCoordinate_ValidateSquareCanBeShown()
         {
             var coordinate = new Coordinate(0, 0);
-            var numRows = 1;
-            var numCols = 2;
-            var numMines = 1;
-            var fieldBuild = FieldBuilder.MakeField(numRows, numCols, null, numMines);
-            var field = new Field(numRows, numCols, numMines, fieldBuild);
+            var dimensions = new Dimension(2, 2);
+            var expected = new Field(dimensions, 1, null);
+            var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(1)
+                .Returns(0)
+                .Returns(0);
+
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.CreateField(dimensions);
 
             field.SetSquareToShowWithCoordinate(coordinate);
 

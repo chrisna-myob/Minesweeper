@@ -6,7 +6,6 @@ namespace Minesweeper
         private bool _show = false;
         private string _hint = "0";
 
-        public string InitialCharacter => ".";
         public bool CanShow => _show;
 
         public void AddHint(int hint)

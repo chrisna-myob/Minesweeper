@@ -15,9 +15,9 @@ namespace Minesweeper
         {
             var currentField = field.GetField();
             var countOfMines = 0;
-            for(var row = 0; row < field.NumberOfRows; row++)
+            for(var row = 0; row < field.Dimension.NumRows; row++)
             {
-                for(var col = 0; col < field.NumberOfColumns; col++)
+                for(var col = 0; col < field.Dimension.NumCols; col++)
                 {
                     if (currentField[row, col].CanShow == false && !currentField[row, col].HasMine())
                     {
@@ -46,15 +46,29 @@ namespace Minesweeper
             }
         }
 
+        public static bool MineHasBeenUncovered(Field field)
+        {
+            var currentField = field.GetField();
+            for (var row = 0; row < field.Dimension.NumRows; row++)
+            {
+                for (var col = 0; col < field.Dimension.NumCols; col++)
+                {
+                    if (currentField[row, col].CanShow && currentField[row, col].HasMine())
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public static void Sprawl(Field fieldObject, int row, int col)
         {
             var field = fieldObject.GetField();
-            var numRows = fieldObject.NumberOfRows;
-            var numCols = fieldObject.NumberOfColumns;
-            if (field[row, col].CanShow == true)
-            {
-                return;
-            }
+            var numRows = fieldObject.Dimension.NumRows;
+            var numCols = fieldObject.Dimension.NumCols;
+            if (field[row, col].CanShow == true) return;
             if (field[row, col].CanShow == false && field[row, col].RevealSquare() != "0")
             {
                 field[row, col].SetSquareToShow();

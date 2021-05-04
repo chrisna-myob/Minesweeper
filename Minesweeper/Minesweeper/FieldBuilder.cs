@@ -3,16 +3,23 @@ using System.Collections.Generic;
 
 namespace Minesweeper
 {
-    public static class FieldBuilder
+    public class FieldBuilder : IBuild
     {
-        public static List<Coordinate> MakeUniqueMineCoordinates(INumberGenerator rng, int numberOfMines, int numberOfRows, int numberOfColumns)
+        private INumberGenerator _rng;
+
+        public FieldBuilder(INumberGenerator rng)
+        {
+            _rng = rng;
+        }
+
+        public List<Coordinate> MakeUniqueMineCoordinates(int numberOfMines, Dimension dimension)
         {
             var coordinateArray = new List<Coordinate>();
 
             var numberOfMineCoordinates = 0;
             while (numberOfMineCoordinates < numberOfMines)
             {
-                Coordinate coordinate = CreateRandomCoordinate(rng, numberOfRows, numberOfColumns);
+                Coordinate coordinate = CreateRandomCoordinate(dimension);
 
                 if (coordinateArray.Count == 0)
                 {
@@ -24,7 +31,7 @@ namespace Minesweeper
                     if (!coordinateArray.Contains(coordinate))
                     {
                         coordinateArray.Add(coordinate);
-                        numberOfMineCoordinates++;
+                    numberOfMineCoordinates++;
                     }
 
                 }
@@ -34,18 +41,30 @@ namespace Minesweeper
             return coordinateArray;
         }
 
-        private static Coordinate CreateRandomCoordinate(INumberGenerator rng, int numberOfRows, int numberOfColumns)
+        public Field CreateField(Dimension dimension)
         {
-            var row = rng.GetRandomNumber(0, numberOfRows);
-            var column = rng.GetRandomNumber(0, numberOfColumns);
+            var numMines = _rng.GetRandomNumber(1, dimension.NumRows*dimension.NumCols);
+            
+            var coordinates = MakeUniqueMineCoordinates(numMines, dimension);
+
+            var field = MakeField(dimension, coordinates, numMines);
+            CalculateHints(field, dimension);
+
+            return new Field(dimension, numMines, field);
+        }
+
+        public Coordinate CreateRandomCoordinate(Dimension dimension)
+        {
+            var row = _rng.GetRandomNumber(0, dimension.NumRows);
+            var column = _rng.GetRandomNumber(0, dimension.NumCols);
 
             var coordinate = new Coordinate(row, column);
             return coordinate;
         }
 
-        public static ISquare[,] MakeField(int numRows, int numColumns, List<Coordinate> mineCoordinates, int numMines)
+        public ISquare[,] MakeField(Dimension dimension, List<Coordinate> mineCoordinates, int numMines)
         {
-            ISquare[,] field = new ISquare[numRows, numColumns];
+            ISquare[,] field = new ISquare[dimension.NumRows, dimension.NumCols];
 
             if (mineCoordinates != null)
             {
@@ -55,9 +74,9 @@ namespace Minesweeper
                 }
             }
 
-            for (var row = 0; row < numRows; row++)
+            for (var row = 0; row < dimension.NumRows; row++)
             {
-                for(var col = 0; col < numColumns; col++)
+                for(var col = 0; col < dimension.NumCols; col++)
                 {
                     if (field[row, col] == null) field[row, col] = new SafeSquare();
                 }
@@ -66,8 +85,11 @@ namespace Minesweeper
             return field;
         }
 
-        public static void CalculateHints(ISquare[,] field, int numRows, int numCols)
+        public void CalculateHints(ISquare[,] field, Dimension dimension)
         {
+            var numRows = dimension.NumRows;
+            var numCols = dimension.NumCols;
+
             for (var row = 0; row < numRows; row++)
             {
                 for (var col = 0; col < numCols; col++)

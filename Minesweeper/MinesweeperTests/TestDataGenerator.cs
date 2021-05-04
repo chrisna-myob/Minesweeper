@@ -15,17 +15,17 @@ namespace MinesweeperTests
         {
             yield return new object[]
             {
-                1, new Queue<int>(new[] { 0, 0}), 1, 1, new List<Coordinate> { new Coordinate(0,0) }
+                1, new Queue<int>(new[] { 0, 0 }), new Dimension(1, 1), new List<Coordinate> { new Coordinate(0,0) }
             };
 
             yield return new object[]
             {
-                2, new Queue<int>(new[] { 0, 0, 1, 0 }), 2, 2, new List<Coordinate> { new Coordinate(0,0), new Coordinate(1, 0) }
+                2, new Queue<int>(new[] { 0, 0, 1, 0 }), new Dimension(2, 2), new List<Coordinate> { new Coordinate(0,0), new Coordinate(1, 0) }
             };
 
             yield return new object[]
             {
-                3, new Queue<int>(new[] { 0, 0, 1, 0, 0, 0, 1, 1 }), 2, 2, new List<Coordinate> { new Coordinate(0,0), new Coordinate(1, 0), new Coordinate(1, 1) }
+                3, new Queue<int>(new[] { 0, 0, 1, 0, 0, 0, 1, 1 }), new Dimension(2, 2), new List<Coordinate> { new Coordinate(0,0), new Coordinate(1, 0), new Coordinate(1, 1) }
             };
 
         }

@@ -8,43 +8,68 @@ namespace MinesweeperTests
 {
     public class FieldBuilderTests
     {
+        private readonly Mock<INumberGenerator> rng;
+
+        public FieldBuilderTests()
+        {
+            rng = new Mock<INumberGenerator>();
+        }
+
         [Theory]
         [MemberData(nameof(TestDataGenerator.GetWinningCoordinatesFromDataGenerator), MemberType = typeof(TestDataGenerator))]
-        public void MakeUniqueMineCoordinates_InputNumberOfMinesIntegerCoordinatesRowsAndColumns_ReturnListOfUniqueCoordinates(int numberOfMines, Queue<int> randomNumbers, int rows, int columns, List<Coordinate> expected)
+        public void MakeUniqueMineCoordinates_InputNumberOfMinesIntegerCoordinatesRowsAndColumns_ReturnListOfUniqueCoordinates(int numberOfMines, Queue<int> randomNumbers, Dimension dimension, List<Coordinate> expected)
         {
-            var rng = new Mock<INumberGenerator>();
-
-            rng.Setup(i => i.GetRandomNumber(0, columns))
+            rng.Setup(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                .Returns(randomNumbers.Dequeue);
+            var builder = new FieldBuilder(rng.Object);
 
-
-            var actual = FieldBuilder.MakeUniqueMineCoordinates(rng.Object, numberOfMines, rows, columns);
+            var actual = builder.MakeUniqueMineCoordinates(numberOfMines, dimension);
 
             Assert.Equal(expected, actual);
         }
 
+
         [Fact]
         public void MakeField_InputRNGOneMineAndDimensionsReturnField()
         {
-            var rng = new Mock<INumberGenerator>();
             var numberOfMines = 1;
-            rng.Setup(i => i.GetRandomNumber(0, 1))
+            var dimension = new Dimension(1, 2);
+            rng.Setup(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                .Returns(new Queue<int>(new[] { 0, 0 }).Dequeue);
-            var mineCoordinates = FieldBuilder.MakeUniqueMineCoordinates(rng.Object, numberOfMines, 1, 2);
+            var builder = new FieldBuilder(rng.Object);
+            var mineCoordinates = builder.MakeUniqueMineCoordinates(numberOfMines, dimension);
 
-            var actual = FieldBuilder.MakeField(1, 2, mineCoordinates, numberOfMines);
+            var actual = builder.MakeField(dimension, mineCoordinates, numberOfMines);
 
             Assert.True(actual[0, 0].HasMine());
             Assert.False(actual[0, 1].HasMine());
         }
 
+        //[Fact]
+        //public void CalculateHints_InputSmallFieldWithOneMine()
+        //{
+        //    var numberOfMines = 1;
+        //    var dimension = new Dimension(1, 2);
+        //    var builder = new FieldBuilder(rng.Object);
+        //    var mineCoordinates = builder.MakeUniqueMineCoordinates(numberOfMines, dimension);
+
+        //    var field = builder.MakeField(dimension, new List<Coordinate> { new Coordinate(0, 0) }, numberOfMines);
+        //    builder.CalculateHints(field, dimension);
+
+        //    Assert.Equal("1", field[0, 1].RevealSquare());
+
+        //}
+
         [Fact]
-        public void CalculateHints_InputSmallFieldWithOneMine()
+        public void CalculateHints_InputFieldWithOneMine()
         {
             var numberOfMines = 1;
+            var dimension = new Dimension(2, 2);
+            var builder = new FieldBuilder(rng.Object);
+            var mineCoordinates = builder.MakeUniqueMineCoordinates(numberOfMines, dimension);
 
-            var field = FieldBuilder.MakeField(2, 2, new List<Coordinate> { new Coordinate(0, 0) }, numberOfMines);
-            FieldBuilder.CalculateHints(field, 2, 2);
+            var field = builder.MakeField(dimension, new List<Coordinate> { new Coordinate(0, 0) }, numberOfMines);
+            builder.CalculateHints(field, dimension);
 
             Assert.Equal("1", field[0, 1].RevealSquare());
             Assert.Equal("1", field[1, 0].RevealSquare());
@@ -53,12 +78,13 @@ namespace MinesweeperTests
         }
 
         [Fact]
-        public void CalculateHints_InputMediumFieldWithTwoMines()
+        public void CalculateHints_InputFieldWithTwoMines_ReturnStringOfCorrectHintValue()
         {
             var numberOfMines = 2;
-
-            var field = FieldBuilder.MakeField(3, 3, new List<Coordinate> { new Coordinate(0, 2), new Coordinate(1,1) }, numberOfMines);
-            FieldBuilder.CalculateHints(field, 3, 3);
+            var dimension = new Dimension(3, 3);
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.MakeField(dimension, new List<Coordinate> { new Coordinate(0, 2), new Coordinate(1, 1) }, numberOfMines);
+            builder.CalculateHints(field, dimension);
 
             Assert.Equal("1", field[0, 0].RevealSquare());
             Assert.Equal("2", field[0, 1].RevealSquare());
@@ -71,12 +97,13 @@ namespace MinesweeperTests
         }
 
         [Fact]
-        public void CalculateHints_InputMediumFieldWithThreeMines()
+        public void CalculateHints_InputFieldWithThreeMines_ReturnStringOfCorrectHintValue()
         {
-            var numberOfMines = 3;
-
-            var field = FieldBuilder.MakeField(3, 3, new List<Coordinate> { new Coordinate(0, 2), new Coordinate(1, 1), new Coordinate(2,2) }, numberOfMines);
-            FieldBuilder.CalculateHints(field, 3, 3);
+            var numberOfMines = 2;
+            var dimension = new Dimension(3, 3);
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.MakeField(dimension, new List<Coordinate> { new Coordinate(0, 2), new Coordinate(1, 1), new Coordinate(2, 2) }, numberOfMines);
+            builder.CalculateHints(field, dimension);
 
             Assert.Equal("1", field[0, 0].RevealSquare());
             Assert.Equal("2", field[0, 1].RevealSquare());
