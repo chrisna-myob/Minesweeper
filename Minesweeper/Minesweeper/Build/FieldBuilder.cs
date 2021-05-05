@@ -140,6 +140,12 @@ namespace Minesweeper
             }
         }
 
+        public bool HasValidTopLeftSquare(int row, int col)
+        {
+            if (row == 0 && col == 0) return true;
+            return false;
+        }
+
 
         private static int GetHintCountForTopLeftCorner(ISquare[,] field, int row, int col)
         {

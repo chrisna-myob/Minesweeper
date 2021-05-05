@@ -17,7 +17,6 @@ namespace Minesweeper
 
         public override bool Equals(Object obj)
         {
-            //Check for null and compare run-time types.
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
             {
                 return false;

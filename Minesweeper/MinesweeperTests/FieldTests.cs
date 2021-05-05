@@ -8,19 +8,29 @@ namespace MinesweeperTests
 {
     public class FieldTests
     {
-        [Fact]
-        public void Field_InputRowsColumnsListOfMineCoordinatesAndNumberOfMines_ReturnFieldObject()
+        private readonly Dimension dimension;
+        private readonly Coordinate coordinate;
+        private readonly Mock<INumberGenerator> rng;
+        private readonly FieldBuilder builder;
+
+        public FieldTests()
         {
-            var dimensions = new Dimension(2, 2);
-            var expected = new Field(dimensions, 1, null);
-            var rng = new Mock<INumberGenerator>();
+            dimension = new Dimension(2,2);
+            coordinate = new Coordinate(0, 0);
+            rng = new Mock<INumberGenerator>();
             rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(1)
                 .Returns(0)
                 .Returns(0);
+            builder = new FieldBuilder(rng.Object);
+        }
 
-            var builder = new FieldBuilder(rng.Object);
-            var actual = builder.CreateField(dimensions);
+        [Fact]
+        public void Field_InputRowsColumnsListOfMineCoordinatesAndNumberOfMines_ReturnFieldObject()
+        {
+            var expected = new Field(dimension, 1, null);
+
+            var actual = builder.CreateField(dimension);
 
             Assert.Equal(2, actual.Dimension.NumRows);
             Assert.Equal(2, actual.Dimension.NumCols);
@@ -30,17 +40,8 @@ namespace MinesweeperTests
         [Fact]
         public void GetSquareFromCoordinate_InputCoordinate_ReturnSquare()
         {
-            var coordinate = new Coordinate(0, 0);
-            var dimensions = new Dimension(2, 2);
-            var expected = new Field(dimensions, 1, null);
-            var rng = new Mock<INumberGenerator>();
-            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(1)
-                .Returns(0)
-                .Returns(0);
-
-            var builder = new FieldBuilder(rng.Object);
-            var field = builder.CreateField(dimensions);
+            var expected = new Field(dimension, 1, null);
+            var field = builder.CreateField(dimension);
 
             var actual = field.GetSquareFromCoordinate(coordinate);
 
@@ -50,18 +51,8 @@ namespace MinesweeperTests
         [Fact]
         public void SetSquareToShowUsingCoordinate_InputCoordinate_ValidateSquareCanBeShown()
         {
-            var coordinate = new Coordinate(0, 0);
-            var dimensions = new Dimension(2, 2);
-            var expected = new Field(dimensions, 1, null);
-            var rng = new Mock<INumberGenerator>();
-            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(1)
-                .Returns(0)
-                .Returns(0);
-
-            var builder = new FieldBuilder(rng.Object);
-            var field = builder.CreateField(dimensions);
-
+            var expected = new Field(dimension, 1, null);
+            var field = builder.CreateField(dimension);
             field.SetSquareToShowWithCoordinate(coordinate);
 
             var actual = field.GetSquareFromCoordinate(coordinate);

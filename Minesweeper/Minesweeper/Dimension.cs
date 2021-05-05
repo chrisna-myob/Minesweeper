@@ -14,5 +14,18 @@ namespace Minesweeper
             _numRows = numRow;
             _numCols = numCol;
         }
+
+        public override bool Equals(Object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Dimension d = (Dimension)obj;
+                return (NumRows == d.NumRows) && (NumCols == d.NumCols);
+            }
+        }
     }
 }

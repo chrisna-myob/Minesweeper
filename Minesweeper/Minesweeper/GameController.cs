@@ -12,6 +12,7 @@ namespace Minesweeper
         private IIO _io;
         private Field _field;
         private IBuild _builder;
+        private bool _hasQuit = false;
 
         public GameController(IIO io, IBuild builder)
         {
@@ -21,14 +22,29 @@ namespace Minesweeper
 
         public void Run()
         {
+            PrintWelcomeMessage();
             SetUpGame();
+            DisplayField();
             PlayGame();
             DisplayResults();
         }
 
+        public void PrintWelcomeMessage()
+        {
+            _io.WriteLine("Welcome to Minesweeper!");
+        }
+
         public void SetUpGame()
         {
-            _io.WriteLine("Welcome to Tic Tac Toe");
+            var playerDimensionInput = GetValidDimensionInput();
+
+            var dimension = TurnInputIntoDimension(playerDimensionInput);
+
+            _field = _builder.CreateField(dimension);
+        }
+
+        public string GetValidDimensionInput()
+        {
             _io.Write("Please enter the dimensions of your field row,column: ");
             string playerDimensionInput = _io.ReadLine();
             bool validInput = false;
@@ -46,10 +62,11 @@ namespace Minesweeper
                 }
             }
 
-            var dimension = TurnInputIntoDimension(playerDimensionInput);
+            return playerDimensionInput;
+        }
 
-            _field = _builder.CreateField(dimension);
-
+        public void DisplayField()
+        {
             _io.DisplayField(_field.GetField(), _field.Dimension);
         }
 
@@ -59,10 +76,11 @@ namespace Minesweeper
 
             while (!gameHasEnded)
             {
-                _io.Write("Please enter a coordinate x,y: ");
-                var playerInput = GetValidInput();
+                _io.Write("Please enter a coordinate x,y or q to quit: ");
+                var playerInput = GetValidCoordinateInput();
                 if (playerInput == "q")
                 {
+                    _hasQuit = true;
                     break;
                 }
 
@@ -70,7 +88,7 @@ namespace Minesweeper
 
                 Rules.SetCoordinatesToShow(_field, coord);
 
-                _io.DisplayField(_field.GetField(), _field.Dimension);
+                DisplayField();
 
                 if (GameHasEnded(coord)) gameHasEnded = true;
             }
@@ -86,7 +104,7 @@ namespace Minesweeper
             return new Coordinate(x, y);
         }
 
-        private string GetValidInput()
+        public string GetValidCoordinateInput()
         {
             var validInput = false;
             string playerCoordinateInput = _io.ReadLine();
@@ -105,7 +123,7 @@ namespace Minesweeper
             }
 
             return playerCoordinateInput;
-            
+
         }
 
         private bool GameHasEnded(Coordinate coord)
@@ -122,10 +140,8 @@ namespace Minesweeper
         {
             var dimensionArray = input.Split(',');
 
-            int row, column;
-
-            var rowResult = Int32.TryParse(dimensionArray[0], out row);
-            var columnResult = Int32.TryParse(dimensionArray[1], out column);
+            var row = Int32.Parse(dimensionArray[0]);
+            var column = Int32.Parse(dimensionArray[1]);
 
             return new Dimension(row, column);
         }
@@ -138,10 +154,15 @@ namespace Minesweeper
 
         public void DisplayResults()
         {
-            if (GameResult(_field) == Minesweeper.GameResult.WIN)
+            if (_hasQuit)
+            {
+                _io.WriteLine("You have quit the game.");
+            }
+            else if (GameResult(_field) == Minesweeper.GameResult.WIN)
             {
                 _io.WriteLine("You've won the game :)");
-            } else
+            }
+            else
             {
                 _io.WriteLine("You've lost :(");
             }

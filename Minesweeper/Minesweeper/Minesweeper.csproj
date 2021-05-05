@@ -9,6 +9,7 @@
     <PackageReference Include="Moq" Version="4.16.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="View\" />
+    <Folder Include="IO\" />
+    <Folder Include="Build\" />
   </ItemGroup>
 </Project>

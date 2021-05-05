@@ -4,6 +4,8 @@ namespace Minesweeper
 {
     public static class Rules
     {
+        private const string NO_HINT = "0";
+
         public static bool CoordinateHasMineSquare(Field field, Coordinate coord)
         {
             var square = field.GetSquareFromCoordinate(coord);
@@ -36,7 +38,7 @@ namespace Minesweeper
             var field = fieldObject.GetField();
             if (field[coord.X, coord.Y].CanShow == false)
             {
-                if (field[coord.X, coord.Y].RevealSquare() != "0")
+                if (field[coord.X, coord.Y].RevealSquare() != NO_HINT)
                 {
                     field[coord.X, coord.Y].SetSquareToShow();
                 } else
@@ -68,8 +70,11 @@ namespace Minesweeper
             var field = fieldObject.GetField();
             var numRows = fieldObject.Dimension.NumRows;
             var numCols = fieldObject.Dimension.NumCols;
-            if (field[row, col].CanShow == true) return;
-            if (field[row, col].CanShow == false && field[row, col].RevealSquare() != "0")
+            if (field[row, col].CanShow == true)
+            {
+                return;
+            }
+            if (field[row, col].CanShow == false && field[row, col].RevealSquare() != NO_HINT)
             {
                 field[row, col].SetSquareToShow();
                 return;

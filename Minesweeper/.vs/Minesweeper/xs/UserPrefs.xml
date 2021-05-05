@@ -1,24 +1,27 @@
 ﻿<Properties StartupConfiguration="{12FA8C4D-7262-4F87-A879-9429CF914791}|Default">
   <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Rules.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Build/FieldBuilder.cs">
     <Files>
-      <File FileName="Minesweeper/Validation.cs" Line="50" Column="1" />
-      <File FileName="Minesweeper/GameController.cs" Line="28" Column="1" />
-      <File FileName="Minesweeper/Program.cs" Line="13" Column="34" />
-      <File FileName="Minesweeper/Field.cs" Line="1" Column="1" />
-      <File FileName="Minesweeper/FieldBuilder.cs" Line="2" Column="1" />
-      <File FileName="Minesweeper/Rules.cs" Line="17" Column="1" />
+      <File FileName="Minesweeper/Dimension.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/GameController.cs" Line="34" Column="51" />
+      <File FileName="Minesweeper/Rules.cs" Line="84" Column="51" />
+      <File FileName="Minesweeper/Build/FieldBuilder.cs" Line="122" Column="82" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Minesweeper" expanded="True">
             <Node name="Minesweeper" expanded="True">
-              <Node name="Rules.cs" selected="True" />
+              <Node name="Build" expanded="True">
+                <Node name="FieldBuilder.cs" selected="True" />
+              </Node>
             </Node>
             <Node name="MinesweeperTests" expanded="True" />
           </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
