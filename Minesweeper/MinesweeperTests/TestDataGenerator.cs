@@ -30,6 +30,56 @@ namespace MinesweeperTests
 
         }
 
+        public static IEnumerable<object[]> GetAdjacentCoordinates()
+        {
+            yield return new object[]
+            {
+                1, 1, new List<Coordinate> { new Coordinate(0, 0), new Coordinate(0, 2), new Coordinate(2, 0), new Coordinate(2, 2), new Coordinate(0, 1), new Coordinate(1, 0), new Coordinate(2, 1), new Coordinate(1, 2) }
+            };
+
+            yield return new object[]
+            {
+                0, 0, new List<Coordinate> { new Coordinate(1, 1), new Coordinate(1, 0), new Coordinate(0, 1) }
+            };
+
+            yield return new object[]
+            {
+                0, 2, new List<Coordinate> { new Coordinate(1, 1), new Coordinate(0, 1), new Coordinate(1, 2) }
+            };
+
+            yield return new object[]
+            {
+                2, 0, new List<Coordinate> { new Coordinate(1, 1), new Coordinate(1, 0), new Coordinate(2, 1) }
+            };
+
+            yield return new object[]
+            {
+                2, 2, new List<Coordinate> { new Coordinate(1, 1), new Coordinate(1, 2), new Coordinate(2, 1) }
+            };
+
+            yield return new object[]
+            {
+                0, 1, new List<Coordinate> { new Coordinate(1, 0), new Coordinate(1, 2), new Coordinate(0, 0), new Coordinate(1, 1), new Coordinate(0, 2) }
+            };
+
+            yield return new object[]
+            {
+                1, 0, new List<Coordinate> { new Coordinate(0, 1), new Coordinate(2, 1), new Coordinate(0, 0), new Coordinate(2, 0), new Coordinate(1, 1) }
+            };
+
+            yield return new object[]
+            {
+                1, 2, new List<Coordinate> { new Coordinate(0, 1), new Coordinate(2, 1), new Coordinate(0, 2), new Coordinate(1, 1), new Coordinate(2, 2) }
+            };
+
+            yield return new object[]
+            {
+                2, 1, new List<Coordinate> { new Coordinate(1, 0), new Coordinate(1, 2), new Coordinate(1, 1), new Coordinate(2, 0), new Coordinate(2, 2) }
+            };
+
+
+        }
+
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

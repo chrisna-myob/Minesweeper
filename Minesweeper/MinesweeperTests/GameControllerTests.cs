@@ -44,7 +44,7 @@ namespace MinesweeperTests
             var gameController = new GameController(io.Object, builder.Object);
             gameController.PrintWelcomeMessage();
 
-            io.Verify(x => x.WriteLine("Welcome to Tic Tac Toe"), Times.Once);
+            io.Verify(x => x.WriteLine("Welcome to Minesweeper!"), Times.Once);
         }
 
         [Fact]

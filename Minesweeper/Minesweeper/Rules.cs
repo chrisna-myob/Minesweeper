@@ -1,5 +1,5 @@
-﻿using System;
-using Minesweeper;
+﻿using System.Collections.Generic;
+
 namespace Minesweeper
 {
     public static class Rules
@@ -68,51 +68,21 @@ namespace Minesweeper
         public static void Sprawl(Field fieldObject, int row, int col)
         {
             var field = fieldObject.GetField();
-            var numRows = fieldObject.Dimension.NumRows;
-            var numCols = fieldObject.Dimension.NumCols;
-            if (field[row, col].CanShow == true)
-            {
-                return;
-            }
-            if (field[row, col].CanShow == false && field[row, col].RevealSquare() != NO_HINT)
+
+            if (field[row, col].CanShow == true) return;
+            else if (field[row, col].CanShow == false && field[row, col].RevealSquare() != NO_HINT)
             {
                 field[row, col].SetSquareToShow();
                 return;
-            }
-            else
+            } else
             {
                 field[row, col].SetSquareToShow();
-                if (row - 1 >= 0 && col - 1 >= 0)
+
+                var adjacentSquaresList = Helpers.GetAdjacentCoordinates(row, col, fieldObject.Dimension);
+
+                foreach (var coord in adjacentSquaresList)
                 {
-                    Sprawl(fieldObject, row - 1, col - 1);
-                }
-                if (row - 1 >= 0 && col + 1 < numCols)
-                {
-                    Sprawl(fieldObject, row - 1, col + 1);
-                }
-                if (row + 1 < numRows && col - 1 >= 0)
-                {
-                    Sprawl(fieldObject, row + 1, col - 1);
-                }
-                if (row + 1 < numRows && col + 1 < numCols)
-                {
-                    Sprawl(fieldObject, row + 1, col + 1);
-                }
-                if (row - 1 >= 0)
-                {
-                    Sprawl(fieldObject, row - 1, col);
-                }
-                if (col - 1 >= 0)
-                {
-                    Sprawl(fieldObject, row, col - 1);
-                }
-                if (row + 1 < numRows)
-                {
-                    Sprawl(fieldObject, row + 1, col);
-                }
-                if (col + 1 < numCols)
-                {
-                    Sprawl(fieldObject, row, col + 1);
+                    Sprawl(fieldObject, coord.X, coord.Y);
                 }
             }
         }
