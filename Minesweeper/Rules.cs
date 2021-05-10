@@ -21,11 +21,11 @@ namespace Minesweeper
             {
                 for(var col = 0; col < field.Dimension.NumCols; col++)
                 {
-                    if (currentField[row, col].CanShow == false && !currentField[row, col].HasMine())
+                    if (!CanShowSquare(currentField, row, col) && !SquareHasMine(currentField, row, col))
                     {
                         return false;
                     }
-                    if (currentField[row,col].CanShow == false && currentField[row, col].HasMine()) countOfMines++;
+                    if (!CanShowSquare(currentField, row, col) && SquareHasMine(currentField, row, col)) countOfMines++;
                 }
             }
 
@@ -46,6 +46,16 @@ namespace Minesweeper
                     Sprawl(fieldObject, coord.X, coord.Y);
                 }
             }
+        }
+
+        public static bool CanDisplayIndividualSquare(Field fieldObject, Coordinate coord)
+        {
+            var field = fieldObject.GetField();
+            if (field[coord.X, coord.Y].CanShow == false && field[coord.X, coord.Y].RevealSquare() != NO_HINT)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static bool MineHasBeenUncovered(Field field)
@@ -69,8 +79,8 @@ namespace Minesweeper
         {
             var field = fieldObject.GetField();
 
-            if (field[row, col].CanShow == true) return;
-            else if (field[row, col].CanShow == false && field[row, col].RevealSquare() != NO_HINT)
+            if (CanShowSquare(field, row, col)) return;
+            else if (!CanShowSquare(field, row, col) && SquareHasHintLargerThanZero(field, row, col))
             {
                 field[row, col].SetSquareToShow();
                 return;
@@ -85,6 +95,21 @@ namespace Minesweeper
                     Sprawl(fieldObject, coord.X, coord.Y);
                 }
             }
+        }
+
+        private static bool CanShowSquare(ISquare[,] field, int row, int col)
+        {
+            return field[row, col].CanShow;
+        }
+
+        private static bool SquareHasHintLargerThanZero(ISquare[,] field, int row, int col)
+        {
+            return field[row, col].RevealSquare() != NO_HINT;
+        }
+
+        private static bool SquareHasMine(ISquare[,] field, int row, int col)
+        {
+            return field[row, col].HasMine();
         }
     }
 }

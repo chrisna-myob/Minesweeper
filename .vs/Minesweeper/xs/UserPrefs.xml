@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{12FA8C4D-7262-4F87-A879-9429CF914791}|Default">
+  <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/GameController.cs">
+    <Files>
+      <File FileName="Minesweeper/Coordinate.cs" Line="12" Column="9" />
+      <File FileName="Minesweeper/GameController.cs" Line="114" Column="1" />
+      <File FileName="Minesweeper/IO/ConsoleIO.cs" />
+      <File FileName="Minesweeper/IO/IIO.cs" />
+      <File FileName="Minesweeper/Helpers/GlobalHelpers.cs" />
+      <File FileName="Minesweeper/Field/Field.cs" />
+      <File FileName="Minesweeper/Build/FieldBuilder.cs" />
+      <File FileName="Minesweeper/Rules.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Minesweeper" expanded="True">
+            <Node name="Minesweeper" expanded="True">
+              <Node name="GameController.cs" selected="True" />
+            </Node>
+            <Node name="MinesweeperTests" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

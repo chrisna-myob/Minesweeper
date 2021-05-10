@@ -4,6 +4,7 @@ namespace Minesweeper
     public class ConsoleIO : IIO
     {
         private const string COVERED_SQUARE = ".";
+
         public string ReadLine()
         {
             return Console.ReadLine();
@@ -22,6 +23,19 @@ namespace Minesweeper
         public void WriteLine(string message)
         {
             Console.WriteLine(message);
+        }
+
+        public void DisplayRevealedField(ISquare[,] field, Dimension dimension)
+        {
+            for (var row = 0; row < dimension.NumRows; row++)
+            {
+                for (var col = 0; col < dimension.NumCols; col++)
+                {
+                    Write(field[row, col].RevealSquare());
+                    
+                }
+                WriteLine();
+            }
         }
 
         public void DisplayField(ISquare[,] field, Dimension dimension)

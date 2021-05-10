@@ -24,7 +24,7 @@ namespace Minesweeper
         {
             PrintWelcomeMessage();
             SetUpGame();
-            DisplayField();
+            DisplayRevealedField();
             PlayGame();
             DisplayResults();
         }
@@ -70,13 +70,17 @@ namespace Minesweeper
             _io.DisplayField(_field.GetField(), _field.Dimension);
         }
 
+        public void DisplayRevealedField()
+        {
+            _io.DisplayRevealedField(_field.GetField(), _field.Dimension);
+        }
+
         public void PlayGame()
         {
             bool gameHasEnded = false;
 
             while (!gameHasEnded)
             {
-                _io.Write("Please enter a coordinate x,y or q to quit: ");
                 var playerInput = GetValidCoordinateInput();
                 if (playerInput == "q")
                 {
@@ -84,7 +88,7 @@ namespace Minesweeper
                     break;
                 }
 
-                var coord = ConvertInputIntoCorrespondingCoordinate(playerInput);
+                var coord = Parse(playerInput);
 
                 Rules.SetCoordinatesToShow(_field, coord);
 
@@ -93,8 +97,9 @@ namespace Minesweeper
                 if (GameHasEnded(coord)) gameHasEnded = true;
             }
         }
+        
 
-        private Coordinate ConvertInputIntoCorrespondingCoordinate(string input)
+        private Coordinate Parse(string input)
         {
             var coordinateArray = input.Split(',');
 
@@ -106,6 +111,7 @@ namespace Minesweeper
 
         public string GetValidCoordinateInput()
         {
+            _io.Write("Please enter a coordinate x,y or q to quit: ");
             var validInput = false;
             string playerCoordinateInput = _io.ReadLine();
 
@@ -123,7 +129,6 @@ namespace Minesweeper
             }
 
             return playerCoordinateInput;
-
         }
 
         private bool GameHasEnded(Coordinate coord)
