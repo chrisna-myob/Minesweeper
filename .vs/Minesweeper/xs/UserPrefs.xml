@@ -2,20 +2,14 @@
   <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/GameController.cs">
     <Files>
-      <File FileName="Minesweeper/Coordinate.cs" Line="12" Column="9" />
-      <File FileName="Minesweeper/GameController.cs" Line="114" Column="1" />
-      <File FileName="Minesweeper/IO/ConsoleIO.cs" />
-      <File FileName="Minesweeper/IO/IIO.cs" />
-      <File FileName="Minesweeper/Helpers/GlobalHelpers.cs" />
-      <File FileName="Minesweeper/Field/Field.cs" />
-      <File FileName="Minesweeper/Build/FieldBuilder.cs" />
-      <File FileName="Minesweeper/Rules.cs" />
+      <File FileName="Minesweeper/GameController.cs" Line="37" Column="28" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Minesweeper" expanded="True">
             <Node name="Minesweeper" expanded="True">
+              <Node name="Build" expanded="True" />
               <Node name="GameController.cs" selected="True" />
             </Node>
             <Node name="MinesweeperTests" expanded="True" />

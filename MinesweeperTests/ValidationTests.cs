@@ -7,57 +7,75 @@ namespace MinesweeperTests
 {
     public class ValidationTests
     {
-        [Fact]
-        public void IsFieldDimensionInputValid_InputValidStringDimensionOfField_ReturnTrue()
-        {
-            var actual = Validation.IsFieldDimensionInputValid("1,2");
-
-            Assert.True(actual);
-        }
 
         [Theory]
         [InlineData("-1,2")]
         [InlineData("1,-2")]
         [InlineData("-1,-2")]
-        [InlineData("a,b")]
-        [InlineData("ab")]
-        [InlineData("1212")]
-        [InlineData("0,0")]
-        [InlineData("8,0")]
-        public void IsFieldDimensionInputValid_InputInvalidStringDimensionOfField_ReturnFalse(string dimension)
+        public void IsFieldDimensionInputValid_InputNegativeDimension_ThrowInvalidInputException(string dimension)
         {
-            var actual = Validation.IsFieldDimensionInputValid(dimension);
+            var exception = Assert.Throws<InvalidInputException>(() => Validation.IsFieldDimensionInputValid(dimension));
 
-            Assert.False(actual);
+            Assert.Equal("Dimension cannot be negative", exception.Message);
         }
 
-        [Fact]
-        public void IsCoordinateInputValid_InputValidCoordinate_ReturnTrue()
+        [Theory]
+        [InlineData("ab")]
+        [InlineData("1212")]
+        [InlineData("a,b")]
+        public void IsFieldDimensionInputValid_InputDimensionWithIncorrectFormat_ThrowInvalidInputException(string dimension)
         {
-            var dimension = new Dimension(3, 3);
-            var field = new Field(dimension, 1, null);
+            var exception = Assert.Throws<InvalidInputException>(() => Validation.IsFieldDimensionInputValid(dimension));
 
-            var actual = Validation.IsCoordinateInputValid(dimension, "1,1");
+            Assert.Equal("Dimension must be in the format x,y with integer values", exception.Message);
+        }
 
-            Assert.True(actual);
+        [Theory]
+        [InlineData("0,0")]
+        [InlineData("8,0")]
+        public void IsFieldDimensionInputValid_InputDimensionWithZero_ThrowInvalidInputException(string dimension)
+        {
+            var exception = Assert.Throws<InvalidInputException>(() => Validation.IsFieldDimensionInputValid(dimension));
+
+            Assert.Equal("Dimension values must be larger than 0", exception.Message);
         }
 
         [Theory]
         [InlineData("-1,-1")]
-        [InlineData("4,5")]
-        [InlineData("ab")]
-        [InlineData("a,b")]
-        [InlineData("0,0")]
-        [InlineData("0,1")]
-        [InlineData("1,0")]
-        public void IsCoordinateInputValid_InputInvalidCoordinate_ReturnFalse(string coordinate)
+        public void IsCoordinateInputValid_InputNegativeCoordinate_ThrowInvalidInputException(string coordinate)
         {
             var dimension = new Dimension(3, 3);
             var field = new Field(dimension, 1, null);
 
-            var actual = Validation.IsCoordinateInputValid(dimension, coordinate);
+            var exception = Assert.Throws<InvalidInputException>(() => Validation.IsCoordinateInputValid(dimension, coordinate));
+            Assert.Equal("Coordinate cannot be negative", exception.Message);
+        }
 
-            Assert.False(actual);
+        [Theory]
+        [InlineData("4,5")]
+        [InlineData("0,0")]
+        [InlineData("0,1")]
+        [InlineData("1,0")]
+        public void IsCoordinateInputValid_InputCoordinateSmallerOrLargerThanDimensions_ThrowInvalidInputException(string coordinate)
+        {
+            var dimension = new Dimension(3, 3);
+            var field = new Field(dimension, 1, null);
+
+            var exception = Assert.Throws<InvalidInputException>(() => Validation.IsCoordinateInputValid(dimension, coordinate));
+            Assert.Equal("Coordinate must be within the field bounds", exception.Message);
+        }
+
+        [Theory]
+        [InlineData("ab")]
+        [InlineData("12")]
+        [InlineData("a,b")]
+        public void IsCoordinateInputValid_InputCoordinateWithIncorrectFormat_ThrowInvalidInputException(string coordinate)
+        {
+            var dimension = new Dimension(3, 3);
+            var field = new Field(dimension, 1, null);
+
+            var exception = Assert.Throws<InvalidInputException>(() => Validation.IsCoordinateInputValid(dimension, coordinate));
+            Assert.Equal("Coordinate must be in the format x,y with integer values", exception.Message);
         }
 
     }

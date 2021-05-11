@@ -5,54 +5,50 @@ namespace Minesweeper
 {
     public static class Validation
     {
-        private const string QUIT_GAME = "q";
-
-        public static bool IsFieldDimensionInputValid(String dimensions)
+        public static void IsFieldDimensionInputValid(String dimensions)
         {
             if (HasNegativeNumber(dimensions))
             {
-                return false;
+                throw new InvalidInputException("Dimension cannot be negative");
             }
-            if (!InCorrectFormat(dimensions)) return false;
+
+            if (!InCorrectFormat(dimensions)) throw new InvalidInputException("Dimension must be in the format x,y with integer values");
 
             var coordinateArray = dimensions.Split(',');
 
-            int row;
-            int column;
+            var row = Int32.Parse(coordinateArray[0]);
+            var column = Int32.Parse(coordinateArray[1]);
 
-            var rowResult = Int32.TryParse(coordinateArray[0], out row);
-            var columnResult = Int32.TryParse(coordinateArray[1], out column);
-
-            if (rowResult == false || columnResult == false) return false;
-
-            return HasCorrectIntegerDimensions(row, column);
+            if (!HasCorrectIntegerDimensions(row, column))
+            {
+                throw new InvalidInputException("Dimension values must be larger than 0");
+            }
         }
 
-        public static bool IsCoordinateInputValid(Dimension dimension, string coordinate)
+        public static void IsCoordinateInputValid(Dimension dimension, string coordinate)
         {
-            if (coordinate == QUIT_GAME) return true;
-
             if (HasNegativeNumber(coordinate))
             {
-                return false;
+                throw new InvalidInputException("Coordinate cannot be negative");
             }
 
-            if (!InCorrectFormat(coordinate)) return false;
+            if (!InCorrectFormat(coordinate))
+            {
+                throw new InvalidInputException("Coordinate must be in the format x,y with integer values");
+            }
 
-            var coordinateArray = coordinate.Split(',');
-
-            int x, y;
-
-            var xResult = Int32.TryParse(coordinateArray[0], out x);
-            var yResult = Int32.TryParse(coordinateArray[1], out y);
-
-            if (xResult == false || yResult == false) return false;
-
-            return HasCoordinateWithinFieldBounds(dimension, x, y);
+            if (!InputIsWithinFieldBounds(dimension, coordinate))
+            {
+                throw new InvalidInputException("Coordinate must be within the field bounds");
+            }
         }
 
-        private static bool HasCoordinateWithinFieldBounds(Dimension dimension, int x, int y)
+        private static bool InputIsWithinFieldBounds(Dimension dimension, string coordinate)
         {
+            var coordinateArray = coordinate.Split(',');
+
+            var x = Int32.Parse(coordinateArray[0]);
+            var y = Int32.Parse(coordinateArray[1]);
 
             if (x > 0 && x <= dimension.NumRows && y > 0 && y <= dimension.NumCols)
             {

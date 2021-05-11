@@ -36,7 +36,7 @@ namespace Minesweeper
         public static void SetCoordinatesToShow(Field fieldObject, Coordinate coord)
         {
             var field = fieldObject.GetField();
-            if (field[coord.X, coord.Y].CanShow == false)
+            if (coord != null && field[coord.X, coord.Y].CanShow == false)
             {
                 if (field[coord.X, coord.Y].RevealSquare() != NO_HINT)
                 {

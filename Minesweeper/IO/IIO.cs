@@ -12,5 +12,7 @@ namespace Minesweeper
         void DisplayField(ISquare[,] field, Dimension dimension);
 
         void DisplayRevealedField(ISquare[,] field, Dimension dimension);
+
+        void DisplayCoordinates(Dimension dimension);
     }
 }
