@@ -31,7 +31,7 @@ namespace Minesweeper
                     if (!coordinateArray.Contains(coordinate))
                     {
                         coordinateArray.Add(coordinate);
-                    numberOfMineCoordinates++;
+                        numberOfMineCoordinates++;
                     }
 
                 }
@@ -43,14 +43,14 @@ namespace Minesweeper
 
         public Field CreateField(Dimension dimension)
         {
-            var numMines = _rng.GetRandomNumber(1, dimension.NumRows*dimension.NumCols);
-            
+            var numMines = _rng.GetRandomNumber(1, dimension.NumCols);
+
             var coordinates = MakeUniqueMineCoordinates(numMines, dimension);
 
             var field = MakeField(dimension, coordinates, numMines);
             CalculateHints(field, dimension);
 
-            return new Field(dimension, numMines, field);
+            return new Field(dimension, numMines, field, coordinates);
         }
 
         public Coordinate CreateRandomCoordinate(Dimension dimension)

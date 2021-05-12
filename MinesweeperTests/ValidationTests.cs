@@ -45,7 +45,7 @@ namespace MinesweeperTests
         public void IsCoordinateInputValid_InputNegativeCoordinate_ThrowInvalidInputException(string coordinate)
         {
             var dimension = new Dimension(3, 3);
-            var field = new Field(dimension, 1, null);
+            var field = new Field(dimension, 1, null, null);
 
             var exception = Assert.Throws<InvalidInputException>(() => Validation.IsCoordinateInputValid(dimension, coordinate));
             Assert.Equal("Coordinate cannot be negative", exception.Message);
@@ -59,7 +59,7 @@ namespace MinesweeperTests
         public void IsCoordinateInputValid_InputCoordinateSmallerOrLargerThanDimensions_ThrowInvalidInputException(string coordinate)
         {
             var dimension = new Dimension(3, 3);
-            var field = new Field(dimension, 1, null);
+            var field = new Field(dimension, 1, null, null);
 
             var exception = Assert.Throws<InvalidInputException>(() => Validation.IsCoordinateInputValid(dimension, coordinate));
             Assert.Equal("Coordinate must be within the field bounds", exception.Message);
@@ -72,7 +72,7 @@ namespace MinesweeperTests
         public void IsCoordinateInputValid_InputCoordinateWithIncorrectFormat_ThrowInvalidInputException(string coordinate)
         {
             var dimension = new Dimension(3, 3);
-            var field = new Field(dimension, 1, null);
+            var field = new Field(dimension, 1, null, null);
 
             var exception = Assert.Throws<InvalidInputException>(() => Validation.IsCoordinateInputValid(dimension, coordinate));
             Assert.Equal("Coordinate must be in the format x,y with integer values", exception.Message);

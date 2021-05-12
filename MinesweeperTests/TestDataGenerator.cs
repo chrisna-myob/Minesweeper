@@ -79,6 +79,20 @@ namespace MinesweeperTests
 
         }
 
+        public static IEnumerable<object[]> GetCoordinatesToSetSquaresForShowing()
+        {
+            yield return new object[]
+            {
+                new List<Coordinate> { new Coordinate(0, 1), new Coordinate(1, 0), new Coordinate(1, 1) }
+            };
+
+            yield return new object[]
+            {
+                new List<Coordinate> { new Coordinate(0, 0) }
+            };
+
+        }
+
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

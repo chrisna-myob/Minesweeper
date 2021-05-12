@@ -8,15 +8,18 @@ namespace Minesweeper
         private Dimension _dimension;
         private int _mines;
         private ISquare[,] _field;
+        private List<Coordinate> _mineCoordinates;
+        private const string NO_HINT = "0";
 
         public Dimension Dimension => _dimension;
         public int NumberOfMines => _mines;
 
-        public Field(Dimension dimension, int mines, ISquare[,] field)
+        public Field(Dimension dimension, int mines, ISquare[,] field, List<Coordinate> mineCoordinates)
         {
             _dimension = dimension;
             _mines = mines;
             _field = field;
+            _mineCoordinates = mineCoordinates;
         }
 
         public ISquare[,] GetField()
@@ -24,9 +27,14 @@ namespace Minesweeper
             return _field;
         }
 
-        public ISquare GetSquareFromCoordinate(Coordinate coord)
+        public bool CanShowSquare(Coordinate coord)
         {
-            return _field[coord.X, coord.Y];
+            return _field[coord.X, coord.Y].CanShow;
+        }
+
+        private bool CoordinateHasMine(Coordinate coord)
+        {
+            return _field[coord.X, coord.Y].HasMine();
         }
 
         public void SetSquareToShowWithCoordinate(Coordinate coord)
@@ -34,30 +42,67 @@ namespace Minesweeper
             _field[coord.X, coord.Y].SetSquareToShow();
         }
 
-        // change variable names
-        public static List<Coordinate> GetAdjacentCoordinates(int x, int y, Dimension dimension)
+        public bool RemainingSquaresAreMines()
         {
-            var adjacentCoordinates = new List<Coordinate>();
-
-            for (var row = x - 1; row <= x + 1; row++)
+            var countOfMines = 0;
+            for (var row = 0; row < _dimension.NumRows; row++)
             {
-                for (var col = y - 1; col <= y + 1; col++)
+                for (var col = 0; col < _dimension.NumCols; col++)
                 {
-                    if (row == x && col == y) continue;
-                    else if (IsCoordinateValid(row, col, dimension))
+                    var coordinate = new Coordinate(row, col);
+                    if (!CanShowSquare(coordinate) && !CoordinateHasMine(coordinate))
                     {
-                        adjacentCoordinates.Add(new Coordinate(row, col));
+                        return false;
                     }
+                    if (!CanShowSquare(coordinate) && CoordinateHasMine(coordinate)) countOfMines++;
                 }
             }
 
-            return adjacentCoordinates;
+            if (countOfMines == _mines) return true;
+            else return false;
         }
 
-        private static bool IsCoordinateValid(int x, int y, Dimension dimension)
+        public bool MineHasBeenUncovered()
         {
-            if ((x >= 0 && x < dimension.NumRows) && (y >= 0 && y < dimension.NumCols)) return true;
+            foreach(var coord in _mineCoordinates)
+            {
+                if (_field[coord.X, coord.Y].CanShow)
+                {
+                    return true;
+                }
+            }
+
             return false;
+        }
+
+        public bool CoordinateInFieldHasHintLargerThanZero(Coordinate coord)
+        {
+            if (_field[coord.X, coord.Y].RevealSquare() == NO_HINT)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public void SetAdjacentCoordinatesInFieldToShow(Coordinate coordinate)
+        {
+            if (CanShowSquare(coordinate)) return;
+            else if (!CanShowSquare(coordinate) && CoordinateInFieldHasHintLargerThanZero(coordinate))
+            {
+                _field[coordinate.X, coordinate.Y].SetSquareToShow();
+                return;
+            }
+            else
+            {
+                _field[coordinate.X, coordinate.Y].SetSquareToShow();
+
+                var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(coordinate.X, coordinate.Y, _dimension);
+
+                foreach (var coord in adjacentSquaresList)
+                {
+                    SetAdjacentCoordinatesInFieldToShow(coord);
+                }
+            }
         }
     }
 }

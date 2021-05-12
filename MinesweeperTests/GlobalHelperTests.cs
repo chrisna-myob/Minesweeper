@@ -14,10 +14,10 @@ namespace MinesweeperTests
             var numberOfMines = 0;
             var dimension = new Dimension(3, 3);
             var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(numberOfMines);
             var builder = new FieldBuilder(rng.Object);
-            var fieldBuild = builder.MakeField(dimension, null, numberOfMines);
-            builder.CalculateHints(fieldBuild, dimension);
-            var field = new Field(dimension, 0, fieldBuild);
+            var fieldBuild = builder.CreateField(dimension);
 
             var actual = GlobalHelpers.GetAdjacentCoordinates(x, y, dimension);
 

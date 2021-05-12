@@ -39,17 +39,17 @@ namespace Minesweeper
             DisplayResults(result);
         }
 
-        public void PrintWelcomeMessage()
+        private void PrintWelcomeMessage()
         {
             _io.WriteLine("Welcome to Minesweeper!");
         }
 
-        public void PrintInstructions()
+        private void PrintInstructions()
         {
             _io.WriteLine("To play the game, enter in coordinates, starting from 1,1, to reveal a square. If the square is a mine, you lose the game, but if the remaining squares are all mines, you win!");
         }
 
-        public void SetUpGame()
+        private void SetUpGame()
         {
             while (true)
             {
@@ -62,22 +62,18 @@ namespace Minesweeper
 
                     _field = _builder.CreateField(dimension);
 
-                    break;
+                    return;
                 }
                 catch (InvalidInputException exception)
                 {
-                    DisplayException(exception);
+                    DisplayExceptionMessage(exception);
                 }
             }
-
-            
         }
 
-        public GameResult Play()
+        private GameResult Play()
         {
-            bool gameHasEnded = false;
-
-            while (!gameHasEnded)
+            while (true)
             {
                 try
                 {
@@ -89,58 +85,61 @@ namespace Minesweeper
                     } else
                     {
                         var coord = CoordinateBuilder.MakeCoordinate(userInput, _field.Dimension);
-                        Rules.SetCoordinatesToShow(_field, coord);
+                        ProcessCoordinate(coord);
                         DisplayField();
-                        if (GameHasEnded(coord)) gameHasEnded = true;
+                        if (Rules.GameHasEnded(_field))
+                        {
+                            if (Rules.HasWon(_field)) return Minesweeper.GameResult.WIN;
+                            else return Minesweeper.GameResult.LOSE;
+                        }
                     }
                     
                 }
                 catch (InvalidInputException exception)
                 {
-                    DisplayException(exception);
+                    DisplayExceptionMessage(exception);
                 }
             }
-
-            return GameResult();
         }
 
-        public void DisplayField()
+        private void ProcessCoordinate(Coordinate coord)
+        {
+            Rules.HasNotPreviouslyInputtedCoordinate(_field, coord);
+            SetCoordinateInFieldToShow(coord);
+        }
+
+        private void SetCoordinateInFieldToShow(Coordinate coord)
+        {
+            if (Rules.CanShowIndividualCoordinateInField(_field, coord))
+            {
+                _field.SetSquareToShowWithCoordinate(coord);
+            } else
+            {
+                _field.SetAdjacentCoordinatesInFieldToShow(coord);
+            }
+        }
+
+        private void DisplayField()
         {
             _io.DisplayField(_field.GetField(), _field.Dimension);
         }
 
-        public void DisplayRevealedField()
+        private void DisplayRevealedField()
         {
             _io.DisplayRevealedField(_field.GetField(), _field.Dimension);
         }
 
-        public string GetInput()
+        private string GetInput()
         {
             return _io.ReadLine();
         }
 
-        private bool GameHasEnded(Coordinate coord)
-        {
-            if (Rules.CoordinateHasMineSquare(_field, coord) || Rules.RemainingSquaresAreMines(_field))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public GameResult GameResult()
-        {
-            if (Rules.RemainingSquaresAreMines(_field)) return Minesweeper.GameResult.WIN;
-            return Minesweeper.GameResult.LOSE;
-        }
-
-        public void DisplayResults(GameResult result)
+        private void DisplayResults(GameResult result)
         {
             _io.WriteLine(ResultMessage[result]);
         }
 
-        public void DisplayException(Exception exception)
+        private void DisplayExceptionMessage(Exception exception)
         {
             _io.WriteLine(exception.Message);
         }

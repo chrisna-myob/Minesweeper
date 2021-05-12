@@ -12,14 +12,12 @@ namespace Minesweeper
                 throw new InvalidInputException("Dimension cannot be negative");
             }
 
-            if (!InCorrectFormat(dimensions)) throw new InvalidInputException("Dimension must be in the format x,y with integer values");
+            if (!InCorrectFormat(dimensions))
+            {
+                throw new InvalidInputException("Dimension must be in the format x,y with integer values");
+            }
 
-            var coordinateArray = dimensions.Split(',');
-
-            var row = Int32.Parse(coordinateArray[0]);
-            var column = Int32.Parse(coordinateArray[1]);
-
-            if (!HasCorrectIntegerDimensions(row, column))
+            if (!HasCorrectIntegerDimensions(dimensions))
             {
                 throw new InvalidInputException("Dimension values must be larger than 0");
             }
@@ -63,9 +61,14 @@ namespace Minesweeper
             return dimensions.Contains('-');
         }
 
-        private static bool HasCorrectIntegerDimensions(int x, int y)
+        private static bool HasCorrectIntegerDimensions(string input)
         {
-            if (x - 1 < 0 || y - 1 < 0) return false;
+            var coordinateArray = input.Split(',');
+
+            var row = Int32.Parse(coordinateArray[0]);
+            var column = Int32.Parse(coordinateArray[1]);
+
+            if (row - 1 < 0 || column - 1 < 0) return false;
             return true;
         }
 
@@ -74,17 +77,6 @@ namespace Minesweeper
             var correctFormatRegex = @"\d+,\d+";
             MatchCollection validInput = Regex.Matches(input, correctFormatRegex);
             return validInput.Count > 0;
-        }
-
-        private static bool ValidateInputParse(string input)
-        {
-            var inputArray = input.Split(',');
-
-            var firstResult = Int32.TryParse(inputArray[0], out _);
-            var secondResult = Int32.TryParse(inputArray[1], out _);
-
-            if (firstResult == false || secondResult == false) return false;
-            else return true;
         }
     }
 }
