@@ -12,6 +12,18 @@ namespace Minesweeper
             _rng = rng;
         }
 
+        public Field CreateField(Dimension dimension)
+        {
+            var numMines = _rng.GetRandomNumber(1, dimension.NumCols);
+
+            var coordinates = MakeUniqueMineCoordinates(numMines, dimension);
+
+            var field = MakeField(dimension, coordinates, numMines);
+            CalculateHints(field, dimension);
+
+            return new Field(dimension, numMines, field, coordinates);
+        }
+
         public List<Coordinate> MakeUniqueMineCoordinates(int numberOfMines, Dimension dimension)
         {
             var coordinateArray = new List<Coordinate>();
@@ -37,20 +49,7 @@ namespace Minesweeper
                 }
 
             }
-
             return coordinateArray;
-        }
-
-        public Field CreateField(Dimension dimension)
-        {
-            var numMines = _rng.GetRandomNumber(1, dimension.NumCols);
-
-            var coordinates = MakeUniqueMineCoordinates(numMines, dimension);
-
-            var field = MakeField(dimension, coordinates, numMines);
-            CalculateHints(field, dimension);
-
-            return new Field(dimension, numMines, field, coordinates);
         }
 
         public Coordinate CreateRandomCoordinate(Dimension dimension)
@@ -59,6 +58,7 @@ namespace Minesweeper
             var column = _rng.GetRandomNumber(0, dimension.NumCols);
 
             var coordinate = new Coordinate(row, column);
+
             return coordinate;
         }
 
@@ -108,7 +108,6 @@ namespace Minesweeper
             {
                 if (field[coord.X, coord.Y].HasMine()) mineCount++;
             }
-
             return mineCount;
         }
 

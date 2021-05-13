@@ -39,12 +39,12 @@ namespace MinesweeperTests
         }
 
         [Fact]
-        public void GetSquareCharacter_ReturnStringHint()
+        public void GetSquareValue_ReturnStringHint()
         {
             var square = new SafeSquare();
             square.AddHint(1);
 
-            var actual = square.RevealSquare();
+            var actual = square.GetSquareValue();
 
             Assert.Equal("1", actual);
         }

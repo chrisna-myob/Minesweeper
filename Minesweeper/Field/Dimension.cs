@@ -27,5 +27,10 @@ namespace Minesweeper
                 return (NumRows == d.NumRows) && (NumCols == d.NumCols);
             }
         }
+
+        public override int GetHashCode()
+        {
+            return 0;
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Minesweeper
 
         public void AddHint(int hint) { }
 
-        public string RevealSquare()
+        public string GetSquareValue()
         {
             return _character;
         }

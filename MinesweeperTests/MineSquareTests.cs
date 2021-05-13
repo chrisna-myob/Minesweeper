@@ -43,7 +43,7 @@ namespace MinesweeperTests
         {
             var square = new MineSquare();
 
-            var actual = square.RevealSquare();
+            var actual = square.GetSquareValue();
 
             Assert.Equal(MINE_CHARACTER, actual);
         }

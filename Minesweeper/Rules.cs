@@ -14,7 +14,7 @@ namespace Minesweeper
             return false;
         }
 
-        public static void HasNotPreviouslyInputtedCoordinate(Field field, Coordinate coord)
+        public static void CoordinateIsUnique(Field field, Coordinate coord)
         {
             if (field.CanShowSquare(coord))
             {

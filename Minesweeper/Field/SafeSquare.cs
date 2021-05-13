@@ -23,7 +23,7 @@ namespace Minesweeper
             return false;
         }
 
-        public string RevealSquare()
+        public string GetSquareValue()
         {
             return _hint;
         }

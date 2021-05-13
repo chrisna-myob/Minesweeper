@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Minesweeper
 {
-    public static class Validation
+    public static class Validate
     {
         public static void IsFieldDimensionInputValid(String dimensions)
         {

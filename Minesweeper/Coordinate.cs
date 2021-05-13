@@ -27,5 +27,10 @@ namespace Minesweeper
                 return (X == c.X) && (Y == c.Y);
             }
         }
+
+        public override int GetHashCode()
+        {
+            return 0;
+        }
     }
 }

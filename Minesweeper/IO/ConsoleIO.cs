@@ -31,7 +31,7 @@ namespace Minesweeper
             {
                 for (var col = 0; col < dimension.NumCols; col++)
                 {
-                    Write(field[row, col].RevealSquare());
+                    Write(field[row, col].GetSquareValue());
                     
                 }
                 WriteLine();
@@ -46,7 +46,7 @@ namespace Minesweeper
                 {
                     if (field[row, col].CanShow)
                     {
-                        Write(field[row, col].RevealSquare());
+                        Write(field[row, col].GetSquareValue());
                     }
                     else
                     {

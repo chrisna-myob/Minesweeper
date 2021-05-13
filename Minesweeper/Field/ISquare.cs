@@ -7,6 +7,6 @@ namespace Minesweeper
         bool HasMine();
         void SetSquareToShow();
         void AddHint(int hint);
-        string RevealSquare();
+        string GetSquareValue();
     }
 }

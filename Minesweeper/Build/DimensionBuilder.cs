@@ -5,7 +5,7 @@ namespace Minesweeper.Build
     {
         public static Dimension Make(string input)
         {
-            Validation.IsFieldDimensionInputValid(input);
+            Validate.IsFieldDimensionInputValid(input);
 
             var dimensionArray = input.Split(',');
 

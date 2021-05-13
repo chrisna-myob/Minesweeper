@@ -45,21 +45,6 @@ namespace MinesweeperTests
             Assert.False(actual[0, 1].HasMine());
         }
 
-        //[Fact]
-        //public void CalculateHints_InputSmallFieldWithOneMine()
-        //{
-        //    var numberOfMines = 1;
-        //    var dimension = new Dimension(1, 2);
-        //    var builder = new FieldBuilder(rng.Object);
-        //    var mineCoordinates = builder.MakeUniqueMineCoordinates(numberOfMines, dimension);
-
-        //    var field = builder.MakeField(dimension, new List<Coordinate> { new Coordinate(0, 0) }, numberOfMines);
-        //    builder.CalculateHints(field, dimension);
-
-        //    Assert.Equal("1", field[0, 1].RevealSquare());
-
-        //}
-
         [Fact]
         public void CalculateHints_InputFieldWithOneMine()
         {
@@ -71,9 +56,9 @@ namespace MinesweeperTests
             var field = builder.MakeField(dimension, new List<Coordinate> { new Coordinate(0, 0) }, numberOfMines);
             builder.CalculateHints(field, dimension);
 
-            Assert.Equal("1", field[0, 1].RevealSquare());
-            Assert.Equal("1", field[1, 0].RevealSquare());
-            Assert.Equal("1", field[1, 1].RevealSquare());
+            Assert.Equal("1", field[0, 1].GetSquareValue());
+            Assert.Equal("1", field[1, 0].GetSquareValue());
+            Assert.Equal("1", field[1, 1].GetSquareValue());
 
         }
 
@@ -86,31 +71,13 @@ namespace MinesweeperTests
             var field = builder.MakeField(dimension, new List<Coordinate> { new Coordinate(0, 2), new Coordinate(1, 1) }, numberOfMines);
             builder.CalculateHints(field, dimension);
 
-            Assert.Equal("1", field[0, 0].RevealSquare());
-            Assert.Equal("2", field[0, 1].RevealSquare());
-            Assert.Equal("1", field[1, 0].RevealSquare());
-            Assert.Equal("2", field[1, 2].RevealSquare());
-            Assert.Equal("1", field[2, 0].RevealSquare());
-            Assert.Equal("1", field[2, 1].RevealSquare());
-            Assert.Equal("1", field[2, 2].RevealSquare());
-
-        }
-
-        [Fact]
-        public void CalculateHints_InputFieldWithThreeMines_ReturnStringOfCorrectHintValue()
-        {
-            var numberOfMines = 2;
-            var dimension = new Dimension(3, 3);
-            var builder = new FieldBuilder(rng.Object);
-            var field = builder.MakeField(dimension, new List<Coordinate> { new Coordinate(0, 2), new Coordinate(1, 1), new Coordinate(2, 2) }, numberOfMines);
-            builder.CalculateHints(field, dimension);
-
-            Assert.Equal("1", field[0, 0].RevealSquare());
-            Assert.Equal("2", field[0, 1].RevealSquare());
-            Assert.Equal("1", field[1, 0].RevealSquare());
-            Assert.Equal("3", field[1, 2].RevealSquare());
-            Assert.Equal("1", field[2, 0].RevealSquare());
-            Assert.Equal("2", field[2, 1].RevealSquare());
+            Assert.Equal("1", field[0, 0].GetSquareValue());
+            Assert.Equal("2", field[0, 1].GetSquareValue());
+            Assert.Equal("1", field[1, 0].GetSquareValue());
+            Assert.Equal("2", field[1, 2].GetSquareValue());
+            Assert.Equal("1", field[2, 0].GetSquareValue());
+            Assert.Equal("1", field[2, 1].GetSquareValue());
+            Assert.Equal("1", field[2, 2].GetSquareValue());
 
         }
     }

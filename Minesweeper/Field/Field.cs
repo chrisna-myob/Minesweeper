@@ -77,7 +77,7 @@ namespace Minesweeper
 
         public bool CoordinateInFieldHasHintLargerThanZero(Coordinate coord)
         {
-            if (_field[coord.X, coord.Y].RevealSquare() == NO_HINT)
+            if (_field[coord.X, coord.Y].GetSquareValue() == NO_HINT)
             {
                 return false;
             }

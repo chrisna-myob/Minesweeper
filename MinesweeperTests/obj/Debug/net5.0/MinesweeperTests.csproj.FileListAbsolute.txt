@@ -210,12 +210,12 @@
 /Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/MinesweeperTests/obj/Debug/net5.0/ref/MinesweeperTests.dll
 /Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/MinesweeperTests/obj/Debug/net5.0/MinesweeperTests.pdb
 /Users/Chrisna.Meas/Desktop/Minesweeper/Minesweeper/MinesweeperTests/obj/Debug/net5.0/MinesweeperTests.genruntimeconfig.cache
-/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll
-/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/xunit.runner.reporters.netcoreapp10.dll
-/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/xunit.runner.utility.netcoreapp10.dll
 /Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Minesweeper.deps.json
 /Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Minesweeper.runtimeconfig.json
 /Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Minesweeper.runtimeconfig.dev.json
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/xunit.runner.reporters.netcoreapp10.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/xunit.runner.utility.netcoreapp10.dll
 /Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/MinesweeperTests.deps.json
 /Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/MinesweeperTests.runtimeconfig.json
 /Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/MinesweeperTests.runtimeconfig.dev.json

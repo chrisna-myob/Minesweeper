@@ -13,5 +13,6 @@
     <Folder Include="Build\" />
     <Folder Include="Helpers\" />
     <Folder Include="Field\" />
+    <Folder Include="NumberGenerator\" />
   </ItemGroup>
 </Project>

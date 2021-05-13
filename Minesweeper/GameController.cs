@@ -18,9 +18,9 @@ namespace Minesweeper
 
         private readonly Dictionary<GameResult, string> ResultMessage = new Dictionary<GameResult, string>()
         {
-            { Minesweeper.GameResult.QUIT, "You have quit the game." },
-            { Minesweeper.GameResult.WIN, "You've won the game :)" },
-            { Minesweeper.GameResult.LOSE, "You've lost :(" },
+            { GameResult.QUIT, "You have quit the game." },
+            { GameResult.WIN, "You've won the game :)" },
+            { GameResult.LOSE, "You've lost :(" },
         };
 
         public GameController(IIO io, IBuild builder)
@@ -66,7 +66,7 @@ namespace Minesweeper
                 }
                 catch (InvalidInputException exception)
                 {
-                    DisplayExceptionMessage(exception);
+                    _io.WriteLine(exception.Message);
                 }
             }
         }
@@ -81,7 +81,7 @@ namespace Minesweeper
                     var userInput = GetInput();
                     if (userInput == QUIT_GAME)
                     {
-                        return Minesweeper.GameResult.QUIT;
+                        return GameResult.QUIT;
                     } else
                     {
                         var coord = CoordinateBuilder.MakeCoordinate(userInput, _field.Dimension);
@@ -89,22 +89,22 @@ namespace Minesweeper
                         DisplayField();
                         if (Rules.GameHasEnded(_field))
                         {
-                            if (Rules.HasWon(_field)) return Minesweeper.GameResult.WIN;
-                            else return Minesweeper.GameResult.LOSE;
+                            if (Rules.HasWon(_field)) return GameResult.WIN;
+                            else return GameResult.LOSE;
                         }
                     }
                     
                 }
                 catch (InvalidInputException exception)
                 {
-                    DisplayExceptionMessage(exception);
+                    _io.WriteLine(exception.Message);
                 }
             }
         }
 
         private void ProcessCoordinate(Coordinate coord)
         {
-            Rules.HasNotPreviouslyInputtedCoordinate(_field, coord);
+            Rules.CoordinateIsUnique(_field, coord);
             SetCoordinateInFieldToShow(coord);
         }
 
@@ -137,11 +137,6 @@ namespace Minesweeper
         private void DisplayResults(GameResult result)
         {
             _io.WriteLine(ResultMessage[result]);
-        }
-
-        private void DisplayExceptionMessage(Exception exception)
-        {
-            _io.WriteLine(exception.Message);
         }
     }
 }
