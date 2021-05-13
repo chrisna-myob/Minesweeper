@@ -3,7 +3,7 @@ namespace Minesweeper.Build
 {
     public static class DimensionBuilder
     {
-        public static Dimension Make(string input)
+        public static Dimension MakeDimension(string input)
         {
             Validate.IsFieldDimensionInputValid(input);
 

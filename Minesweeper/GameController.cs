@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Minesweeper.Build;
 
 namespace Minesweeper
@@ -32,8 +31,8 @@ namespace Minesweeper
         public void Run()
         {
             PrintWelcomeMessage();
-            SetUpGame();
             PrintInstructions();
+            SetUpGame();
             DisplayRevealedField();
             var result = Play();
             DisplayResults(result);
@@ -58,7 +57,7 @@ namespace Minesweeper
                     _io.Write("Please enter the dimensions of your field row,column: ");
                     var userInput = GetInput();
 
-                    var dimension = DimensionBuilder.Make(userInput);
+                    var dimension = DimensionBuilder.MakeDimension(userInput);
 
                     _field = _builder.CreateField(dimension);
 
@@ -121,12 +120,12 @@ namespace Minesweeper
 
         private void DisplayField()
         {
-            _io.DisplayField(_field.GetField(), _field.Dimension);
+            _io.DisplayField(_field.GetBoard(), _field.Dimension);
         }
 
         private void DisplayRevealedField()
         {
-            _io.DisplayRevealedField(_field.GetField(), _field.Dimension);
+            _io.DisplayRevealedField(_field.GetBoard(), _field.Dimension);
         }
 
         private string GetInput()

@@ -18,13 +18,13 @@ namespace Minesweeper
         {
             if (field.CanShowSquare(coord))
             {
-                throw new InvalidInputException("You have already used this coordinate.");
+                throw new InvalidInputException("You have already entered this coordinate.");
             }
         }
 
         public static bool CanShowIndividualCoordinateInField(Field field, Coordinate coord)
         {
-            if (field.CoordinateInFieldHasHintLargerThanZero(coord))
+            if (field.CoordinateHasHintLargerThanZero(coord))
             {
                 return true;
             }

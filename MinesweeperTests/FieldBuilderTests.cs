@@ -39,7 +39,7 @@ namespace MinesweeperTests
             var builder = new FieldBuilder(rng.Object);
             var mineCoordinates = builder.MakeUniqueMineCoordinates(numberOfMines, dimension);
 
-            var actual = builder.MakeField(dimension, mineCoordinates, numberOfMines);
+            var actual = builder.MakeBoard(dimension, mineCoordinates, numberOfMines);
 
             Assert.True(actual[0, 0].HasMine());
             Assert.False(actual[0, 1].HasMine());
@@ -53,7 +53,7 @@ namespace MinesweeperTests
             var builder = new FieldBuilder(rng.Object);
             var mineCoordinates = builder.MakeUniqueMineCoordinates(numberOfMines, dimension);
 
-            var field = builder.MakeField(dimension, new List<Coordinate> { new Coordinate(0, 0) }, numberOfMines);
+            var field = builder.MakeBoard(dimension, new List<Coordinate> { new Coordinate(0, 0) }, numberOfMines);
             builder.CalculateHints(field, dimension);
 
             Assert.Equal("1", field[0, 1].GetSquareValue());
@@ -68,7 +68,7 @@ namespace MinesweeperTests
             var numberOfMines = 2;
             var dimension = new Dimension(3, 3);
             var builder = new FieldBuilder(rng.Object);
-            var field = builder.MakeField(dimension, new List<Coordinate> { new Coordinate(0, 2), new Coordinate(1, 1) }, numberOfMines);
+            var field = builder.MakeBoard(dimension, new List<Coordinate> { new Coordinate(0, 2), new Coordinate(1, 1) }, numberOfMines);
             builder.CalculateHints(field, dimension);
 
             Assert.Equal("1", field[0, 0].GetSquareValue());

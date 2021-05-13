@@ -4,13 +4,13 @@ namespace Minesweeper
 {
     public interface IBuild
     {
-        public List<Coordinate> MakeUniqueMineCoordinates(int numberOfMines, Dimension dimension);
+        List<Coordinate> MakeUniqueMineCoordinates(int numberOfMines, Dimension dimension);
 
-        public Field CreateField(Dimension dimension);
+        Field CreateField(Dimension dimension);
 
-        public ISquare[,] MakeField(Dimension dimension, List<Coordinate> mineCoordinates, int numMines);
+        ISquare[,] MakeBoard(Dimension dimension, List<Coordinate> mineCoordinates, int numMines);
 
-        public void CalculateHints(ISquare[,] field, Dimension dimension);
+        void CalculateHints(ISquare[,] field, Dimension dimension);
 
     }
 }

@@ -1,23 +1,19 @@
 ﻿<Properties StartupConfiguration="{12FA8C4D-7262-4F87-A879-9429CF914791}|Default">
   <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Field/Field.cs">
     <Files>
-      <File FileName="Minesweeper/InvalidInputException.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Coordinate.cs" Line="26" Column="17" />
       <File FileName="Minesweeper/GameController.cs" Line="1" Column="1" />
-      <File FileName="Minesweeper/Coordinate.cs" Line="1" Column="1" />
-      <File FileName="Minesweeper/Build/FieldBuilder.cs" Line="7" Column="35" />
-      <File FileName="Minesweeper/Build/MineBuilder.cs" Line="26" Column="48" />
-      <File FileName="Minesweeper/Program.cs" Line="11" Column="32" />
+      <File FileName="Minesweeper/Field/Field.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Minesweeper" expanded="True">
             <Node name="Minesweeper" expanded="True">
-              <Node name="Build" expanded="True" />
-              <Node name="Field" expanded="True" />
-              <Node name="IO" expanded="True" />
-              <Node name="Program.cs" selected="True" />
+              <Node name="Field" expanded="True">
+                <Node name="Field.cs" selected="True" />
+              </Node>
             </Node>
             <Node name="MinesweeperTests" expanded="True" />
           </Node>
