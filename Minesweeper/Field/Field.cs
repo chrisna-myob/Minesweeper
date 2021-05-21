@@ -5,6 +5,7 @@ namespace Minesweeper
 {
     public class Field
     {
+        // make tostring method
         private Dimension _dimension;
         private int _numberOfMines;
         private ISquare[,] _board;
@@ -20,7 +21,7 @@ namespace Minesweeper
             _board = board;
             _mineCoordinates = mineCoordinates;
         }
-        
+
         public ISquare[,] GetBoard()
         {
             return _board;
@@ -93,6 +94,28 @@ namespace Minesweeper
                     }
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            var stringBuilder = "";
+            for (var row = 0; row < _dimension.NumRows; row++)
+            {
+                for (var col = 0; col < _dimension.NumCols; col++)
+                {
+                    if (_board[row, col].CanShow)
+                    {
+                        stringBuilder += $"{_board[row, col].GetSquareValue() }";
+                    }
+                    else
+                    {
+                        stringBuilder += ".";
+                    }
+                }
+                stringBuilder += "\n";
+            }
+
+            return stringBuilder;
         }
     }
 }

@@ -54,9 +54,9 @@ namespace MinesweeperTests
             var field = builder.CreateField(dimension);
             field.SetAdjacentCoordinatesInFieldToShow(coordinate);
 
-            var exception = Assert.Throws<InvalidInputException>(() => Rules.CoordinateIsUnique(field, coordinate));
+            var exception = Assert.Throws<InvalidInputException>(() => Rules.ValidateCoordinate(field, coordinate));
 
-            Assert.Equal("You have already used this coordinate.", exception.Message);
+            Assert.Equal("You have already entered this coordinate.", exception.Message);
         }
 
         [Fact]

@@ -3,7 +3,8 @@
 ### Requirements
 
 -	The game can take player input via the console 
--	Player can specify the size of a 2D field (row, column)
+-	Player can specify the dimension of a 2D field (row, column)
+-   Dimension of field is valid such that 1 <= row <= 100 and 1 <= y <= 100 
 -	All squares are initially represented by “.” 
 -	A square is either a safe square which is represented by a numerical hint or a mine which is represented by “*”
 -	Mines are placed randomly on the field 

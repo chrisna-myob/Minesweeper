@@ -56,5 +56,10 @@ namespace Minesweeper
                 WriteLine();
             }
         }
+
+        public string GetUserInput()
+        {
+            return Console.ReadLine();
+        }
     }
 }

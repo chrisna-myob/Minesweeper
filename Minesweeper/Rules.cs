@@ -14,7 +14,7 @@ namespace Minesweeper
             return false;
         }
 
-        public static void CoordinateIsUnique(Field field, Coordinate coord)
+        public static void ValidateCoordinate(Field field, Coordinate coord)
         {
             if (field.CanShowSquare(coord))
             {
@@ -33,11 +33,14 @@ namespace Minesweeper
 
         public static bool GameHasEnded(Field fieldObject)
         {
+            
             if (fieldObject.MineHasBeenUncovered() || fieldObject.RemainingSquaresAreMines())
             {
                 return true;
             }
             return false;
         }
+
+
     }
 }
