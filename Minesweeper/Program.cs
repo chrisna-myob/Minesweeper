@@ -1,4 +1,6 @@
 ﻿using System;
+using Minesweeper.Repository;
+using Minesweeper.Model;
 
 namespace Minesweeper
 {
@@ -6,11 +8,15 @@ namespace Minesweeper
     {
         static void Main(string[] args)
         {
-            var console = new ConsoleIO();
             var rng = new RandomNumberGenerator();
             var builder = new FieldBuilder(rng);
-            var gameController = new GameController(console, builder);
-            gameController.Run();
+            var output = new ConsoleOutputRepository();
+            var input = new ConsoleInputRepository();
+            var dimension = new DimensionRepository();
+            var coordinate = new CoordinateRepository();
+            var service = new GameService(input, builder, output, dimension, coordinate);
+            var game = new ConsoleGameController(service);
+            game.Run();
         }
     }
 }

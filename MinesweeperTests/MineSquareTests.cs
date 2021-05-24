@@ -1,9 +1,10 @@
 ﻿using System;
 using Xunit;
 using Minesweeper;
+
 namespace MinesweeperTests
 {
-    public class MineSquareTests
+    public class MineTrialTests
     {
         private const string MINE_CHARACTER = "*";
 

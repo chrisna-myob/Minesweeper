@@ -12,7 +12,7 @@ namespace MinesweeperTests
             var row = 4;
             var column = 5;
 
-            var actual = new Dimension(4,5);
+            var actual = new Dimension(4, 5);
 
             Assert.Equal(row, actual.NumRows);
             Assert.Equal(column, actual.NumCols);
