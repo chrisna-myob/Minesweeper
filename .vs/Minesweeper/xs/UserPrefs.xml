@@ -1,23 +1,13 @@
 ﻿<Properties StartupConfiguration="{12FA8C4D-7262-4F87-A879-9429CF914791}|Default">
-  <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Program.cs">
     <Files>
-      <File FileName="Minesweeper/GameController.cs" Line="63" Column="48" />
-      <File FileName="MinesweeperTests/GameControllerTests.cs" />
-      <File FileName="MinesweeperTests/EndToEndTests.cs" />
-      <File FileName="MinesweeperTests/CoordinateTests.cs" />
-      <File FileName="MinesweeperTests/FieldTests.cs" />
-      <File FileName="MinesweeperTests/FieldBuilderTests.cs" />
-      <File FileName="Minesweeper/GameRound.cs" />
+      <File FileName="Minesweeper/Program.cs" Line="17" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Minesweeper" expanded="True">
-            <Node name="Minesweeper" expanded="True">
-              <Node name="IO" expanded="True" />
-              <Node name="GameController.cs" selected="True" />
-            </Node>
+            <Node name="Minesweeper" expanded="True" />
             <Node name="MinesweeperTests" expanded="True" />
           </Node>
         </State>
