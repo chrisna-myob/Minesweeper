@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Minesweeper;
+﻿using Minesweeper;
 using Xunit;
-using Moq;
+using Minesweeper.Model;
 
 namespace MinesweeperTests
 {
@@ -12,8 +10,9 @@ namespace MinesweeperTests
         public void MakeDimension_InputValidStringAndDimension_ReturnCoordinate()
         {
             var expected = new Dimension(1, 1);
+            var dimensionRepo = new DimensionRepository();
 
-            var actual = DimensionBuilder.MakeDimension("1,1");
+            var actual = dimensionRepo.MakeDimension("1,1");
 
             Assert.Equal(expected, actual);
         }

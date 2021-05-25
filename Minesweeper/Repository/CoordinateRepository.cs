@@ -1,8 +1,9 @@
 ﻿using System;
+using Minesweeper.Repository.Interfaces;
 
 namespace Minesweeper.Model
 {
-    public class CoordinateRepository
+    public class CoordinateRepository : ICoordinateRepository
     {
         public Coordinate MakeCoordinate(string input, Dimension dimension)
         {

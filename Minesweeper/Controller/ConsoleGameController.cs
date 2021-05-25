@@ -16,17 +16,28 @@ namespace Minesweeper
         public void Run()
         {
             _gameService.DisplayMessage(Messages.Welcome);
-            SetUpGame();
+            SetUpLoop();
             GameLoop();
             _gameService.DisplayMessage(Messages.gameResult[_state]);
         }
 
-        public void SetUpGame()
+        private void SetUpLoop()
         {
-            _gameService.DisplayMessage(Messages.EnterDimension);
-            var dimension = _gameService.MakeDimension();
-            _gameService.CreateFieldService(dimension);
-            _gameService.DisplayUncoveredBoard();
+            while (true)
+            {
+                try
+                {
+                    _gameService.DisplayMessage(Messages.EnterDimension);
+                    var input = _gameService.GetUserInput();
+                    _gameService.InitialiseField(input);
+                    _gameService.DisplayUncoveredBoard();
+                    break;
+                }
+                catch (InvalidInputException exception)
+                {
+                    _gameService.DisplayMessage(exception.Message);
+                }
+            }
         }
 
         private void GameLoop()
@@ -35,7 +46,10 @@ namespace Minesweeper
             {
                 try
                 {
-                    _state = _gameService.GameRound();
+                    _gameService.DisplayMessage(Messages.EnterCoordinate);
+                    var input = _gameService.GetUserInput();
+                    _state = _gameService.GameRound(input);
+                    _gameService.DisplayBoard();
                 }
                 catch (InvalidInputException exception)
                 {

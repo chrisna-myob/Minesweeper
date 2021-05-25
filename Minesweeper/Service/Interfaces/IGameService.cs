@@ -4,15 +4,11 @@ namespace Minesweeper
 {
     public interface IGameService
     {
-        Dimension MakeDimension();
-        void CreateFieldService(Dimension dimension);
+        void InitialiseField(string userInput);
         string GetUserInput();
-        bool UserWantsToQuit(string input);
         void DisplayMessage(string message);
-        void HandleInput(string userInput);
         void DisplayBoard();
         void DisplayUncoveredBoard();
-        GameState GetGameStatus();
-        GameState GameRound();
+        GameState GameRound(string input);
     }
 }

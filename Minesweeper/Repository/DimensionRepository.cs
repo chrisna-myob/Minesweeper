@@ -1,8 +1,9 @@
 ﻿using System;
+using Minesweeper.Repository.Interfaces;
 
 namespace Minesweeper.Model
 {
-    public class DimensionRepository
+    public class DimensionRepository : IDimensionRepository
     {
         public Dimension MakeDimension(string input)
         {

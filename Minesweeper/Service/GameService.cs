@@ -1,5 +1,6 @@
 ﻿using Minesweeper.Model;
 using Minesweeper.Repository;
+using Minesweeper.Repository.Interfaces;
 
 namespace Minesweeper
 {
@@ -9,11 +10,11 @@ namespace Minesweeper
         private readonly IOutputRepository _outputRepo;
         private IFieldService _fieldService;
         private FieldBuilder _builder;
-        private DimensionRepository _dimensionRepo;
-        private CoordinateRepository _coordinateRepo;
+        private IDimensionRepository _dimensionRepo;
+        private ICoordinateRepository _coordinateRepo;
 
 
-        public GameService(IInputRepository inputRepo, FieldBuilder builder, IOutputRepository outputRepo, DimensionRepository dimensionRepo, CoordinateRepository coordinateRepo)
+        public GameService(IInputRepository inputRepo, FieldBuilder builder, IOutputRepository outputRepo, IDimensionRepository dimensionRepo, ICoordinateRepository coordinateRepo)
         {
             _inputRepo = inputRepo;
             _builder = builder;
@@ -22,39 +23,38 @@ namespace Minesweeper
             _coordinateRepo = coordinateRepo;
         }
 
-        public Dimension MakeDimension()
-        {
-            Dimension dimension;
-            while (true)
-            {
-                try
-                {
-                    var input = _inputRepo.GetUserInput();
-
-                    dimension = _dimensionRepo.MakeDimension(input);
-
-                    return dimension;
-                }
-                catch (InvalidInputException exception)
-                {
-                    _outputRepo.WriteLine(exception.Message);
-                }
-            }
-        }
-
         public string GetUserInput()
         {
             return _inputRepo.GetUserInput();
         }
 
-        public void CreateFieldService(Dimension dimension)
+        public void InitialiseField(string userInput)
+        {
+            var dimension = _dimensionRepo.MakeDimension(userInput);
+            CreateFieldService(dimension);
+        }
+
+        private void CreateFieldService(Dimension dimension)
         {
             var field = _builder.CreateField(dimension);
             var fieldRepo = new FieldRepository(field);
             _fieldService = new FieldService(fieldRepo);
         }
 
-        public Coordinate MakeCoordinate(string input)
+        public GameState GameRound(string userInput)
+        {
+            if (userInput == Messages.QUIT) return GameState.QUIT;
+            HandleInput(userInput);
+            return GetGameStatus();
+        }
+
+        private void HandleInput(string userInput)
+        {
+            var coord = MakeCoordinate(userInput);
+            _fieldService.SetAdjacentCoordinatesInFieldToShow(coord);
+        }
+
+        private Coordinate MakeCoordinate(string input)
         {
             var dimension = _fieldService.GetDimension();
             var coord = _coordinateRepo.MakeCoordinate(input, dimension);
@@ -62,31 +62,16 @@ namespace Minesweeper
             return coord;
         }
 
-        public GameState GameRound()
+        private GameState GetGameStatus()
         {
-            DisplayMessage(Messages.EnterCoordinate);
-            var userInput = _inputRepo.GetUserInput();
-            if (UserWantsToQuit(userInput)) return GameState.QUIT;
-            HandleInput(userInput);
-            DisplayBoard();
-            return GetGameStatus();
-        }
-
-        public bool UserWantsToQuit(string input)
-        {
-            return input == "q";
+            if (Rules.HasWon(_fieldService)) return GameState.WIN;
+            if (Rules.GameHasEnded(_fieldService)) return GameState.LOSE;
+            return GameState.PLAY;
         }
 
         public void DisplayMessage(string message)
         {
             _outputRepo.WriteLine(message);
-        }
-
-        public GameState GetGameStatus()
-        {
-            if (Rules.HasWon(_fieldService)) return GameState.WIN;
-            if (Rules.GameHasEnded(_fieldService)) return GameState.LOSE;
-            return GameState.PLAY;
         }
 
         public void DisplayUncoveredBoard()
@@ -97,12 +82,6 @@ namespace Minesweeper
         public void DisplayBoard()
         {
             DisplayMessage(_fieldService.ToString());
-        }
-
-        public void HandleInput(string userInput)
-        {
-            var coord = MakeCoordinate(userInput);
-            _fieldService.SetAdjacentCoordinatesInFieldToShow(coord);
         }
     }
 }

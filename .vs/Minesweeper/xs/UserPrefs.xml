@@ -1,30 +1,25 @@
 ﻿<Properties StartupConfiguration="{12FA8C4D-7262-4F87-A879-9429CF914791}|Default">
   <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Model/Rules.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Controller/ConsoleGameController.cs">
     <Files>
-      <File FileName="Minesweeper/Service/GameService.cs" Line="24" Column="40" />
-      <File FileName="Minesweeper/Controller/ConsoleGameController.cs" Line="26" Column="31" />
-      <File FileName="Minesweeper/Service/Interfaces/IGameService.cs" Line="15" Column="35" />
-      <File FileName="Minesweeper/Model/CoordinateBuilder.cs" />
-      <File FileName="Minesweeper/Model/CoordinateRepository.cs" />
-      <File FileName="Minesweeper/Repository/ConsoleInputRepository.cs" />
-      <File FileName="MinesweeperTests/GameServiceTests.cs" />
-      <File FileName="Minesweeper/Model/Messages.cs" />
-      <File FileName="Minesweeper/Program.cs" />
-      <File FileName="Minesweeper/Service/Interfaces/IFieldService.cs" Line="1" Column="1" />
-      <File FileName="Minesweeper/Service/FieldService.cs" Line="1" Column="1" />
-      <File FileName="Minesweeper/Model/Rules.cs" Line="28" Column="23" />
+      <File FileName="MinesweeperTests/GameServiceTests.cs" Line="108" Column="41" />
+      <File FileName="Minesweeper/Service/GameService.cs" Line="37" Column="23" />
+      <File FileName="Minesweeper/Service/Interfaces/IGameService.cs" Line="8" Column="1" />
+      <File FileName="Minesweeper/Program.cs" Line="18" Column="90" />
+      <File FileName="Minesweeper/Controller/ConsoleGameController.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Minesweeper" expanded="True">
             <Node name="Minesweeper" expanded="True">
-              <Node name="Controller" expanded="True" />
-              <Node name="Model" expanded="True">
-                <Node name="Rules.cs" selected="True" />
+              <Node name="Controller" expanded="True">
+                <Node name="ConsoleGameController.cs" selected="True" />
               </Node>
-              <Node name="Repository" expanded="True" />
+              <Node name="Model" expanded="True" />
+              <Node name="Repository" expanded="True">
+                <Node name="Interfaces" expanded="True" />
+              </Node>
               <Node name="Service" expanded="True">
                 <Node name="Interfaces" expanded="True" />
               </Node>

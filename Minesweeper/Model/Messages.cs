@@ -10,6 +10,8 @@ namespace Minesweeper
 
     public static class Messages
     {
+        public const string QUIT = "q";
+
         public static Dictionary<GameState, string> gameResult = new Dictionary<GameState, string>() {
             { GameState.QUIT, "You have quit the game." },
             { GameState.WIN, "You've won the game :)" },
