@@ -9,7 +9,6 @@ namespace Minesweeper
         private Dimension _dimension;
         private int _numberOfMines;
         private ISquare[,] _board;
-        private Square[,] _board2;
         private List<Coordinate> _mineCoordinates;
         private const string NO_HINT = "0";
 

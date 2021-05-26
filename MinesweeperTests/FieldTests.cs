@@ -12,7 +12,7 @@ namespace MinesweeperTests
         private readonly Coordinate coordinate;
         private readonly Mock<INumberGenerator> rng;
         private readonly FieldBuilder builder;
-
+        
         public FieldTests()
         {
             dimension = new Dimension(2, 2);
