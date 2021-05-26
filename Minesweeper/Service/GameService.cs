@@ -1,5 +1,4 @@
-﻿using Minesweeper.Model;
-using Minesweeper.Repository;
+﻿using Minesweeper.Repository;
 using Minesweeper.Repository.Interfaces;
 
 namespace Minesweeper

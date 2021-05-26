@@ -27,11 +27,6 @@ namespace Minesweeper
             return _board[coord.X, coord.Y].GetSquareValue();
         }
 
-        public ISquare[,] GetBoard()
-        {
-            return _board;
-        }
-
         public bool CanShowSquare(Coordinate coord)
         {
             return _board[coord.X, coord.Y].CanShow;

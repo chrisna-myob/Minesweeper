@@ -3,66 +3,84 @@ using System.Collections.Generic;
 using Minesweeper;
 using Xunit;
 using Moq;
+using Minesweeper.Repository.Interfaces;
+using Minesweeper.Model;
 
 namespace MinesweeperTests
 {
     public class EndToEndTests
     {
-        //private readonly Mock<INumberGenerator> rng;
-        //private readonly Mock<IIO> io;
+        private readonly Mock<INumberGenerator> rng;
 
-        //public EndToEndTests()
-        //{
-        //    rng = new Mock<INumberGenerator>();
-        //    io = new Mock<IIO>();
-        //}
+        public EndToEndTests()
+        {
+            rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(1)
+                .Returns(0)
+                .Returns(0);
+        }
 
-        //[Fact]
-        //public void GameEndsWithPlayerWinning()
-        //{
-        //    io.SetupSequence(input => input.ReadLine())
-        //        .Returns("3,3")
-        //        .Returns("3,3")
-        //        .Returns("1,3")
-        //        .Returns("2,1")
-        //        .Returns("1,1");
+        [Fact]
+        public void GameEndsWithPlayerWinning()
+        {
+            var builder = new FieldBuilder(rng.Object);
+            var output = new Mock<IOutputRepository>();
+            var input = new Mock<IInputRepository>();
+            input.SetupSequence(i => i.GetUserInput())
+                .Returns("2,2")
+                .Returns("1,2")
+                .Returns("2,1")
+                .Returns("2,2");
+            var coordinate = new CoordinateRepository();
+            var dimensionRepo = new DimensionRepository();
+            var gameService = new GameService(input.Object, builder, output.Object, dimensionRepo, coordinate);
+            var gameController = new ConsoleGameController(gameService);
 
-        //    rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-        //       .Returns(2)
-        //       .Returns(0)
-        //       .Returns(1)
-        //       .Returns(2)
-        //       .Returns(0);
+            gameController.Run();
 
-        //    var builder = new FieldBuilder(rng.Object);
+            output.Verify(x => x.WriteLine("You've won the game :)"), Times.Once);
 
-        //    var gameController = new GameController(io.Object, builder);
-        //    gameController.Run();
+        }
 
-        //    io.Verify(x => x.WriteLine("You've won the game :)"), Times.Once);
+        [Fact]
+        public void GameEndsWithPlayerQuit()
+        {
+            var builder = new FieldBuilder(rng.Object);
+            var output = new Mock<IOutputRepository>();
+            var input = new Mock<IInputRepository>();
+            input.SetupSequence(i => i.GetUserInput())
+                .Returns("2,2")
+                .Returns("q");
+            var coordinate = new CoordinateRepository();
+            var dimensionRepo = new DimensionRepository();
+            var gameService = new GameService(input.Object, builder, output.Object, dimensionRepo, coordinate);
+            var gameController = new ConsoleGameController(gameService);
 
-        //}
+            gameController.Run();
 
-        //[Fact]
-        //public void GameEndsWithPlayerLosing()
-        //{
-        //    io.SetupSequence(input => input.ReadLine())
-        //        .Returns("3,3")
-        //        .Returns("1,2");
+            output.Verify(x => x.WriteLine("You have quit the game."), Times.Once);
 
-        //    rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-        //       .Returns(2)
-        //       .Returns(0)
-        //       .Returns(1)
-        //       .Returns(2)
-        //       .Returns(0);
+        }
 
-        //    var builder = new FieldBuilder(rng.Object);
+        [Fact]
+        public void GameEndsWithPlayerLosing()
+        {
+            var builder = new FieldBuilder(rng.Object);
+            var output = new Mock<IOutputRepository>();
+            var input = new Mock<IInputRepository>();
+            input.SetupSequence(i => i.GetUserInput())
+                .Returns("2,2")
+                .Returns("1,1");
+            var coordinate = new CoordinateRepository();
+            var dimensionRepo = new DimensionRepository();
+            var gameService = new GameService(input.Object, builder, output.Object, dimensionRepo, coordinate);
+            var gameController = new ConsoleGameController(gameService);
 
-        //    var gameController = new GameController(io.Object, builder);
-        //    gameController.Run();
+            gameController.Run();
 
-        //    io.Verify(x => x.WriteLine("You've lost :("), Times.Once);
-        //}
+            output.Verify(x => x.WriteLine("You've lost :("), Times.Once);
+
+        }
     }
 }

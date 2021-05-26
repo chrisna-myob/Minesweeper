@@ -99,7 +99,6 @@ namespace Minesweeper
 
                 }
             }
-
             if (countOfMines == _fieldRepo.NumberOfMines()) return true;
             return false;
         }
