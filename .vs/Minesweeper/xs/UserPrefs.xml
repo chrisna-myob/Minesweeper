@@ -1,27 +1,24 @@
 ﻿<Properties StartupConfiguration="{12FA8C4D-7262-4F87-A879-9429CF914791}|Default">
   <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MinesweeperTests/CoordinateRepositoryTests.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Model/RandomNumberGenerator.cs">
     <Files>
-      <File FileName="MinesweeperTests/MineSquareTests.cs" Line="1" Column="1" />
-      <File FileName="MinesweeperTests/CoordinateRepositoryTests.cs" Line="1" Column="1" />
+      <File FileName="MinesweeperTests/DimensionTests.cs" Line="17" Column="44" />
+      <File FileName="Minesweeper/Model/Coordinate.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Program.cs" Line="22" Column="24" />
+      <File FileName="Minesweeper/Model/Validate.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Model/Rules.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Model/RandomNumberGenerator.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Minesweeper" expanded="True">
             <Node name="Minesweeper" expanded="True">
-              <Node name="Controller" expanded="True" />
-              <Node name="Model" expanded="True" />
-              <Node name="Repository" expanded="True">
-                <Node name="Interfaces" expanded="True" />
-              </Node>
-              <Node name="Service" expanded="True">
-                <Node name="Interfaces" expanded="True" />
+              <Node name="Model" expanded="True">
+                <Node name="RandomNumberGenerator.cs" selected="True" />
               </Node>
             </Node>
-            <Node name="MinesweeperTests" expanded="True">
-              <Node name="CoordinateRepositoryTests.cs" selected="True" />
-            </Node>
+            <Node name="MinesweeperTests" expanded="True" />
           </Node>
         </State>
       </Pad>

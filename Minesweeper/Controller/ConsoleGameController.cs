@@ -6,11 +6,12 @@ namespace Minesweeper
     public class ConsoleGameController
     {
         private readonly IGameService _gameService;
-        private GameState _state = GameState.PLAY;
+        private GameState _state;
 
         public ConsoleGameController(IGameService gameService)
         {
             _gameService = gameService;
+            _state = GameState.PLAY;
         }
 
         public void Run()

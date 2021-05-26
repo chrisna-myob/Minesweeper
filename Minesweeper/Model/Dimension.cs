@@ -31,7 +31,7 @@ namespace Minesweeper
 
         public override int GetHashCode()
         {
-            return 0;
+            throw new NotImplementedException();
         }
     }
 }

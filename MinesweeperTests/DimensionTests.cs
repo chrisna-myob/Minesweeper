@@ -1,5 +1,4 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
 using Minesweeper;
 
 namespace MinesweeperTests
@@ -11,12 +10,11 @@ namespace MinesweeperTests
         {
             var row = 4;
             var column = 5;
+            var expected = new Dimension(row, column);
 
-            var actual = new Dimension(4, 5);
+            var actual = new Dimension(row, column);
 
-            Assert.Equal(row, actual.NumRows);
-            Assert.Equal(column, actual.NumCols);
-
+            Assert.Equal(expected, actual);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Minesweeper
             { GameState.WIN, "You've won the game :)" },
             { GameState.LOSE, "You've lost :(" }
         };
+
         public static string Welcome = "Welcome to Minesweeper!";
         public static string EnterDimension = "Please enter the dimensions of your field row,column: ";
         public static string EnterCoordinate = "Please enter a coordinate x,y or q to quit: ";

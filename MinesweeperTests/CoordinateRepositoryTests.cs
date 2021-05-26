@@ -1,5 +1,4 @@
-﻿using System;
-using Minesweeper;
+﻿using Minesweeper;
 using Minesweeper.Model;
 using Xunit;
 
