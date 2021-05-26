@@ -57,19 +57,9 @@ namespace Minesweeper
             }
         }
 
-        public void DisplayCoordinates(Dimension dimension)
+        public string GetUserInput()
         {
-            
-            for (var row = 0; row < dimension.NumRows; row++)
-            {
-                Write("|");
-                for (var col = 0; col < dimension.NumCols; col++)
-                {
-                    Write($" {row + 1},{col + 1} |");
-                }
-                WriteLine();
-                WriteLine("_ _ _ _");
-            }
+            return Console.ReadLine();
         }
     }
 }

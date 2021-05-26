@@ -12,7 +12,7 @@ namespace MinesweeperTests
         private readonly Coordinate coordinate;
         private readonly Mock<INumberGenerator> rng;
         private readonly FieldBuilder builder;
-
+        
         public FieldTests()
         {
             dimension = new Dimension(2,2);
@@ -34,7 +34,6 @@ namespace MinesweeperTests
 
             Assert.Equal(2, actual.Dimension.NumRows);
             Assert.Equal(2, actual.Dimension.NumCols);
-            Assert.Equal(1, actual.NumberOfMines);
         }
 
         [Fact]
@@ -76,7 +75,7 @@ namespace MinesweeperTests
             var coord = new Coordinate(0,1);
             var field = builder.CreateField(dimension);
 
-            var actual = field.CoordinateInFieldHasHintLargerThanZero(coord);
+            var actual = field.CoordinateHasHintLargerThanZero(coord);
 
             Assert.True(actual);
         }
@@ -94,7 +93,7 @@ namespace MinesweeperTests
             var builder = new FieldBuilder(rng.Object);
             var field = builder.CreateField(dimensions);
 
-            var actual = field.CoordinateInFieldHasHintLargerThanZero(coordinate);
+            var actual = field.CoordinateHasHintLargerThanZero(coordinate);
 
             Assert.False(actual);
         }
@@ -129,31 +128,6 @@ namespace MinesweeperTests
             var rng = new Mock<INumberGenerator>();
             rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(1)
-                .Returns(1)
-                .Returns(0);
-
-            var builder = new FieldBuilder(rng.Object);
-            var field = builder.CreateField(dimensions);
-
-            field.SetSquareToShowWithCoordinate(new Coordinate(0, 1));
-            field.SetSquareToShowWithCoordinate(new Coordinate(1, 0));
-            field.SetSquareToShowWithCoordinate(new Coordinate(1, 1));
-
-            var actual = field.RemainingSquaresAreMines();
-
-            Assert.False(actual);
-        }
-
-        [Fact]
-        public void RemainingSquaresAreMines_InputField_ReturnFalseAgain()
-        {
-            var coordinate = new Coordinate(0, 0);
-            var dimensions = new Dimension(2, 2);
-            var rng = new Mock<INumberGenerator>();
-            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(2)
-                .Returns(0)
-                .Returns(0)
                 .Returns(1)
                 .Returns(0);
 
@@ -226,7 +200,7 @@ namespace MinesweeperTests
             var field = builder.CreateField(dimension);
             field.SetAdjacentCoordinatesInFieldToShow(coordinate);
 
-            var actual = field.GetField();
+            var actual = field.GetBoard();
 
             Assert.True(actual[0, 0].CanShow);
             Assert.True(actual[0, 1].CanShow);

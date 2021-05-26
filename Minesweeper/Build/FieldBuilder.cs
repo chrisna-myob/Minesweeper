@@ -18,7 +18,7 @@ namespace Minesweeper
 
             var coordinates = MakeUniqueMineCoordinates(numMines, dimension);
 
-            var field = MakeField(dimension, coordinates, numMines);
+            var field = MakeBoard(dimension, coordinates, numMines);
             CalculateHints(field, dimension);
 
             return new Field(dimension, numMines, field, coordinates);
@@ -27,27 +27,16 @@ namespace Minesweeper
         public List<Coordinate> MakeUniqueMineCoordinates(int numberOfMines, Dimension dimension)
         {
             var coordinateArray = new List<Coordinate>();
-
             var numberOfMineCoordinates = 0;
+
             while (numberOfMineCoordinates < numberOfMines)
             {
                 Coordinate coordinate = CreateRandomCoordinate(dimension);
-
-                if (coordinateArray.Count == 0)
+                if (!coordinateArray.Contains(coordinate))
                 {
                     coordinateArray.Add(coordinate);
                     numberOfMineCoordinates++;
                 }
-                else
-                {
-                    if (!coordinateArray.Contains(coordinate))
-                    {
-                        coordinateArray.Add(coordinate);
-                        numberOfMineCoordinates++;
-                    }
-
-                }
-
             }
             return coordinateArray;
         }
@@ -57,12 +46,10 @@ namespace Minesweeper
             var row = _rng.GetRandomNumber(0, dimension.NumRows);
             var column = _rng.GetRandomNumber(0, dimension.NumCols);
 
-            var coordinate = new Coordinate(row, column);
-
-            return coordinate;
+            return new Coordinate(row, column);;
         }
 
-        public ISquare[,] MakeField(Dimension dimension, List<Coordinate> mineCoordinates, int numMines)
+        public ISquare[,] MakeBoard(Dimension dimension, List<Coordinate> mineCoordinates, int numMines)
         {
             ISquare[,] field = new ISquare[dimension.NumRows, dimension.NumCols];
 

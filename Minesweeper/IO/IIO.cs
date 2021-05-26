@@ -13,6 +13,6 @@ namespace Minesweeper
 
         void DisplayRevealedField(ISquare[,] field, Dimension dimension);
 
-        void DisplayCoordinates(Dimension dimension);
+        string GetUserInput();
     }
 }

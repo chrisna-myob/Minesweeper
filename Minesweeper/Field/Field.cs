@@ -5,41 +5,41 @@ namespace Minesweeper
 {
     public class Field
     {
+        // make tostring method
         private Dimension _dimension;
-        private int _mines;
-        private ISquare[,] _field;
+        private int _numberOfMines;
+        private ISquare[,] _board;
         private List<Coordinate> _mineCoordinates;
         private const string NO_HINT = "0";
 
         public Dimension Dimension => _dimension;
-        public int NumberOfMines => _mines;
 
-        public Field(Dimension dimension, int mines, ISquare[,] field, List<Coordinate> mineCoordinates)
+        public Field(Dimension dimension, int mines, ISquare[,] board, List<Coordinate> mineCoordinates)
         {
             _dimension = dimension;
-            _mines = mines;
-            _field = field;
+            _numberOfMines = mines;
+            _board = board;
             _mineCoordinates = mineCoordinates;
         }
 
-        public ISquare[,] GetField()
+        public ISquare[,] GetBoard()
         {
-            return _field;
+            return _board;
         }
 
         public bool CanShowSquare(Coordinate coord)
         {
-            return _field[coord.X, coord.Y].CanShow;
+            return _board[coord.X, coord.Y].CanShow;
         }
 
         private bool CoordinateHasMine(Coordinate coord)
         {
-            return _field[coord.X, coord.Y].HasMine();
+            return _board[coord.X, coord.Y].HasMine();
         }
 
         public void SetSquareToShowWithCoordinate(Coordinate coord)
         {
-            _field[coord.X, coord.Y].SetSquareToShow();
+            _board[coord.X, coord.Y].SetSquareToShow();
         }
 
         public bool RemainingSquaresAreMines()
@@ -50,59 +50,72 @@ namespace Minesweeper
                 for (var col = 0; col < _dimension.NumCols; col++)
                 {
                     var coordinate = new Coordinate(row, col);
-                    if (!CanShowSquare(coordinate) && !CoordinateHasMine(coordinate))
+                    if (!CanShowSquare(coordinate))
                     {
-                        return false;
+                        if (!CoordinateHasMine(coordinate)) return false;
+                        else if (CoordinateHasMine(coordinate)) countOfMines++;
                     }
-                    if (!CanShowSquare(coordinate) && CoordinateHasMine(coordinate)) countOfMines++;
+                    
                 }
             }
-
-            if (countOfMines == _mines) return true;
-            else return false;
+            if (countOfMines == _numberOfMines) return true;
+            return false;
         }
 
         public bool MineHasBeenUncovered()
         {
             foreach(var coord in _mineCoordinates)
             {
-                if (_field[coord.X, coord.Y].CanShow)
-                {
-                    return true;
-                }
+                if (_board[coord.X, coord.Y].CanShow) return true;
             }
-
             return false;
         }
 
-        public bool CoordinateInFieldHasHintLargerThanZero(Coordinate coord)
+        public bool CoordinateHasHintLargerThanZero(Coordinate coord)
         {
-            if (_field[coord.X, coord.Y].GetSquareValue() == NO_HINT)
-            {
-                return false;
-            }
-            return true;
+            return _board[coord.X, coord.Y].GetSquareValue() != NO_HINT;
         }
 
         public void SetAdjacentCoordinatesInFieldToShow(Coordinate coordinate)
         {
             if (CanShowSquare(coordinate)) return;
-            else if (!CanShowSquare(coordinate) && CoordinateInFieldHasHintLargerThanZero(coordinate))
-            {
-                _field[coordinate.X, coordinate.Y].SetSquareToShow();
-                return;
-            }
             else
             {
-                _field[coordinate.X, coordinate.Y].SetSquareToShow();
+                _board[coordinate.X, coordinate.Y].SetSquareToShow();
 
-                var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(coordinate.X, coordinate.Y, _dimension);
-
-                foreach (var coord in adjacentSquaresList)
+                if (CoordinateHasHintLargerThanZero(coordinate)) return;
+                else
                 {
-                    SetAdjacentCoordinatesInFieldToShow(coord);
+                    var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(coordinate.X, coordinate.Y, _dimension);
+
+                    foreach (var coord in adjacentSquaresList)
+                    {
+                        SetAdjacentCoordinatesInFieldToShow(coord);
+                    }
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            var stringBuilder = "";
+            for (var row = 0; row < _dimension.NumRows; row++)
+            {
+                for (var col = 0; col < _dimension.NumCols; col++)
+                {
+                    if (_board[row, col].CanShow)
+                    {
+                        stringBuilder += $"{_board[row, col].GetSquareValue() }";
+                    }
+                    else
+                    {
+                        stringBuilder += ".";
+                    }
+                }
+                stringBuilder += "\n";
+            }
+
+            return stringBuilder;
         }
     }
 }

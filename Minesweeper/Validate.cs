@@ -40,6 +40,10 @@ namespace Minesweeper
                 throw new InvalidInputException("Coordinate must be within the field bounds");
             }
         }
+        private static bool HasNegativeNumber(string dimensions)
+        {
+            return dimensions.Contains('-');
+        }
 
         private static bool InputIsWithinFieldBounds(Dimension dimension, string coordinate)
         {
@@ -48,17 +52,8 @@ namespace Minesweeper
             var x = Int32.Parse(coordinateArray[0]);
             var y = Int32.Parse(coordinateArray[1]);
 
-            if (x > 0 && x <= dimension.NumRows && y > 0 && y <= dimension.NumCols)
-            {
-                return true;
-            }
-
+            if (x > 0 && x <= dimension.NumRows && y > 0 && y <= dimension.NumCols) return true;
             return false;
-        }
-
-        private static bool HasNegativeNumber(string dimensions)
-        {
-            return dimensions.Contains('-');
         }
 
         private static bool HasCorrectIntegerDimensions(string input)

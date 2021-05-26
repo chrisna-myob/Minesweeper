@@ -14,17 +14,17 @@ namespace Minesweeper
             return false;
         }
 
-        public static void CoordinateIsUnique(Field field, Coordinate coord)
+        public static void ValidateCoordinate(Field field, Coordinate coord)
         {
             if (field.CanShowSquare(coord))
             {
-                throw new InvalidInputException("You have already used this coordinate.");
+                throw new InvalidInputException("You have already entered this coordinate.");
             }
         }
 
         public static bool CanShowIndividualCoordinateInField(Field field, Coordinate coord)
         {
-            if (field.CoordinateInFieldHasHintLargerThanZero(coord))
+            if (field.CoordinateHasHintLargerThanZero(coord))
             {
                 return true;
             }
@@ -33,11 +33,14 @@ namespace Minesweeper
 
         public static bool GameHasEnded(Field fieldObject)
         {
+            
             if (fieldObject.MineHasBeenUncovered() || fieldObject.RemainingSquaresAreMines())
             {
                 return true;
             }
             return false;
         }
+
+
     }
 }
