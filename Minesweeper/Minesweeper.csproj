@@ -9,10 +9,6 @@
     <PackageReference Include="Moq" Version="4.16.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="IO\" />
-    <Folder Include="Build\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Field\" />
-    <Folder Include="NumberGenerator\" />
+    <Folder Include="Controller\" />
   </ItemGroup>
 </Project>
