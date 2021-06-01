@@ -9,20 +9,20 @@ namespace MinesweeperTests
         [Fact]
         public void MakeDimension_InputValidStringAndDimension_ReturnCoordinate()
         {
-            var expected = new Dimension(1, 1);
-            var dimensionRepo = new DimensionRepository();
+           var expected = new Dimension(1, 1);
+           var dimensionRepo = new DimensionRepository();
 
-            var actual = dimensionRepo.MakeDimension("1,1");
+           var actual = dimensionRepo.MakeDimension("1,1");
 
-            Assert.Equal(expected, actual);
+           Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void MakeDimension_InputInvalidStringAndDimension_ThrowInvalidInputException()
         {
-            var actual = Assert.Throws<InvalidInputException>(() => Validate.IsFieldDimensionInputValid("-1,1"));
+           var actual = Assert.Throws<InvalidInputException>(() => Validate.IsFieldDimensionInputValid("-1,1"));
 
-            Assert.Equal("Dimension cannot be negative", actual.Message);
+           Assert.Equal("Dimension cannot be negative", actual.Message);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 using Minesweeper.Repository.Interfaces;
 
 namespace Minesweeper.Model

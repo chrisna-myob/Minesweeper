@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
+using Minesweeper.Model;
 
 namespace Minesweeper
 {
@@ -40,10 +42,12 @@ namespace Minesweeper
                 throw new InvalidInputException("Coordinate must be within the field bounds");
             }
         }
+
         private static bool HasNegativeNumber(string dimensions)
         {
             return dimensions.Contains('-');
         }
+
         private static bool InputIsWithinFieldBounds(Dimension dimension, string coordinate)
         {
             var coordinateArray = coordinate.Split(',');

@@ -21,5 +21,21 @@ namespace Minesweeper
             var game = new ConsoleGameController(service);
             game.Run();
         }
+
+        public static string Lines(int num)
+        {
+            var stringBuilder = " ";
+            for (var i = 0; i < num; i++)
+            {
+                stringBuilder += "---";
+            }
+
+            for (var i = 0; i < num - 1; i++)
+            {
+                stringBuilder += "-";
+            }
+
+            return stringBuilder += " \n";
+        }
     }
 }

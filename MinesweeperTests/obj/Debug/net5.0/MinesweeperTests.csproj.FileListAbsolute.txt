@@ -316,3 +316,15 @@
 /Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/obj/Debug/net5.0/ref/MinesweeperTests.dll
 /Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/obj/Debug/net5.0/MinesweeperTests.pdb
 /Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/obj/Debug/net5.0/MinesweeperTests.genruntimeconfig.cache
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.Configuration.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.Configuration.Abstractions.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.Configuration.Binder.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.DependencyInjection.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.Logging.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.Logging.Abstractions.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.Logging.Configuration.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.Logging.Console.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.Options.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.Options.ConfigurationExtensions.dll
+/Users/Chrisna.Meas/Desktop/Minesweeper/MinesweeperTests/bin/Debug/net5.0/Microsoft.Extensions.Primitives.dll

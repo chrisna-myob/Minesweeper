@@ -27,15 +27,15 @@ namespace Minesweeper
             return _inputRepo.GetUserInput();
         }
 
-        public void InitialiseField(string userInput)
+        public void InitialiseField(string difficulty, string userDimension)
         {
-            var dimension = _dimensionRepo.MakeDimension(userInput);
-            CreateFieldService(dimension);
+            var dimension = _dimensionRepo.MakeDimension(userDimension);
+            CreateFieldService(difficulty, dimension);
         }
 
-        private void CreateFieldService(Dimension dimension)
+        private void CreateFieldService(string difficulty, Dimension dimension)
         {
-            var field = _builder.CreateField(dimension);
+            var field = _builder.CreateField(difficulty, dimension);
             var fieldRepo = new FieldRepository(field);
             _fieldService = new FieldService(fieldRepo);
         }
@@ -81,6 +81,14 @@ namespace Minesweeper
         public void DisplayBoard()
         {
             DisplayMessage(_fieldService.ToString());
+        }
+
+        public void ValidateDifficulty(string difficulty)
+        {
+            if (!(difficulty == "EASY" || difficulty == "INTERMEDIATE" || difficulty == "EXPERT"))
+            {
+                throw new InvalidInputException("That is not a valid difficulty.");
+            }
         }
     }
 }

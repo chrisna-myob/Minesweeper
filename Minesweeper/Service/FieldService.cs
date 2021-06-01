@@ -43,43 +43,73 @@ namespace Minesweeper
 
         public override string ToString()
         {
-            var stringBuilder = "";
             var dimension = _fieldRepo.GetDimension();
+            var lineBreak = Lines(dimension.NumCols);
+            var stringBuilder = lineBreak;
             for (var row = 0; row < dimension.NumRows; row++)
             {
+                stringBuilder += "|";
                 for (var col = 0; col < dimension.NumCols; col++)
                 {
                     var coord = new Coordinate(row, col);
                     if (_fieldRepo.CanShowSquare(coord))
                     {
-                        stringBuilder += $"{_fieldRepo.GetSquareValue(coord) }";
+                        if (_fieldRepo.GetSquareValue(coord) == "0")
+                        {
+                            stringBuilder += "   |";
+                        }
+                        else
+                        {
+                            stringBuilder += $" {_fieldRepo.GetSquareValue(coord)} |";
+                        }
                     }
                     else
                     {
-                        stringBuilder += ".";
+                        stringBuilder += " . |";
                     }
+
                 }
                 stringBuilder += Environment.NewLine;
+                stringBuilder += lineBreak;
             }
 
-            return stringBuilder;
+            return stringBuilder + " \n";
         }
 
         public string UncoveredBoardToString()
         {
-            var stringBuilder = "";
             var dimension = _fieldRepo.GetDimension();
+            var lineBreak = Lines(dimension.NumCols);
+            var stringBuilder = lineBreak;
             for (var row = 0; row < dimension.NumRows; row++)
             {
+                stringBuilder += "|";
                 for (var col = 0; col < dimension.NumCols; col++)
                 {
                     var coord = new Coordinate(row, col);
-                    stringBuilder += $"{_fieldRepo.GetSquareValue(coord) }";
+                    stringBuilder += $" {_fieldRepo.GetSquareValue(coord)} |";
                 }
                 stringBuilder += Environment.NewLine;
+                stringBuilder += lineBreak;
             }
 
-            return stringBuilder;
+            return stringBuilder + " \n";
+        }
+
+        private string Lines(int num)
+        {
+            var stringBuilder = " ";
+            for (var i = 0; i < num; i++)
+            {
+                stringBuilder += "---";
+            }
+
+            for (var i = 0; i < num - 1; i++)
+            {
+                stringBuilder += "-";
+            }
+
+            return stringBuilder += " \n";
         }
 
         public bool RemainingSquaresAreMines()

@@ -12,74 +12,71 @@ namespace MinesweeperTests
         [Fact]
         public void HasWon_InputFieldService_ReturnFalse()
         {
-            var rng = new Mock<INumberGenerator>();
-            rng.SetupSequence(rng => rng.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(0);
-            var builder = new FieldBuilder(rng.Object);
-            var field = builder.CreateField(new Dimension(1, 2));
-            var fieldRepo = new FieldRepository(field);
-            var fieldService = new FieldService(fieldRepo);
+           var rng = new Mock<INumberGenerator>();
+           rng.SetupSequence(rng => rng.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+               .Returns(0);
+           var builder = new FieldBuilder(rng.Object);
+           var field = builder.CreateField("EASY", new Dimension(1, 2));
+           var fieldRepo = new FieldRepository(field);
+           var fieldService = new FieldService(fieldRepo);
 
-            var actual = Rules.HasWon(fieldService);
+           var actual = Rules.HasWon(fieldService);
 
-            Assert.False(actual);
+           Assert.False(actual);
         }
 
         [Fact]
         public void HasWon_InputFieldService_ReturnTrue()
         {
-            var rng = new Mock<INumberGenerator>();
-            rng.SetupSequence(rng => rng.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(1)
-                .Returns(0)
-                .Returns(0);
-            var builder = new FieldBuilder(rng.Object);
-            var field = builder.CreateField(new Dimension(1, 2));
-            var fieldRepo = new FieldRepository(field);
-            var fieldService = new FieldService(fieldRepo);
+           var rng = new Mock<INumberGenerator>();
+           rng.SetupSequence(rng => rng.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+               .Returns(0)
+               .Returns(0);
+           var builder = new FieldBuilder(rng.Object);
+           var field = builder.CreateField("EASY", new Dimension(1, 2));
+           var fieldRepo = new FieldRepository(field);
+           var fieldService = new FieldService(fieldRepo);
 
-            fieldRepo.SetSquareToShow(new Coordinate(0, 1));
+           fieldRepo.SetSquareToShow(new Coordinate(0, 1));
 
-            var actual = Rules.HasWon(fieldService);
+           var actual = Rules.HasWon(fieldService);
 
-            Assert.True(actual);
+           Assert.True(actual);
         }
 
         [Fact]
         public void GameHasEnded_InputFieldService_ReturnFalse()
         {
-            var rng = new Mock<INumberGenerator>();
-            rng.SetupSequence(rng => rng.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(1)
-                .Returns(0)
-                .Returns(0);
-            var builder = new FieldBuilder(rng.Object);
-            var field = builder.CreateField(new Dimension(1, 2));
-            var fieldRepo = new FieldRepository(field);
-            var fieldService = new FieldService(fieldRepo);
+           var rng = new Mock<INumberGenerator>();
+           rng.SetupSequence(rng => rng.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+               .Returns(0)
+               .Returns(0);
+           var builder = new FieldBuilder(rng.Object);
+           var field = builder.CreateField("EASY", new Dimension(1, 2));
+           var fieldRepo = new FieldRepository(field);
+           var fieldService = new FieldService(fieldRepo);
 
-            var actual = Rules.GameHasEnded(fieldService);
+           var actual = Rules.GameHasEnded(fieldService);
 
-            Assert.False(actual);
+           Assert.False(actual);
         }
 
         [Fact]
         public void GameHasEnded_InputFieldService_ReturnTrue()
         {
-            var rng = new Mock<INumberGenerator>();
-            rng.SetupSequence(rng => rng.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(1)
-                .Returns(0)
-                .Returns(0);
-            var builder = new FieldBuilder(rng.Object);
-            var field = builder.CreateField(new Dimension(1, 2));
-            var fieldRepo = new FieldRepository(field);
-            var fieldService = new FieldService(fieldRepo);
-            fieldRepo.SetSquareToShow(new Coordinate(0, 1));
+           var rng = new Mock<INumberGenerator>();
+           rng.SetupSequence(rng => rng.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+               .Returns(0)
+               .Returns(0);
+           var builder = new FieldBuilder(rng.Object);
+           var field = builder.CreateField("EASY", new Dimension(1, 2));
+           var fieldRepo = new FieldRepository(field);
+           var fieldService = new FieldService(fieldRepo);
+           fieldRepo.SetSquareToShow(new Coordinate(0, 1));
 
-            var actual = Rules.GameHasEnded(fieldService);
+           var actual = Rules.GameHasEnded(fieldService);
 
-            Assert.True(actual);
+           Assert.True(actual);
         }
     }
 }

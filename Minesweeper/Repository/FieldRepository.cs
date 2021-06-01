@@ -5,6 +5,8 @@ namespace Minesweeper.Repository
 {
     public class FieldRepository : IFieldRepository
     {
+        // create, read, update, delete
+
         private Field _field;
 
         public FieldRepository(Field field)

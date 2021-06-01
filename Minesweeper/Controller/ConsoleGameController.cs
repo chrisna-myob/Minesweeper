@@ -28,9 +28,14 @@ namespace Minesweeper
             {
                 try
                 {
+                    _gameService.DisplayMessage("Please enter difficulty (EASY, INTERMEDIATE, EXPERT): ");
+                    var difficulty = _gameService.GetUserInput();
+                    _gameService.ValidateDifficulty(difficulty);
+
                     _gameService.DisplayMessage(Messages.EnterDimension);
                     var input = _gameService.GetUserInput();
-                    _gameService.InitialiseField(input);
+
+                    _gameService.InitialiseField(difficulty, input);
                     _gameService.DisplayUncoveredBoard();
                     break;
                 }

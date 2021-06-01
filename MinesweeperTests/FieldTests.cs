@@ -15,87 +15,85 @@ namespace MinesweeperTests
         
         public FieldTests()
         {
-            dimension = new Dimension(2, 2);
-            coordinate = new Coordinate(0, 0);
-            rng = new Mock<INumberGenerator>();
-            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(1)
-                .Returns(0)
-                .Returns(0);
-            builder = new FieldBuilder(rng.Object);
+           dimension = new Dimension(2, 2);
+           coordinate = new Coordinate(0, 0);
+           rng = new Mock<INumberGenerator>();
+           rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+               .Returns(0)
+               .Returns(0);
+           builder = new FieldBuilder(rng.Object);
         }
 
         [Fact]
         public void Field_InputRowsColumnsListOfMineCoordinatesAndNumberOfMines_ReturnFieldObject()
         {
-            var expected = new Field(dimension, 1, null, null);
+           var expected = new Field(dimension, 1, null, null);
 
-            var actual = builder.CreateField(dimension);
+           var actual = builder.CreateField("EASY", dimension);
 
-            Assert.Equal(2, actual.Dimension.NumRows);
-            Assert.Equal(2, actual.Dimension.NumCols);
+           Assert.Equal(2, actual.Dimension.NumRows);
+           Assert.Equal(2, actual.Dimension.NumCols);
         }
 
         [Fact]
         public void SetSquareToShowWithCoordinate_InputCoordinate_ValidateSquareCanBeShown()
         {
-            var expected = new Field(dimension, 1, null, null);
-            var field = builder.CreateField(dimension);
-            field.SetSquareToShowWithCoordinate(coordinate);
+           var expected = new Field(dimension, 1, null, null);
+           var field = builder.CreateField("EASY", dimension);
+           field.SetSquareToShowWithCoordinate(coordinate);
 
-            var actual = field.CanShowSquare(coordinate);
+           var actual = field.CanShowSquare(coordinate);
 
-            Assert.True(actual);
+           Assert.True(actual);
         }
 
         [Fact]
         public void CanShowSquare_InputCoordinate_ReturnTrue()
         {
-            var field = builder.CreateField(dimension);
-            field.SetSquareToShowWithCoordinate(coordinate);
+           var field = builder.CreateField("EASY", dimension);
+           field.SetSquareToShowWithCoordinate(coordinate);
 
-            var actual = field.CanShowSquare(coordinate);
+           var actual = field.CanShowSquare(coordinate);
 
-            Assert.True(actual);
+           Assert.True(actual);
         }
 
         [Fact]
         public void CanShowSquare_InputCoordinate_ReturnFalse()
         {
-            var field = builder.CreateField(dimension);
+           var field = builder.CreateField("EASY", dimension);
 
-            var actual = field.CanShowSquare(coordinate);
+           var actual = field.CanShowSquare(coordinate);
 
-            Assert.False(actual);
+           Assert.False(actual);
         }
 
         [Fact]
         public void CoordinateInFieldHasHintLargerThanZero_InputCoordinate_ReturnTrue()
         {
-            var coord = new Coordinate(0, 1);
-            var field = builder.CreateField(dimension);
+           var coord = new Coordinate(0, 1);
+           var field = builder.CreateField("EASY", dimension);
 
-            var actual = field.CoordinateHasHintLargerThanZero(coord);
+           var actual = field.CoordinateHasHintLargerThanZero(coord);
 
-            Assert.True(actual);
+           Assert.True(actual);
         }
 
         [Fact]
         public void CoordinateInFieldHasHintLargerThanZero_InputCoordinate_ReturnFalse()
         {
-            var dimensions = new Dimension(3, 3);
-            var rng = new Mock<INumberGenerator>();
-            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(1)
-                .Returns(2)
-                .Returns(2);
+           var dimensions = new Dimension(3, 3);
+           var rng = new Mock<INumberGenerator>();
+           rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+               .Returns(2)
+               .Returns(2);
 
-            var builder = new FieldBuilder(rng.Object);
-            var field = builder.CreateField(dimensions);
+           var builder = new FieldBuilder(rng.Object);
+           var field = builder.CreateField("EASY", dimensions);
 
-            var actual = field.CoordinateHasHintLargerThanZero(coordinate);
+           var actual = field.CoordinateHasHintLargerThanZero(coordinate);
 
-            Assert.False(actual);
+           Assert.False(actual);
         }
     }
 }
