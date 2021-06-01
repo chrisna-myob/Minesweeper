@@ -11,136 +11,50 @@ namespace Minesweeper
             _fieldRepo = fieldRepo;
         }
 
-        public bool CanShowSquare(Coordinate coord)
-        {
-            return _fieldRepo.CanShowSquare(coord);
-        }
-
         public Dimension GetDimension()
         {
             return _fieldRepo.GetDimension();
         }
 
-        public void SetAdjacentCoordinatesInFieldToShow(Coordinate coordinate)
+        public void HandleCoordinate(Coordinate coord)
         {
-            if (_fieldRepo.CanShowSquare(coordinate)) return;
-            else
-            {
-                _fieldRepo.SetSquareToShow(coordinate);
-
-                if (_fieldRepo.CoordinateHasHintLargerThanZero(coordinate)) return;
-                else
-                {
-                    var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(coordinate.X, coordinate.Y, _fieldRepo.GetDimension());
-
-                    foreach (var coord in adjacentSquaresList)
-                    {
-                        SetAdjacentCoordinatesInFieldToShow(coord);
-                    }
-                }
-            }
-        }
-
-        public override string ToString()
-        {
-            var dimension = _fieldRepo.GetDimension();
-            var lineBreak = Lines(dimension.NumCols);
-            var stringBuilder = lineBreak;
-            for (var row = 0; row < dimension.NumRows; row++)
-            {
-                stringBuilder += "|";
-                for (var col = 0; col < dimension.NumCols; col++)
-                {
-                    var coord = new Coordinate(row, col);
-                    if (_fieldRepo.CanShowSquare(coord))
-                    {
-                        if (_fieldRepo.GetSquareValue(coord) == "0")
-                        {
-                            stringBuilder += "   |";
-                        }
-                        else
-                        {
-                            stringBuilder += $" {_fieldRepo.GetSquareValue(coord)} |";
-                        }
-                    }
-                    else
-                    {
-                        stringBuilder += " . |";
-                    }
-
-                }
-                stringBuilder += Environment.NewLine;
-                stringBuilder += lineBreak;
-            }
-
-            return stringBuilder + " \n";
+            _fieldRepo.SetCoordinateToShow(coord);
         }
 
         public string UncoveredBoardToString()
         {
-            var dimension = _fieldRepo.GetDimension();
-            var lineBreak = Lines(dimension.NumCols);
-            var stringBuilder = lineBreak;
-            for (var row = 0; row < dimension.NumRows; row++)
-            {
-                stringBuilder += "|";
-                for (var col = 0; col < dimension.NumCols; col++)
-                {
-                    var coord = new Coordinate(row, col);
-                    stringBuilder += $" {_fieldRepo.GetSquareValue(coord)} |";
-                }
-                stringBuilder += Environment.NewLine;
-                stringBuilder += lineBreak;
-            }
-
-            return stringBuilder + " \n";
+            return _fieldRepo.UncoveredBoardToString();
         }
 
-        private string Lines(int num)
+        public string BoardToString()
         {
-            var stringBuilder = " ";
-            for (var i = 0; i < num; i++)
-            {
-                stringBuilder += "---";
-            }
-
-            for (var i = 0; i < num - 1; i++)
-            {
-                stringBuilder += "-";
-            }
-
-            return stringBuilder += " \n";
+            return _fieldRepo.BoardToString();
         }
 
-        public bool RemainingSquaresAreMines()
+        public bool HasWon()
         {
-            var countOfMines = 0;
-            var dimension = _fieldRepo.GetDimension();
-            for (var row = 0; row < dimension.NumRows; row++)
+            if (_fieldRepo.RemainingSquaresAreMines())
             {
-                for (var col = 0; col < dimension.NumCols; col++)
-                {
-                    var coordinate = new Coordinate(row, col);
-                    if (_fieldRepo.CanShowSquare(coordinate) == false)
-                    {
-                        if (_fieldRepo.CoordinateHasMine(coordinate) == true) countOfMines++;
-                        else if (_fieldRepo.CoordinateHasMine(coordinate) == false) return false;
-                    }
-
-                }
+                return true;
             }
-            if (countOfMines == _fieldRepo.NumberOfMines()) return true;
             return false;
         }
 
-        public bool MineHasBeenUncovered()
+        public bool GameHasEnded()
         {
-            var mineCoordinates = _fieldRepo.GetMineCoordinates();
-            foreach (var coord in mineCoordinates)
+            if (_fieldRepo.MineHasBeenUncovered() || _fieldRepo.RemainingSquaresAreMines())
             {
-                if (_fieldRepo.CanShowSquare(coord)) return true;
+                return true;
             }
             return false;
+        }
+
+        public void CoordinateHasAlreadyBeenUsed(Coordinate coord)
+        {
+            if (_fieldRepo.CanShowSquare(coord))
+            {
+                throw new InvalidInputException("You have already entered this coordinate.");
+            }
         }
     }
 }

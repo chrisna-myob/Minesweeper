@@ -50,21 +50,21 @@ namespace Minesweeper
         private void HandleInput(string userInput)
         {
             var coord = MakeCoordinate(userInput);
-            _fieldService.SetAdjacentCoordinatesInFieldToShow(coord);
+            _fieldService.HandleCoordinate(coord);
         }
 
         private Coordinate MakeCoordinate(string input)
         {
             var dimension = _fieldService.GetDimension();
             var coord = _coordinateRepo.MakeCoordinate(input, dimension);
-            Rules.CoordinateHasAlreadyBeenUsed(_fieldService, coord);
+            _fieldService.CoordinateHasAlreadyBeenUsed(coord);
             return coord;
         }
 
         private GameState GetGameStatus()
         {
-            if (Rules.HasWon(_fieldService)) return GameState.WIN;
-            if (Rules.GameHasEnded(_fieldService)) return GameState.LOSE;
+            if (_fieldService.HasWon()) return GameState.WIN;
+            if (_fieldService.GameHasEnded()) return GameState.LOSE;
             return GameState.PLAY;
         }
 
@@ -80,7 +80,7 @@ namespace Minesweeper
         
         public void DisplayBoard()
         {
-            DisplayMessage(_fieldService.ToString());
+            DisplayMessage(_fieldService.BoardToString());
         }
 
         public void ValidateDifficulty(string difficulty)

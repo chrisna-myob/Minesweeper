@@ -28,5 +28,21 @@ namespace Minesweeper
             if ((x >= 0 && x < dimension.NumRows) && (y >= 0 && y < dimension.NumCols)) return true;
             return false;
         }
+
+        public static string Lines(int num)
+        {
+            var stringBuilder = " ";
+            for (var i = 0; i < num; i++)
+            {
+                stringBuilder += "---";
+            }
+
+            for (var i = 0; i < num - 1; i++)
+            {
+                stringBuilder += "-";
+            }
+
+            return stringBuilder += " \n";
+        }
     }
 }
