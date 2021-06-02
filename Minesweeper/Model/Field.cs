@@ -97,6 +97,7 @@ namespace Minesweeper
             if (countOfMines == _numberOfMines) return true;
             return false;
         }
+
         public bool MineHasBeenUncovered()
         {
             foreach (var coord in _mineCoordinates)
@@ -118,6 +119,7 @@ namespace Minesweeper
                 {
                     var coord = new Coordinate(row, col);
                     var square = GetSquareFromCoordinate(coord);
+
                     if (square.CanShow)
                     {
                         if (square.GetSquareValue() == "0") stringBuilder += "   |";
@@ -132,8 +134,7 @@ namespace Minesweeper
                 stringBuilder += Environment.NewLine;
                 stringBuilder += lineBreak;
             }
-
-            return stringBuilder;
+            return stringBuilder + "\n";
         }
 
         public string UncoveredBoardToString()
@@ -147,13 +148,19 @@ namespace Minesweeper
                 {
                     var coord = new Coordinate(row, col);
                     var square = GetSquareFromCoordinate(coord);
-                    stringBuilder += $" {square.GetSquareValue()} |";
+                    if (square != null)
+                    {
+                        stringBuilder += $" {square.GetSquareValue()} |";
+                    } else
+                    {
+                        stringBuilder += "   |";
+                    }
                 }
                 stringBuilder += Environment.NewLine;
                 stringBuilder += lineBreak;
             }
 
-            return stringBuilder;
+            return stringBuilder + "\n";
         }
     }
 }

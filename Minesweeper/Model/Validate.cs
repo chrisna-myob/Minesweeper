@@ -11,17 +11,17 @@ namespace Minesweeper
         {
             if (HasNegativeNumber(dimensions))
             {
-                throw new InvalidInputException("Dimension cannot be negative");
+                throw new InvalidInputException("Dimension cannot be negative\n");
             }
 
             if (!InCorrectFormat(dimensions))
             {
-                throw new InvalidInputException("Dimension must be in the format x,y with integer values");
+                throw new InvalidInputException("Dimension must be in the format x,y with integer values\n");
             }
 
             if (!HasCorrectIntegerDimensions(dimensions))
             {
-                throw new InvalidInputException("Dimension values must be larger than 0");
+                throw new InvalidInputException("Dimension values must be larger than 0\n");
             }
         }
 
@@ -29,17 +29,17 @@ namespace Minesweeper
         {
             if (HasNegativeNumber(coordinate))
             {
-                throw new InvalidInputException("Coordinate cannot be negative");
+                throw new InvalidInputException("Coordinate cannot be negative\n");
             }
 
             if (!InCorrectFormat(coordinate))
             {
-                throw new InvalidInputException("Coordinate must be in the format x,y with integer values");
+                throw new InvalidInputException("Coordinate must be in the format x,y with integer values\n");
             }
 
             if (!InputIsWithinFieldBounds(dimension, coordinate))
             {
-                throw new InvalidInputException("Coordinate must be within the field bounds");
+                throw new InvalidInputException("Coordinate must be within the field bounds\n");
             }
         }
 

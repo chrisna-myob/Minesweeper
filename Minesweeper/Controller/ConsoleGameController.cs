@@ -36,7 +36,8 @@ namespace Minesweeper
                     var input = _gameService.GetUserInput();
 
                     _gameService.InitialiseField(difficulty, input);
-                    _gameService.DisplayUncoveredBoard();
+                    _gameService.DisplayBoard();
+                    //_gameService.DisplayUncoveredBoard();
                     break;
                 }
                 catch (InvalidInputException exception)

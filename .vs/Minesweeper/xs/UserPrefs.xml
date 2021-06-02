@@ -1,34 +1,22 @@
 ﻿<Properties StartupConfiguration="{12FA8C4D-7262-4F87-A879-9429CF914791}|Default">
   <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Model/FieldBuilder.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Model/Validate.cs">
     <Files>
-      <File FileName="MinesweeperTests/GameServiceTests.cs" Line="43" Column="1" />
-      <File FileName="MinesweeperTests/FieldTests.cs" Line="102" Column="1" />
-      <File FileName="MinesweeperTests/ValidateTests.cs" Line="79" Column="12" />
-      <File FileName="MinesweeperTests/RulesTests.cs" Line="83" Column="12" />
-      <File FileName="MinesweeperTests/FieldServiceTests.cs" Line="174" Column="1" />
-      <File FileName="MinesweeperTests/DimensionBuilderTests.cs" Line="26" Column="12" />
-      <File FileName="MinesweeperTests/GlobalHelperTests.cs" Line="25" Column="12" />
-      <File FileName="MinesweeperTests/CoordinateRepositoryTests.cs" Line="18" Column="10" />
-      <File FileName="Minesweeper/Model/Validate.cs" Line="8" Column="33" />
-      <File FileName="Minesweeper/Repository/DimensionRepository.cs" Line="11" Column="54" />
-      <File FileName="Minesweeper/Model/FieldBuilder.cs" Line="110" Column="14" />
+      <File FileName="Minesweeper/Controller/ConsoleGameController.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Model/Messages.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Model/Validate.cs" Line="24" Column="90" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Minesweeper" expanded="True">
             <Node name="Minesweeper" expanded="True">
-              <Node name="Controller" expanded="True" />
               <Node name="Model" expanded="True">
-                <Node name="FieldBuilder.cs" selected="True" />
+                <Node name="Validate.cs" selected="True" />
               </Node>
               <Node name="Repository" expanded="True" />
-              <Node name="Service" expanded="True">
-                <Node name="Interfaces" expanded="True" />
-              </Node>
+              <Node name="Service" expanded="True" />
             </Node>
-            <Node name="MinesweeperTests" expanded="True" />
           </Node>
         </State>
       </Pad>

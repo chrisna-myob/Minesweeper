@@ -1,42 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
-// find logging issue
-// add difficulty level
 namespace Minesweeper
 {
     public class FieldBuilder
     {
-        //private readonly ILogger<FieldBuilder> _logger;
         private INumberGenerator _rng;
 
         public FieldBuilder(INumberGenerator rng)
         {
             _rng = rng;
-
-            //ILoggerFactory loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
-
-            //_logger = loggerFactory.CreateLogger<FieldBuilder>();
         }
 
         public Field CreateField(string difficulty, Dimension dimension)
         {
-            //var numMines = _rng.GetRandomNumber(1, dimension.NumCols);
             var numMines = GetNumberOfMines(difficulty, dimension);
-            //_logger.LogInformation($"Number of Mines: {numMines}");
 
             var coordinates = MakeUniqueMineCoordinates(numMines, dimension);
 
             var field = MakeBoard(dimension, coordinates, numMines);
             var watch = new System.Diagnostics.Stopwatch();
 
-            watch.Start();
             CalculateHints(field, dimension);
-            watch.Stop();
-            //_logger.LogInformation($"Time elapsed for calculating hints: {watch.ElapsedMilliseconds} ms");
 
             return new Field(dimension, numMines, field, coordinates);
         }
@@ -103,16 +88,13 @@ namespace Minesweeper
 
         private void CalculateHints(ISquare[,] field, Dimension dimension)
         {
-            var numRows = dimension.NumRows;
-            var numCols = dimension.NumCols;
-
-            for (var row = 0; row < numRows; row++)
+            for (var row = 0; row < dimension.NumRows; row++)
             {
-                for (var col = 0; col < numCols; col++)
+                for (var col = 0; col < dimension.NumCols; col++)
                 {
                     var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(row, col, dimension);
                     var mineCount = GetNumberOfAdjacentMines(field, adjacentSquaresList);
-                    field[row, col].AddHint(mineCount);
+                    if (mineCount > 0) field[row, col].AddHint(mineCount);
                 }
             }
         }

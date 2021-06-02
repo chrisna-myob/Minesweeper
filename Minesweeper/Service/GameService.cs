@@ -70,17 +70,20 @@ namespace Minesweeper
 
         public void DisplayMessage(string message)
         {
-            _outputRepo.WriteLine(message);
+            _outputRepo.Write(message);
+            //_outputRepo.WriteLine("");
         }
 
         public void DisplayUncoveredBoard()
         {
-            DisplayMessage(_fieldService.UncoveredBoardToString());
+            _outputRepo.DisplayBoard(_fieldService.UncoveredBoardToString());
+            //DisplayMessage(_fieldService.UncoveredBoardToString());
         }
         
         public void DisplayBoard()
         {
-            DisplayMessage(_fieldService.BoardToString());
+            _outputRepo.DisplayBoard(_fieldService.BoardToString());
+            //DisplayMessage(_fieldService.BoardToString());
         }
 
         public void ValidateDifficulty(string difficulty)
