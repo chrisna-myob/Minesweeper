@@ -13,9 +13,9 @@ namespace MineTrialTests
         [InlineData("-1,-2")]
         public void IsFieldDimensionInputValid_InputNegativeDimension_ThrowInvalidInputException(string dimension)
         {
-           var exception = Assert.Throws<InvalidInputException>(() => Validate.IsFieldDimensionInputValid(dimension));
+           var exception = Assert.Throws<InvalidInputException>(() => Validation.IsFieldDimensionInputValid(dimension));
 
-           Assert.Equal("Dimension cannot be negative", exception.Message);
+           Assert.Equal("Dimension cannot be negative\n", exception.Message);
         }
 
         [Theory]
@@ -24,9 +24,9 @@ namespace MineTrialTests
         [InlineData("a,b")]
         public void IsFieldDimensionInputValid_InputDimensionWithIncorrectFormat_ThrowInvalidInputException(string dimension)
         {
-           var exception = Assert.Throws<InvalidInputException>(() => Validate.IsFieldDimensionInputValid(dimension));
+           var exception = Assert.Throws<InvalidInputException>(() => Validation.IsFieldDimensionInputValid(dimension));
 
-           Assert.Equal("Dimension must be in the format x,y with integer values", exception.Message);
+           Assert.Equal("Dimension must be in the format x,y with integer values\n", exception.Message);
         }
 
         [Theory]
@@ -34,9 +34,9 @@ namespace MineTrialTests
         [InlineData("8,0")]
         public void IsFieldDimensionInputValid_InputDimensionWithZero_ThrowInvalidInputException(string dimension)
         {
-           var exception = Assert.Throws<InvalidInputException>(() => Validate.IsFieldDimensionInputValid(dimension));
+           var exception = Assert.Throws<InvalidInputException>(() => Validation.IsFieldDimensionInputValid(dimension));
 
-           Assert.Equal("Dimension values must be larger than 0", exception.Message);
+           Assert.Equal("Dimension values must be larger than 0\n", exception.Message);
         }
 
         [Theory]
@@ -46,8 +46,8 @@ namespace MineTrialTests
            var dimension = new Dimension(3, 3);
            var field = new Field(dimension, 1, null, null);
 
-           var exception = Assert.Throws<InvalidInputException>(() => Validate.IsCoordinateInputValid(dimension, coordinate));
-           Assert.Equal("Coordinate cannot be negative", exception.Message);
+           var exception = Assert.Throws<InvalidInputException>(() => Validation.IsCoordinateInputValid(dimension, coordinate));
+           Assert.Equal("Coordinate cannot be negative\n", exception.Message);
         }
 
         [Theory]
@@ -60,8 +60,8 @@ namespace MineTrialTests
            var dimension = new Dimension(3, 3);
            var field = new Field(dimension, 1, null, null);
 
-           var exception = Assert.Throws<InvalidInputException>(() => Validate.IsCoordinateInputValid(dimension, coordinate));
-           Assert.Equal("Coordinate must be within the field bounds", exception.Message);
+           var exception = Assert.Throws<InvalidInputException>(() => Validation.IsCoordinateInputValid(dimension, coordinate));
+           Assert.Equal("Coordinate must be within the field bounds\n", exception.Message);
         }
 
         [Theory]
@@ -73,8 +73,8 @@ namespace MineTrialTests
            var dimension = new Dimension(3, 3);
            var field = new Field(dimension, 1, null, null);
 
-           var exception = Assert.Throws<InvalidInputException>(() => Validate.IsCoordinateInputValid(dimension, coordinate));
-           Assert.Equal("Coordinate must be in the format x,y with integer values", exception.Message);
+           var exception = Assert.Throws<InvalidInputException>(() => Validation.IsCoordinateInputValid(dimension, coordinate));
+           Assert.Equal("Coordinate must be in the format x,y with integer values\n", exception.Message);
         }
 
     }

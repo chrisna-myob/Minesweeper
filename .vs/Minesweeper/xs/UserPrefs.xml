@@ -1,22 +1,23 @@
 ﻿<Properties StartupConfiguration="{12FA8C4D-7262-4F87-A879-9429CF914791}|Default">
   <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Model/Validate.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Model/Field.cs">
     <Files>
-      <File FileName="Minesweeper/Controller/ConsoleGameController.cs" Line="1" Column="1" />
-      <File FileName="Minesweeper/Model/Messages.cs" Line="1" Column="1" />
-      <File FileName="Minesweeper/Model/Validate.cs" Line="24" Column="90" />
+      <File FileName="MinesweeperTests/GameServiceTests.cs" Line="152" Column="17" />
+      <File FileName="Minesweeper/Model/Field.cs" Line="101" Column="41" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Minesweeper" expanded="True">
             <Node name="Minesweeper" expanded="True">
+              <Node name="Controller" expanded="True" />
               <Node name="Model" expanded="True">
-                <Node name="Validate.cs" selected="True" />
+                <Node name="Field.cs" selected="True" />
               </Node>
               <Node name="Repository" expanded="True" />
               <Node name="Service" expanded="True" />
             </Node>
+            <Node name="MinesweeperTests" expanded="True" />
           </Node>
         </State>
       </Pad>

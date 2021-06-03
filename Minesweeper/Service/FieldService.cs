@@ -33,27 +33,21 @@ namespace Minesweeper
 
         public bool HasWon()
         {
-            if (_fieldRepo.RemainingSquaresAreMines())
-            {
-                return true;
-            }
-            return false;
+            if (_fieldRepo.RemainingSquaresAreMines()) return true;
+            else return false;
         }
 
-        public bool GameHasEnded()
+        public bool HasLost()
         {
-            if (_fieldRepo.MineHasBeenUncovered() || _fieldRepo.RemainingSquaresAreMines())
-            {
-                return true;
-            }
-            return false;
+            if (_fieldRepo.MineHasBeenUncovered()) return true;
+            else return false;
         }
 
         public void CoordinateHasAlreadyBeenUsed(Coordinate coord)
         {
             if (_fieldRepo.CanShowSquare(coord))
             {
-                throw new InvalidInputException("You have already entered this coordinate.");
+                throw new InvalidInputException("You have already entered this coordinate.\n");
             }
         }
     }

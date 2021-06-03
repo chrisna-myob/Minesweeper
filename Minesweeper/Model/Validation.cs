@@ -5,7 +5,7 @@ using Minesweeper.Model;
 
 namespace Minesweeper
 {
-    public static class Validate
+    public class Validation
     {
         public static void IsFieldDimensionInputValid(String dimensions)
         {
@@ -43,6 +43,14 @@ namespace Minesweeper
             }
         }
 
+        public static void IsDifficultyLevelValid(string input)
+        {
+            if (!(input == "EASY" || input == "INTERMEDIATE" || input == "EXPERT"))
+            {
+                throw new InvalidInputException("That is not a valid difficulty.");
+            }
+        }
+
         private static bool HasNegativeNumber(string dimensions)
         {
             return dimensions.Contains('-');
@@ -76,5 +84,7 @@ namespace Minesweeper
             MatchCollection validInput = Regex.Matches(input, correctFormatRegex);
             return validInput.Count > 0;
         }
+
+        
     }
 }

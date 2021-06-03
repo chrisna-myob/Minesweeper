@@ -19,13 +19,12 @@ namespace Minesweeper
         };
 
         public static Dictionary<string, double> mineDifficultyPercentage = new Dictionary<string, double>() {
-            { "EASY", 0.1 },
-            { "INTERMEDIATE", 0.15 },
-            { "EXPERT", 0.17 }
+            { "EASY", 0.1 }
         };
 
         public static string Welcome = "Welcome to Minesweeper\n";
         public static string EnterDimension = "Please enter the dimensions of your field row,column: ";
         public static string EnterCoordinate = "Please enter a coordinate x,y or q to quit: ";
+        public static string Difficulty = "Please enter difficulty(EASY, INTERMEDIATE, EXPERT) : ";
     }
 }

@@ -9,7 +9,7 @@ namespace MinesweeperTests
     public class FieldBuilderTests
     {
         [Fact]
-        public void MakeDimension_ReturnField()
+        public void CreateField_ReturnField()
         {
            var expected = new Field(new Dimension(2, 2), 1, new ISquare[,] { { new MineSquare(), new SafeSquare() } , { new SafeSquare(), new SafeSquare() } }, new List<Coordinate>() { new Coordinate(0, 0) });
            var rng = new Mock<INumberGenerator>();

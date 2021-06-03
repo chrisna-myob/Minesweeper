@@ -4,7 +4,7 @@ using Minesweeper.Model;
 
 namespace MinesweeperTests
 {
-    public class DimensionBuilderTests
+    public class DimensionRepositoryTests
     {
         [Fact]
         public void MakeDimension_InputValidStringAndDimension_ReturnCoordinate()
@@ -20,9 +20,9 @@ namespace MinesweeperTests
         [Fact]
         public void MakeDimension_InputInvalidStringAndDimension_ThrowInvalidInputException()
         {
-           var actual = Assert.Throws<InvalidInputException>(() => Validate.IsFieldDimensionInputValid("-1,1"));
+           var actual = Assert.Throws<InvalidInputException>(() => Validation.IsFieldDimensionInputValid("-1,1"));
 
-           Assert.Equal("Dimension cannot be negative", actual.Message);
+           Assert.Equal("Dimension cannot be negative\n", actual.Message);
         }
     }
 }

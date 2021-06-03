@@ -8,7 +8,7 @@ namespace Minesweeper.Model
     {
         public Dimension MakeDimension(string input)
         {
-            Validate.IsFieldDimensionInputValid(input);
+            Validation.IsFieldDimensionInputValid(input);
 
             var dimensionArray = input.Split(',');
 

@@ -27,6 +27,7 @@ namespace MinesweeperTests
             var output = new Mock<IOutputRepository>();
             var input = new Mock<IInputRepository>();
             input.SetupSequence(i => i.GetUserInput())
+                .Returns("EASY")
                 .Returns("2,2")
                 .Returns("1,2")
                 .Returns("2,1")
@@ -38,7 +39,7 @@ namespace MinesweeperTests
 
             gameController.Run();
 
-            output.Verify(x => x.WriteLine("You've won the game :)"), Times.Once);
+            output.Verify(x => x.Write("You've won the game :)\n"), Times.Once);
 
         }
 
@@ -49,6 +50,7 @@ namespace MinesweeperTests
             var output = new Mock<IOutputRepository>();
             var input = new Mock<IInputRepository>();
             input.SetupSequence(i => i.GetUserInput())
+                .Returns("EASY")
                 .Returns("2,2")
                 .Returns("q");
             var coordinate = new CoordinateRepository();
@@ -58,7 +60,7 @@ namespace MinesweeperTests
 
             gameController.Run();
 
-            output.Verify(x => x.WriteLine("You have quit the game."), Times.Once);
+            output.Verify(x => x.Write("You have quit the game.\n"), Times.Once);
 
         }
 
@@ -69,6 +71,7 @@ namespace MinesweeperTests
             var output = new Mock<IOutputRepository>();
             var input = new Mock<IInputRepository>();
             input.SetupSequence(i => i.GetUserInput())
+                .Returns("EASY")
                 .Returns("2,2")
                 .Returns("1,1");
             var coordinate = new CoordinateRepository();
@@ -78,7 +81,7 @@ namespace MinesweeperTests
 
             gameController.Run();
 
-            output.Verify(x => x.WriteLine("You've lost :("), Times.Once);
+            output.Verify(x => x.Write("You've lost :(\n"), Times.Once);
 
         }
     }

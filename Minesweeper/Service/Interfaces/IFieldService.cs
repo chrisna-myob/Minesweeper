@@ -7,11 +7,9 @@ namespace Minesweeper
         Dimension GetDimension();
         void HandleCoordinate(Coordinate coord);
         bool HasWon();
-        bool GameHasEnded();
+        bool HasLost();
         void CoordinateHasAlreadyBeenUsed(Coordinate coord);
-
         string UncoveredBoardToString();
-
         string BoardToString();
     }
 }

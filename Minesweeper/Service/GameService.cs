@@ -12,7 +12,6 @@ namespace Minesweeper
         private IDimensionRepository _dimensionRepo;
         private ICoordinateRepository _coordinateRepo;
 
-
         public GameService(IInputRepository inputRepo, FieldBuilder builder, IOutputRepository outputRepo, IDimensionRepository dimensionRepo, ICoordinateRepository coordinateRepo)
         {
             _inputRepo = inputRepo;
@@ -64,34 +63,28 @@ namespace Minesweeper
         private GameState GetGameStatus()
         {
             if (_fieldService.HasWon()) return GameState.WIN;
-            if (_fieldService.GameHasEnded()) return GameState.LOSE;
+            if (_fieldService.HasLost()) return GameState.LOSE;
             return GameState.PLAY;
         }
 
         public void DisplayMessage(string message)
         {
             _outputRepo.Write(message);
-            //_outputRepo.WriteLine("");
         }
 
         public void DisplayUncoveredBoard()
         {
             _outputRepo.DisplayBoard(_fieldService.UncoveredBoardToString());
-            //DisplayMessage(_fieldService.UncoveredBoardToString());
         }
         
         public void DisplayBoard()
         {
             _outputRepo.DisplayBoard(_fieldService.BoardToString());
-            //DisplayMessage(_fieldService.BoardToString());
         }
 
         public void ValidateDifficulty(string difficulty)
         {
-            if (!(difficulty == "EASY" || difficulty == "INTERMEDIATE" || difficulty == "EXPERT"))
-            {
-                throw new InvalidInputException("That is not a valid difficulty.");
-            }
+            Validation.IsDifficultyLevelValid(difficulty);
         }
     }
 }

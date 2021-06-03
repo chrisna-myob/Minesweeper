@@ -28,7 +28,7 @@ namespace Minesweeper
             {
                 try
                 {
-                    _gameService.DisplayMessage("Please enter difficulty (EASY, INTERMEDIATE, EXPERT): ");
+                    _gameService.DisplayMessage(Messages.Difficulty);
                     var difficulty = _gameService.GetUserInput();
                     _gameService.ValidateDifficulty(difficulty);
 
@@ -36,8 +36,7 @@ namespace Minesweeper
                     var input = _gameService.GetUserInput();
 
                     _gameService.InitialiseField(difficulty, input);
-                    _gameService.DisplayBoard();
-                    //_gameService.DisplayUncoveredBoard();
+                    _gameService.DisplayUncoveredBoard();
                     break;
                 }
                 catch (InvalidInputException exception)
