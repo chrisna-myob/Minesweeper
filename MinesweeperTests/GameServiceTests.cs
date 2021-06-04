@@ -13,57 +13,57 @@ namespace MinesweeperTests
         [Fact]
         public void InitialiseField_VerifyFunctionIsAccessed()
         {
-          var rng = new RandomNumberGenerator();
-          var builder = new FieldBuilder(rng);
-          var output = new Mock<IOutputRepository>();
-          var input = new Mock<IInputRepository>();
-          var coordinate = new Mock<ICoordinateRepository>();
-          var dimensionRepo = new Mock<IDimensionRepository>();
-          dimensionRepo.Setup(funct => funct.MakeDimension(It.IsAny<string>()))
-              .Returns(new Dimension(3, 3));
-          var gameService = new GameService(input.Object, builder, output.Object, dimensionRepo.Object, coordinate.Object);
+			var rng = new RandomNumberGenerator();
+			var builder = new FieldBuilder(rng);
+			var output = new Mock<IOutputRepository>();
+			var input = new Mock<IInputRepository>();
+			var coordinate = new Mock<ICoordinateRepository>();
+			var dimensionRepo = new Mock<IDimensionRepository>();
+			dimensionRepo.Setup(funct => funct.MakeDimension(It.IsAny<string>()))
+				.Returns(new Dimension(3, 3));
+			var gameService = new GameService(input.Object, builder, output.Object, dimensionRepo.Object, coordinate.Object);
 
-          gameService.InitialiseField("EASY", It.IsAny<string>());
+			gameService.InitialiseField("EASY", It.IsAny<string>());
 
-          dimensionRepo.Verify(func => func.MakeDimension(It.IsAny<string>()), Times.Once());
+			dimensionRepo.Verify(func => func.MakeDimension(It.IsAny<string>()), Times.Once());
         }
 
         [Fact]
         public void InitialiseField_InputInvalidString_ThrowInvalidInputException()
         {
-          var rng = new RandomNumberGenerator();
-          var builder = new FieldBuilder(rng);
-          var output = new Mock<IOutputRepository>();
-          var input = new Mock<IInputRepository>();
-          var dimension = new DimensionRepository();
-          var coordinate = new Mock<ICoordinateRepository>();
-          var dimensionRepo = new Mock<IDimensionRepository>();
+			var rng = new RandomNumberGenerator();
+			var builder = new FieldBuilder(rng);
+			var output = new Mock<IOutputRepository>();
+			var input = new Mock<IInputRepository>();
+			var dimension = new DimensionRepository();
+			var coordinate = new Mock<ICoordinateRepository>();
+			var dimensionRepo = new Mock<IDimensionRepository>();
 
-          var gameService = new GameService(input.Object, builder, output.Object, dimension, coordinate.Object);
+			var gameService = new GameService(input.Object, builder, output.Object, dimension, coordinate.Object);
 
-          var actual = Assert.Throws<InvalidInputException>(() => gameService.InitialiseField("EASY", "0,1"));
+			var actual = Assert.Throws<InvalidInputException>(() => gameService.InitialiseField("EASY", "0,1"));
 
-          Assert.Equal("Dimension values must be larger than 0\n", actual.Message);
+			Assert.Equal("Dimension values must be larger than 0\n", actual.Message);
         }
 
         [Fact]
         public void GetUserInput_InputString_ReturnString()
         {
-          var rng = new RandomNumberGenerator();
-          var builder = new FieldBuilder(rng);
-          var output = new Mock<IOutputRepository>();
-          var input = new Mock<IInputRepository>();
-          input.Setup(func => func.GetUserInput())
-              .Returns("1,1");
-          var coordinate = new Mock<ICoordinateRepository>();
-          var dimensionRepo = new Mock<IDimensionRepository>();
-          dimensionRepo.Setup(funct => funct.MakeDimension(It.IsAny<string>()))
-              .Returns(new Dimension(3, 3));
-          var gameService = new GameService(input.Object, builder, output.Object, dimensionRepo.Object, coordinate.Object);
+			var rng = new RandomNumberGenerator();
+			var builder = new FieldBuilder(rng);
+			var output = new Mock<IOutputRepository>();
+			var input = new Mock<IInputRepository>();
+			input.Setup(func => func.GetUserInput())
+				.Returns("1,1");
+			var coordinate = new Mock<ICoordinateRepository>();
+			var dimensionRepo = new Mock<IDimensionRepository>();
+			dimensionRepo.Setup(funct => funct.MakeDimension(It.IsAny<string>()))
+				.Returns(new Dimension(3, 3));
+			var gameService = new GameService(input.Object, builder, output.Object, dimensionRepo.Object, coordinate.Object);
 
-          var actual = gameService.GetUserInput();
+			var actual = gameService.GetUserInput();
 
-          Assert.Equal("1,1", actual);
+			Assert.Equal("1,1", actual);
         }
 
         [Fact]

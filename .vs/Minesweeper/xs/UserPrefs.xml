@@ -1,9 +1,13 @@
 ﻿<Properties StartupConfiguration="{12FA8C4D-7262-4F87-A879-9429CF914791}|Default">
   <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Model/Field.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Repository/ConsoleOutputRepository.cs">
     <Files>
-      <File FileName="MinesweeperTests/GameServiceTests.cs" Line="152" Column="17" />
-      <File FileName="Minesweeper/Model/Field.cs" Line="101" Column="41" />
+      <File FileName="MinesweeperTests/GameServiceTests.cs" Line="152" Column="15" />
+      <File FileName="Minesweeper/Model/Field.cs" Line="98" Column="26" />
+      <File FileName="Minesweeper/Model/Messages.cs" Line="22" Column="29" />
+      <File FileName="MinesweeperTests/FieldBuilderTests.cs" Line="74" Column="29" />
+      <File FileName="Minesweeper/Controller/ConsoleGameController.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Repository/ConsoleOutputRepository.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -11,10 +15,10 @@
           <Node name="Minesweeper" expanded="True">
             <Node name="Minesweeper" expanded="True">
               <Node name="Controller" expanded="True" />
-              <Node name="Model" expanded="True">
-                <Node name="Field.cs" selected="True" />
+              <Node name="Model" expanded="True" />
+              <Node name="Repository" expanded="True">
+                <Node name="ConsoleOutputRepository.cs" selected="True" />
               </Node>
-              <Node name="Repository" expanded="True" />
               <Node name="Service" expanded="True" />
             </Node>
             <Node name="MinesweeperTests" expanded="True" />

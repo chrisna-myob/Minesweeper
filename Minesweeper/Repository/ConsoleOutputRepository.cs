@@ -1,9 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Minesweeper.Repository
 {
     public class ConsoleOutputRepository : IOutputRepository
     {
+        public Dictionary<char, ConsoleColor> characterColour = new Dictionary<char, ConsoleColor>() {
+            { '1', ConsoleColor.DarkBlue },
+            { '2', ConsoleColor.DarkGreen },
+            { '3', ConsoleColor.Red },
+            { '4', ConsoleColor.Magenta },
+            { '5', ConsoleColor.DarkRed },
+            { '6', ConsoleColor.DarkCyan },
+            { '7', ConsoleColor.DarkMagenta },
+            { '8', ConsoleColor.DarkGray }
+        };
+
         public void Write(string message)
         {
             Console.Write(message);
@@ -18,15 +30,11 @@ namespace Minesweeper.Repository
         {
             foreach(var letter in message)
             {
-                if (letter == '1') Console.ForegroundColor = ConsoleColor.DarkBlue;
-                else if (letter == '2') Console.ForegroundColor = ConsoleColor.DarkGreen;
-                else if (letter == '3') Console.ForegroundColor = ConsoleColor.Red;
-                else if (letter == '4') Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                else if (letter == '5') Console.ForegroundColor = ConsoleColor.DarkRed;
-                else if (letter == '6') Console.ForegroundColor = ConsoleColor.DarkCyan;
-                else if (letter == '7') Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                else if (letter == '8') Console.ForegroundColor = ConsoleColor.DarkGray;
-                else Console.ResetColor();
+                if (!characterColour.ContainsKey(letter)) Console.ResetColor();
+                else
+                {
+                    Console.ForegroundColor = characterColour[letter];
+                }
                 Console.Write(letter);
             }
         }

@@ -19,7 +19,9 @@ namespace Minesweeper
         };
 
         public static Dictionary<string, double> mineDifficultyPercentage = new Dictionary<string, double>() {
-            { "EASY", 0.1 }
+            { "EASY", 0.1 },
+            { "INTERMEDIATE", 0.15 },
+            { "EXPERT", 0.17 }
         };
 
         public static string Welcome = "Welcome to Minesweeper\n";
