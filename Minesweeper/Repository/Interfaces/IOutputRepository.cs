@@ -6,5 +6,6 @@ namespace Minesweeper
     {
         void Write(string message);
         void WriteLine(string message);
+        void DisplayBoard(string message);
     }
 }

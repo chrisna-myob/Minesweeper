@@ -20,9 +20,9 @@ namespace MinesweeperTests
         [Fact]
         public void MakeCoordinate_InputInvalidStringAndDimension_ThrowInvalidInputException()
         {
-            var actual = Assert.Throws<InvalidInputException>(() => Validate.IsCoordinateInputValid(new Dimension(2, 2), "-1,1"));
+            var actual = Assert.Throws<InvalidInputException>(() => Validation.IsCoordinateInputValid(new Dimension(2, 2), "-1,1"));
 
-            Assert.Equal("Coordinate cannot be negative", actual.Message);
+            Assert.Equal("Coordinate cannot be negative\n", actual.Message);
         }
     }
 }

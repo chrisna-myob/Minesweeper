@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Minesweeper.Model;
 
 namespace Minesweeper
 {
@@ -23,36 +22,16 @@ namespace Minesweeper
             _mineCoordinates = mineCoordinates;
         }
 
-        public string GetSquareValue(Coordinate coord)
-        {
-            return _board[coord.X, coord.Y].GetSquareValue();
-        }
-
         public bool CanShowSquare(Coordinate coord)
         {
             return _board[coord.X, coord.Y].CanShow;
         }
 
-        public bool CoordinateHasMine(Coordinate coord)
+        private ISquare GetSquareFromCoordinate(Coordinate coord)
         {
-            return _board[coord.X, coord.Y].HasMine();
+            return _board[coord.X, coord.Y];
         }
-
-        public void SetSquareToShowWithCoordinate(Coordinate coord)
-        {
-            _board[coord.X, coord.Y].SetSquareToShow();
-        }
-
-        public bool CoordinateHasHintLargerThanZero(Coordinate coord)
-        {
-            return _board[coord.X, coord.Y].GetSquareValue() != NO_HINT;
-        }
-
-        public List<Coordinate> GetMineCoordinates()
-        {
-            return _mineCoordinates;
-        }
-
+        
         public override bool Equals(object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -77,6 +56,111 @@ namespace Minesweeper
         public override int GetHashCode()
         {
             throw new NotImplementedException();
+        }
+
+        public void SetAdjacentCoordinatesInFieldToShow(Coordinate coordinate)
+        {
+            var square = GetSquareFromCoordinate(coordinate);
+            if (square.CanShow) return;
+            else
+            {
+                square.SetSquareToShow();
+                if (square.GetSquareValue() != NO_HINT) return;
+                else
+                {
+                    var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(coordinate.X, coordinate.Y, Dimension);
+                    foreach (var coord in adjacentSquaresList)
+                    {
+                        SetAdjacentCoordinatesInFieldToShow(coord);
+                    }
+                }
+            }
+        }
+
+        public bool RemainingSquaresAreMines()
+        {
+            var countOfMines = 0;
+            for (var row = 0; row < Dimension.NumRows; row++)
+            {
+                for (var col = 0; col < Dimension.NumCols; col++)
+                {
+                    var coordinate = new Coordinate(row, col);
+                    var square = GetSquareFromCoordinate(coordinate);
+                    if (square.CanShow == false)
+                    {
+                        if (square.HasMine()) countOfMines++;
+                        else if (!square.HasMine()) return false;
+                    }
+
+                }
+            }
+            if (countOfMines == _numberOfMines) return true;
+            return false;
+        }
+
+        public bool MineHasBeenUncovered()
+        {
+            foreach (var coord in _mineCoordinates)
+            {
+                var square = GetSquareFromCoordinate(coord);
+                if (square.CanShow) return true;
+            }
+            return false;
+        }
+
+        public override string ToString()
+        {
+            var lineBreak = GlobalHelpers.Lines(Dimension.NumCols);
+            var stringBuilder = lineBreak;
+            for (var row = 0; row < Dimension.NumRows; row++)
+            {
+                stringBuilder += "|";
+                for (var col = 0; col < Dimension.NumCols; col++)
+                {
+                    var coord = new Coordinate(row, col);
+                    var square = GetSquareFromCoordinate(coord);
+
+                    if (square.CanShow)
+                    {
+                        if (square.GetSquareValue() == "0") stringBuilder += "   |";
+                        else stringBuilder += $" {square.GetSquareValue()} |";
+                    }
+                    else
+                    {
+                        stringBuilder += " . |";
+                    }
+
+                }
+                stringBuilder += Environment.NewLine;
+                stringBuilder += lineBreak;
+            }
+            return stringBuilder + "\n";
+        }
+
+        public string UncoveredBoardToString()
+        {
+            var lineBreak = GlobalHelpers.Lines(Dimension.NumCols);
+            var stringBuilder = lineBreak;
+            for (var row = 0; row < Dimension.NumRows; row++)
+            {
+                stringBuilder += "|";
+                for (var col = 0; col < Dimension.NumCols; col++)
+                {
+                    var coord = new Coordinate(row, col);
+                    var square = GetSquareFromCoordinate(coord);
+                    if (square != null)
+                    {
+                        stringBuilder += $" {square.GetSquareValue()} |";
+                    } else
+                    {
+                        stringBuilder += "   |";
+                    }
+                }
+                stringBuilder += Environment.NewLine;
+                stringBuilder += lineBreak;
+            }
+
+            return stringBuilder + "\n";
         }
     }
 }

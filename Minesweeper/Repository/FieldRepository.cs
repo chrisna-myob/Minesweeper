@@ -5,8 +5,6 @@ namespace Minesweeper.Repository
 {
     public class FieldRepository : IFieldRepository
     {
-        // create, read, update, delete
-
         private Field _field;
 
         public FieldRepository(Field field)
@@ -18,40 +16,32 @@ namespace Minesweeper.Repository
         {
             return _field.Dimension;
         }
-
-        public List<Coordinate> GetMineCoordinates()
-        {
-            return _field.GetMineCoordinates();
-        }
-
-        public int NumberOfMines()
-        {
-            return _field.NumberOfMines;
-        }
-
         public bool CanShowSquare(Coordinate coord)
         {
             return _field.CanShowSquare(coord);
         }
 
-        public string GetSquareValue(Coordinate coord)
+        public void SetCoordinateToShow(Coordinate coord)
         {
-            return _field.GetSquareValue(coord);
+            _field.SetAdjacentCoordinatesInFieldToShow(coord);
         }
 
-        public bool CoordinateHasMine(Coordinate coord)
+        public bool RemainingSquaresAreMines()
         {
-            return _field.CoordinateHasMine(coord);
+            return _field.RemainingSquaresAreMines();
         }
 
-        public void SetSquareToShow(Coordinate coord)
+        public bool MineHasBeenUncovered()
         {
-            _field.SetSquareToShowWithCoordinate(coord);
+            return _field.MineHasBeenUncovered();
         }
 
-        public bool CoordinateHasHintLargerThanZero(Coordinate coord)
-        {
-            return _field.CoordinateHasHintLargerThanZero(coord);
+        public string UncoveredBoardToString() {
+            return _field.UncoveredBoardToString();
+        }
+
+        public string BoardToString() {
+            return _field.ToString();
         }
     }
 }

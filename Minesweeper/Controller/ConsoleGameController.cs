@@ -28,7 +28,7 @@ namespace Minesweeper
             {
                 try
                 {
-                    _gameService.DisplayMessage("Please enter difficulty (EASY, INTERMEDIATE, EXPERT): ");
+                    _gameService.DisplayMessage(Messages.Difficulty);
                     var difficulty = _gameService.GetUserInput();
                     _gameService.ValidateDifficulty(difficulty);
 

@@ -8,7 +8,7 @@ namespace Minesweeper.Model
     {
         public Coordinate MakeCoordinate(string input, Dimension dimension)
         {
-            Validate.IsCoordinateInputValid(dimension, input);
+            Validation.IsCoordinateInputValid(dimension, input);
 
             var coordinateArray = input.Split(',');
 

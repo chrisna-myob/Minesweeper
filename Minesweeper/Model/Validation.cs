@@ -5,23 +5,23 @@ using Minesweeper.Model;
 
 namespace Minesweeper
 {
-    public static class Validate
+    public class Validation
     {
         public static void IsFieldDimensionInputValid(String dimensions)
         {
             if (HasNegativeNumber(dimensions))
             {
-                throw new InvalidInputException("Dimension cannot be negative");
+                throw new InvalidInputException("Dimension cannot be negative\n");
             }
 
             if (!InCorrectFormat(dimensions))
             {
-                throw new InvalidInputException("Dimension must be in the format x,y with integer values");
+                throw new InvalidInputException("Dimension must be in the format x,y with integer values\n");
             }
 
             if (!HasCorrectIntegerDimensions(dimensions))
             {
-                throw new InvalidInputException("Dimension values must be larger than 0");
+                throw new InvalidInputException("Dimension values must be larger than 0\n");
             }
         }
 
@@ -29,17 +29,25 @@ namespace Minesweeper
         {
             if (HasNegativeNumber(coordinate))
             {
-                throw new InvalidInputException("Coordinate cannot be negative");
+                throw new InvalidInputException("Coordinate cannot be negative\n");
             }
 
             if (!InCorrectFormat(coordinate))
             {
-                throw new InvalidInputException("Coordinate must be in the format x,y with integer values");
+                throw new InvalidInputException("Coordinate must be in the format x,y with integer values\n");
             }
 
             if (!InputIsWithinFieldBounds(dimension, coordinate))
             {
-                throw new InvalidInputException("Coordinate must be within the field bounds");
+                throw new InvalidInputException("Coordinate must be within the field bounds\n");
+            }
+        }
+
+        public static void IsDifficultyLevelValid(string input)
+        {
+            if (!(input == "EASY" || input == "INTERMEDIATE" || input == "EXPERT"))
+            {
+                throw new InvalidInputException("That is not a valid difficulty.");
             }
         }
 
@@ -76,5 +84,7 @@ namespace Minesweeper
             MatchCollection validInput = Regex.Matches(input, correctFormatRegex);
             return validInput.Count > 0;
         }
+
+        
     }
 }

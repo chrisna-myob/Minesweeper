@@ -12,7 +12,6 @@ namespace Minesweeper
         private IDimensionRepository _dimensionRepo;
         private ICoordinateRepository _coordinateRepo;
 
-
         public GameService(IInputRepository inputRepo, FieldBuilder builder, IOutputRepository outputRepo, IDimensionRepository dimensionRepo, ICoordinateRepository coordinateRepo)
         {
             _inputRepo = inputRepo;
@@ -50,45 +49,42 @@ namespace Minesweeper
         private void HandleInput(string userInput)
         {
             var coord = MakeCoordinate(userInput);
-            _fieldService.SetAdjacentCoordinatesInFieldToShow(coord);
+            _fieldService.HandleCoordinate(coord);
         }
 
         private Coordinate MakeCoordinate(string input)
         {
             var dimension = _fieldService.GetDimension();
             var coord = _coordinateRepo.MakeCoordinate(input, dimension);
-            Rules.CoordinateHasAlreadyBeenUsed(_fieldService, coord);
+            _fieldService.CoordinateHasAlreadyBeenUsed(coord);
             return coord;
         }
 
         private GameState GetGameStatus()
         {
-            if (Rules.HasWon(_fieldService)) return GameState.WIN;
-            if (Rules.GameHasEnded(_fieldService)) return GameState.LOSE;
+            if (_fieldService.HasWon()) return GameState.WIN;
+            if (_fieldService.HasLost()) return GameState.LOSE;
             return GameState.PLAY;
         }
 
         public void DisplayMessage(string message)
         {
-            _outputRepo.WriteLine(message);
+            _outputRepo.Write(message);
         }
 
         public void DisplayUncoveredBoard()
         {
-            DisplayMessage(_fieldService.UncoveredBoardToString());
+            _outputRepo.DisplayBoard(_fieldService.UncoveredBoardToString());
         }
         
         public void DisplayBoard()
         {
-            DisplayMessage(_fieldService.ToString());
+            _outputRepo.DisplayBoard(_fieldService.BoardToString());
         }
 
         public void ValidateDifficulty(string difficulty)
         {
-            if (!(difficulty == "EASY" || difficulty == "INTERMEDIATE" || difficulty == "EXPERT"))
-            {
-                throw new InvalidInputException("That is not a valid difficulty.");
-            }
+            Validation.IsDifficultyLevelValid(difficulty);
         }
     }
 }

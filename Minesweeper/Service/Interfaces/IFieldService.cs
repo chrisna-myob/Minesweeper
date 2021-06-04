@@ -4,12 +4,12 @@ namespace Minesweeper
 {
     public interface IFieldService
     {
-        void SetAdjacentCoordinatesInFieldToShow(Coordinate coordinate);
-        string ToString();
-        bool RemainingSquaresAreMines();
-        bool MineHasBeenUncovered();
-        string UncoveredBoardToString();
         Dimension GetDimension();
-        bool CanShowSquare(Coordinate coord);
+        void HandleCoordinate(Coordinate coord);
+        bool HasWon();
+        bool HasLost();
+        void CoordinateHasAlreadyBeenUsed(Coordinate coord);
+        string UncoveredBoardToString();
+        string BoardToString();
     }
 }

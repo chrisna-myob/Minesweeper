@@ -36,64 +36,151 @@ namespace MinesweeperTests
         }
 
         [Fact]
-        public void SetSquareToShowWithCoordinate_InputCoordinate_ValidateSquareCanBeShown()
+        public void SetSquareToShowWithCoordinate_InputCoordinate_ValidateCorrectSquaresCanBeShown()
         {
-           var expected = new Field(dimension, 1, null, null);
-           var field = builder.CreateField("EASY", dimension);
-           field.SetSquareToShowWithCoordinate(coordinate);
+            var rng = new Mock<INumberGenerator>();
+			rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+				.Returns(0)
+				.Returns(0);
+			var builder = new FieldBuilder(rng.Object);
 
-           var actual = field.CanShowSquare(coordinate);
+           	var field = builder.CreateField("EASY", new Dimension(3, 3));
 
-           Assert.True(actual);
+          	field.SetAdjacentCoordinatesInFieldToShow(new Coordinate(1, 2));
+
+			Assert.True(field.CanShowSquare(new Coordinate(0, 1)));
+			Assert.True(field.CanShowSquare(new Coordinate(0, 2)));
+			Assert.True(field.CanShowSquare(new Coordinate(1, 1)));
+			Assert.True(field.CanShowSquare(new Coordinate(1, 2)));
+			Assert.True(field.CanShowSquare(new Coordinate(2, 1)));
+			Assert.True(field.CanShowSquare(new Coordinate(2, 2)));
         }
 
         [Fact]
         public void CanShowSquare_InputCoordinate_ReturnTrue()
         {
-           var field = builder.CreateField("EASY", dimension);
-           field.SetSquareToShowWithCoordinate(coordinate);
+			var rng = new Mock<INumberGenerator>();
+			rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+				.Returns(0)
+				.Returns(0);
+			var builder = new FieldBuilder(rng.Object);
+			var field = builder.CreateField("EASY", new Dimension(2, 2));
+			field.SetAdjacentCoordinatesInFieldToShow(new Coordinate(0, 1));
 
-           var actual = field.CanShowSquare(coordinate);
+			var actual = field.CanShowSquare(new Coordinate(0, 1));
 
-           Assert.True(actual);
+			Assert.True(actual);
         }
 
         [Fact]
         public void CanShowSquare_InputCoordinate_ReturnFalse()
         {
-           var field = builder.CreateField("EASY", dimension);
-
-           var actual = field.CanShowSquare(coordinate);
-
-           Assert.False(actual);
-        }
-
-        [Fact]
-        public void CoordinateInFieldHasHintLargerThanZero_InputCoordinate_ReturnTrue()
-        {
-           var coord = new Coordinate(0, 1);
-           var field = builder.CreateField("EASY", dimension);
-
-           var actual = field.CoordinateHasHintLargerThanZero(coord);
-
-           Assert.True(actual);
-        }
-
-        [Fact]
-        public void CoordinateInFieldHasHintLargerThanZero_InputCoordinate_ReturnFalse()
-        {
-           var dimensions = new Dimension(3, 3);
            var rng = new Mock<INumberGenerator>();
-           rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-               .Returns(2)
-               .Returns(2);
+			rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+				.Returns(0)
+				.Returns(0);
+			var builder = new FieldBuilder(rng.Object);
+           	var field = builder.CreateField("EASY", new Dimension(2, 2));
 
-           var builder = new FieldBuilder(rng.Object);
-           var field = builder.CreateField("EASY", dimensions);
+			var actual = field.CanShowSquare(new Coordinate(0, 1));
 
-           var actual = field.CoordinateHasHintLargerThanZero(coordinate);
+			Assert.False(actual);
+        }
 
-           Assert.False(actual);
+        [Fact]
+        public void ToString_ReturnString()
+        {
+            var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(0)
+                .Returns(0);
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.CreateField("EASY", new Dimension(2, 2));
+            var expected = " ------- \n| . | . |\n ------- \n| . | . |\n ------- \n\n";
+
+            var actual = field.ToString();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void UncoveredBoardToString_ReturnString()
+        {
+            var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(0)
+                .Returns(0);
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.CreateField("EASY", new Dimension(2, 2));
+            var expected = " ------- \n| * | 1 |\n ------- \n| 1 | 1 |\n ------- \n\n";
+
+            var actual = field.UncoveredBoardToString();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void RemainingSquaresAreMines_ReturnFalse()
+        {
+            var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(0)
+                .Returns(0);
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.CreateField("EASY", new Dimension(2, 2));
+
+            var actual = field.RemainingSquaresAreMines();
+
+            Assert.False(actual);
+        }
+
+        [Fact]
+        public void RemainingSquaresAreMines_ReturnTrue()
+        {
+            var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(0)
+                .Returns(0);
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.CreateField("EASY", new Dimension(2, 2));
+            field.SetAdjacentCoordinatesInFieldToShow(new Coordinate(0, 1));
+            field.SetAdjacentCoordinatesInFieldToShow(new Coordinate(1, 0));
+            field.SetAdjacentCoordinatesInFieldToShow(new Coordinate(1, 1));
+
+            var actual = field.RemainingSquaresAreMines();
+
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void MineHasBeenUncovered_ReturnFalse()
+        {
+            var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(0)
+                .Returns(0);
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.CreateField("EASY", new Dimension(2, 2));
+
+            var actual = field.MineHasBeenUncovered();
+
+            Assert.False(actual);
+        }
+
+        [Fact]
+        public void MineHasBeenUncovered_ReturnTrue()
+        {
+            var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(0)
+                .Returns(0);
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.CreateField("EASY", new Dimension(2, 2));
+            field.SetAdjacentCoordinatesInFieldToShow(new Coordinate(0, 0));
+
+            var actual = field.MineHasBeenUncovered();
+
+            Assert.True(actual);
         }
     }
 }

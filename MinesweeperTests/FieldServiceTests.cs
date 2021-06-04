@@ -8,164 +8,130 @@ namespace MinesweeperTests
 {
     public class FieldServiceTests
     {
-        [Fact]
-        public void SetAdjacentCoordinatesInFieldToShow_InputOneCoordinateWhichHasHintLargerThanZero_ValidateCorrectSquaresHaveBeenShown()
+        private readonly IFieldRepository _fieldRepo;
+
+        public FieldServiceTests()
         {
-           var rng = new Mock<INumberGenerator>();
-           rng.SetupSequence(rng => rng.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-               .Returns(0)
-               .Returns(0);
-           var builder = new FieldBuilder(rng.Object);
-           var field = builder.CreateField("EASY", new Dimension(2, 2));
-           var fieldRepo = new FieldRepository(field);
-           var fieldService = new FieldService(fieldRepo);
-
-           fieldService.SetAdjacentCoordinatesInFieldToShow(new Coordinate(0, 1));
-
-           var actual = field.CanShowSquare(new Coordinate(0, 1));
-
-           Assert.True(actual);
+            var rng = new Mock<INumberGenerator>();
+            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(0)
+                .Returns(0);
+            var builder = new FieldBuilder(rng.Object);
+            var field = builder.CreateField("EASY", new Dimension(2, 2));
+            _fieldRepo = new FieldRepository(field);
         }
 
         [Fact]
-        public void SetAdjacentCoordinatesInFieldToShow_ValidateCorrectSquaresHaveBeenShown()
+        public void GetDimension_ReturnsDimension()
         {
-           var rng = new Mock<INumberGenerator>();
-           rng.SetupSequence(rng => rng.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-               .Returns(1)
-               .Returns(2);
-           var builder = new FieldBuilder(rng.Object);
-           var field = builder.CreateField("EASY", new Dimension(3, 3));
-           var fieldRepo = new FieldRepository(field);
-           var fieldService = new FieldService(fieldRepo);
+            var expected = new Dimension(2,2);
+            var fieldService = new FieldService(_fieldRepo);
+            
+            var actual = fieldService.GetDimension();
 
-           fieldService.SetAdjacentCoordinatesInFieldToShow(new Coordinate(0, 0));
-
-           Assert.True(field.CanShowSquare(new Coordinate(0, 0)));
-           Assert.True(field.CanShowSquare(new Coordinate(0, 1)));
-           Assert.True(field.CanShowSquare(new Coordinate(1, 0)));
-           Assert.True(field.CanShowSquare(new Coordinate(1, 1)));
-           Assert.True(field.CanShowSquare(new Coordinate(2, 0)));
-           Assert.True(field.CanShowSquare(new Coordinate(2, 1)));
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void ToString_ReturnStringOfField()
+        public void HandleCoordinate_InputCoordinate_VerifySquareWithInputtedCoordinateCanBeShown()
         {
-           var expected = " ------- \n| . | . |\n ------- \n| . | . |\n ------- \n \n";
-           var fieldRepo = new Mock<IFieldRepository>();
-           fieldRepo.Setup(i => i.GetDimension())
-                   .Returns(new Dimension(2, 2));
-           fieldRepo.SetupSequence(i => i.CanShowSquare(It.IsAny<Coordinate>()))
-                   .Returns(false)
-                   .Returns(false)
-                   .Returns(false)
-                   .Returns(false);
-           var fieldService = new FieldService(fieldRepo.Object);
+            var fieldService = new FieldService(_fieldRepo);
+            var coordinate = new Coordinate(0, 1);
 
-           var actual = fieldService.ToString();
+            fieldService.HandleCoordinate(coordinate);
+            var actual = _fieldRepo.CanShowSquare(coordinate);
 
-           Assert.Equal(expected, actual);
-        }
-
-        // [Fact]
-        // public void UncoveredBoardToString_ReturnStringOfField()
-        // {
-        //    var expected = "";
-        //    var fieldRepo = new Mock<IFieldRepository>();
-        //    fieldRepo.Setup(i => i.GetDimension())
-        //            .Returns(new Dimension(2, 2));
-        //    fieldRepo.SetupSequence(i => i.CanShowSquare(It.IsAny<Coordinate>()))
-        //            .Returns(true)
-        //            .Returns(true)
-        //            .Returns(true)
-        //            .Returns(true);
-        //    fieldRepo.SetupSequence(i => i.GetSquareValue(It.IsAny<Coordinate>()))
-        //            .Returns("*")
-        //            .Returns("1")
-        //            .Returns("1")
-        //            .Returns("1");
-        //    var fieldService = new FieldService(fieldRepo.Object);
-
-        //    var actual = fieldService.ToString();
-
-        //    Assert.Equal(expected, actual);
-        // }
-
-        [Fact]
-        public void RemainingSquaresAreMines_ReturnTrue()
-        {
-           var fieldRepo = new Mock<IFieldRepository>();
-           fieldRepo.Setup(i => i.GetDimension())
-                   .Returns(new Dimension(2, 2));
-           fieldRepo.SetupSequence(i => i.CanShowSquare(It.IsAny<Coordinate>()))
-                   .Returns(false)
-                   .Returns(true)
-                   .Returns(true)
-                   .Returns(true);
-           fieldRepo.Setup(i => i.CoordinateHasMine(It.IsAny<Coordinate>()))
-                   .Returns(true);
-           fieldRepo.SetupSequence(i => i.NumberOfMines())
-                   .Returns(1);
-
-           var fieldService = new FieldService(fieldRepo.Object);
-
-           var actual = fieldService.RemainingSquaresAreMines();
-
-           Assert.True(actual);
+            Assert.True(actual);
         }
 
         [Fact]
-        public void RemainingSquaresAreMines_ReturnFalse()
+        public void HasWon_InputCoordinatesThatResultInWin_ReturnTrue()
         {
-           var fieldRepo = new Mock<IFieldRepository>();
-           fieldRepo.Setup(i => i.GetDimension())
-                   .Returns(new Dimension(2, 2));
-           fieldRepo.SetupSequence(i => i.CanShowSquare(It.IsAny<Coordinate>()))
-                   .Returns(true)
-                   .Returns(true)
-                   .Returns(true)
-                   .Returns(true);
-           fieldRepo.SetupSequence(i => i.NumberOfMines())
-                   .Returns(1);
+            var fieldService = new FieldService(_fieldRepo);
+            var coordinate = new Coordinate(0, 1);
+            var coordinate2 = new Coordinate(1, 0);
+            var coordinate3 = new Coordinate(1, 1);
+            fieldService.HandleCoordinate(coordinate);
+            fieldService.HandleCoordinate(coordinate2);
+            fieldService.HandleCoordinate(coordinate3);
 
-           var fieldService = new FieldService(fieldRepo.Object);
+            var actual = _fieldRepo.CanShowSquare(coordinate);
 
-           var actual = fieldService.RemainingSquaresAreMines();
-
-           Assert.False(actual);
+            Assert.True(actual);
         }
 
         [Fact]
-        public void MineHasBeenUncovered_ReturnTrue()
+        public void HasWon_ReturnFalse()
         {
-           var fieldRepo = new Mock<IFieldRepository>();
-           fieldRepo.SetupSequence(i => i.CanShowSquare(It.IsAny<Coordinate>()))
-                   .Returns(true);
-           fieldRepo.Setup(i => i.GetMineCoordinates())
-                   .Returns(new List<Coordinate> { new Coordinate(0, 0) });
+            var fieldService = new FieldService(_fieldRepo);
 
-           var fieldService = new FieldService(fieldRepo.Object);
+            var actual = fieldService.HasWon();
 
-           var actual = fieldService.MineHasBeenUncovered();
-
-           Assert.True(actual);
+            Assert.False(actual);
         }
 
         [Fact]
-        public void MineHasBeenUncovered_ReturnFalse()
+        public void HasLost_ReturnFalse()
         {
-           var fieldRepo = new Mock<IFieldRepository>();
-           fieldRepo.SetupSequence(i => i.CanShowSquare(It.IsAny<Coordinate>()))
-                   .Returns(false);
-           fieldRepo.Setup(i => i.GetMineCoordinates())
-                   .Returns(new List<Coordinate> { new Coordinate(0, 0) });
+            var fieldService = new FieldService(_fieldRepo);
 
-           var fieldService = new FieldService(fieldRepo.Object);
+            var actual = fieldService.HasLost();
 
-           var actual = fieldService.MineHasBeenUncovered();
+            Assert.False(actual);
+        }
 
-           Assert.False(actual);
+        [Fact]
+        public void HasLost_InputCoordinateCorrespondingToAMine_ReturnTrue()
+        {
+            var fieldService = new FieldService(_fieldRepo);
+            var coordinate = new Coordinate(0, 0);
+            fieldService.HandleCoordinate(coordinate);
+
+            var actual = fieldService.HasLost();
+
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void CoordinateHasAlreadyBeenUsed_InputCoordinateThatCanAlreadyBeShown_ThrowInvalidInputException() {
+            var fieldService = new FieldService(_fieldRepo);
+            var coordinate = new Coordinate(0, 1);
+            fieldService.HandleCoordinate(coordinate);
+
+            var exception = Assert.Throws<InvalidInputException>(() => fieldService.CoordinateHasAlreadyBeenUsed(coordinate));
+            Assert.Equal("You have already entered this coordinate.\n", exception.Message);
+        }
+
+        [Fact]
+        public void UncoveredBoardToString_ReturnString() {
+            var expected = " ------- \n| * | 1 |\n ------- \n| 1 | 1 |\n ------- \n\n";
+            var fieldService = new FieldService(_fieldRepo);
+
+            var actual = fieldService.UncoveredBoardToString();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void BoardToString_ReturnString() {
+            var expected = " ------- \n| . | . |\n ------- \n| . | . |\n ------- \n\n";
+            var fieldService = new FieldService(_fieldRepo);
+
+            var actual = fieldService.BoardToString();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void BoardToString_InputOneCoordinate_ReturnString() {
+            var expected = " ------- \n| . | 1 |\n ------- \n| . | . |\n ------- \n\n";
+            var fieldService = new FieldService(_fieldRepo);
+            var coordinate = new Coordinate(0, 1);
+            fieldService.HandleCoordinate(coordinate);
+
+            var actual = fieldService.BoardToString();
+
+            Assert.Equal(expected, actual);
         }
     }
 }
