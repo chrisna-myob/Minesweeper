@@ -7,7 +7,7 @@ namespace Minesweeper
 {
     public class Validation
     {
-        public static void IsFieldDimensionInputValid(String dimensions)
+        public void IsFieldDimensionInputValid(String dimensions)
         {
             if (HasNegativeNumber(dimensions))
             {
@@ -25,7 +25,7 @@ namespace Minesweeper
             }
         }
 
-        public static void IsCoordinateInputValid(Dimension dimension, string coordinate)
+        public void IsCoordinateInputValid(Dimension dimension, string coordinate)
         {
             if (HasNegativeNumber(coordinate))
             {
@@ -43,20 +43,20 @@ namespace Minesweeper
             }
         }
 
-        public static void IsDifficultyLevelValid(string input)
+        public void IsDifficultyLevelValid(string input)
         {
             if (!(input == "EASY" || input == "INTERMEDIATE" || input == "EXPERT"))
             {
-                throw new InvalidInputException("That is not a valid difficulty.");
+                throw new InvalidInputException("That is not a valid difficulty.\n");
             }
         }
 
-        private static bool HasNegativeNumber(string dimensions)
+        private bool HasNegativeNumber(string dimensions)
         {
             return dimensions.Contains('-');
         }
 
-        private static bool InputIsWithinFieldBounds(Dimension dimension, string coordinate)
+        private bool InputIsWithinFieldBounds(Dimension dimension, string coordinate)
         {
             var coordinateArray = coordinate.Split(',');
 
@@ -67,7 +67,7 @@ namespace Minesweeper
             return false;
         }
 
-        private static bool HasCorrectIntegerDimensions(string input)
+        private bool HasCorrectIntegerDimensions(string input)
         {
             var coordinateArray = input.Split(',');
 
@@ -78,7 +78,7 @@ namespace Minesweeper
             return true;
         }
 
-        private static bool InCorrectFormat(string input)
+        private bool InCorrectFormat(string input)
         {
             var correctFormatRegex = @"\d+,\d+";
             MatchCollection validInput = Regex.Matches(input, correctFormatRegex);

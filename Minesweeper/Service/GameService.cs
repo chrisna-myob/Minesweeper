@@ -1,24 +1,35 @@
-﻿using Minesweeper.Repository;
-using Minesweeper.Repository.Interfaces;
+﻿using Minesweeper.Model;
+using Minesweeper.Repository;
 
 namespace Minesweeper
 {
-    public class GameService : IGameService
+    public class GameService
     {
         private readonly IInputRepository _inputRepo;
         private readonly IOutputRepository _outputRepo;
-        private IFieldService _fieldService;
-        private FieldBuilder _builder;
-        private IDimensionRepository _dimensionRepo;
-        private ICoordinateRepository _coordinateRepo;
+        private FieldService _fieldService;
+        private DimensionFactory _dimensionFactory;
+        private CoordinateFactory _coordinateFactory;
+        private Validation _validation;
+        private MineCoordinateFactory _mineCoordinateFactory;
 
-        public GameService(IInputRepository inputRepo, FieldBuilder builder, IOutputRepository outputRepo, IDimensionRepository dimensionRepo, ICoordinateRepository coordinateRepo)
+        public GameService(IInputRepository inputRepo, IOutputRepository outputRepo, DimensionFactory dimensionFactory, CoordinateFactory coordinateFactory, Validation validation, MineCoordinateFactory mineCoordinateFactory)
         {
             _inputRepo = inputRepo;
-            _builder = builder;
             _outputRepo = outputRepo;
-            _dimensionRepo = dimensionRepo;
-            _coordinateRepo = coordinateRepo;
+            _dimensionFactory = dimensionFactory;
+            _coordinateFactory = coordinateFactory;
+            _validation = validation;
+            _mineCoordinateFactory = mineCoordinateFactory;
+        }
+
+        public DifficultyLevel GetDifficulty(string input)
+        {
+            _validation.IsDifficultyLevelValid(input);
+
+            if (input == "EASY") return DifficultyLevel.EASY;
+            if (input == "INTERMEDIATE") return DifficultyLevel.INTERMEDIATE;
+            else return DifficultyLevel.EXPERT;
         }
 
         public string GetUserInput()
@@ -26,17 +37,15 @@ namespace Minesweeper
             return _inputRepo.GetUserInput();
         }
 
-        public void InitialiseField(string difficulty, string userDimension)
+        public void SetUpField(DifficultyLevel difficulty, string userDimension)
         {
-            var dimension = _dimensionRepo.MakeDimension(userDimension);
-            CreateFieldService(difficulty, dimension);
-        }
+            var dimension = _dimensionFactory.MakeDimension(userDimension, _validation);
 
-        private void CreateFieldService(string difficulty, Dimension dimension)
-        {
-            var field = _builder.CreateField(difficulty, dimension);
-            var fieldRepo = new FieldRepository(field);
-            _fieldService = new FieldService(fieldRepo);
+            var coordinates = _mineCoordinateFactory.MakeUniqueMineCoordinates(difficulty, dimension);
+
+            var field = new Field(dimension, coordinates);
+
+            _fieldService = new FieldService(field);
         }
 
         public GameState GameRound(string userInput)
@@ -55,8 +64,8 @@ namespace Minesweeper
         private Coordinate MakeCoordinate(string input)
         {
             var dimension = _fieldService.GetDimension();
-            var coord = _coordinateRepo.MakeCoordinate(input, dimension);
-            _fieldService.CoordinateHasAlreadyBeenUsed(coord);
+            var coord = _coordinateFactory.MakeCoordinate(dimension, input, _validation);
+            _fieldService.CoordinateHasAlreadyBeenUncovered(coord);
             return coord;
         }
 
@@ -74,17 +83,12 @@ namespace Minesweeper
 
         public void DisplayUncoveredBoard()
         {
-            _outputRepo.DisplayBoard(_fieldService.UncoveredBoardToString());
+            _outputRepo.DisplayBoard(_fieldService.BoardToString(View.ADMIN));
         }
         
         public void DisplayBoard()
         {
-            _outputRepo.DisplayBoard(_fieldService.BoardToString());
-        }
-
-        public void ValidateDifficulty(string difficulty)
-        {
-            Validation.IsDifficultyLevelValid(difficulty);
+            _outputRepo.DisplayBoard(_fieldService.BoardToString(View.PLAYER));
         }
     }
 }

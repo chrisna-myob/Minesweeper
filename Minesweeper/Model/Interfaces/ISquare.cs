@@ -4,9 +4,9 @@ namespace Minesweeper
 {
     public interface ISquare
     {
-        bool CanShow { get; }
+        bool CanBeDisplayed { get; }
         bool HasMine();
-        void SetSquareToShow();
+        void Uncover();
         void AddHint(int hint);
         string GetSquareValue();
     }

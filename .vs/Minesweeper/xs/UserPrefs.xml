@@ -1,13 +1,22 @@
 ﻿<Properties StartupConfiguration="{12FA8C4D-7262-4F87-A879-9429CF914791}|Default">
   <MonoDevelop.Ide.ItemProperties.Minesweeper PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Repository/ConsoleOutputRepository.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Minesweeper/Model/MineSquare.cs">
     <Files>
-      <File FileName="MinesweeperTests/GameServiceTests.cs" Line="152" Column="15" />
-      <File FileName="Minesweeper/Model/Field.cs" Line="98" Column="26" />
-      <File FileName="Minesweeper/Model/Messages.cs" Line="22" Column="29" />
-      <File FileName="MinesweeperTests/FieldBuilderTests.cs" Line="74" Column="29" />
-      <File FileName="Minesweeper/Controller/ConsoleGameController.cs" Line="1" Column="1" />
-      <File FileName="Minesweeper/Repository/ConsoleOutputRepository.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Controller/ConsoleGameController.cs" Line="61" Column="53" />
+      <File FileName="Minesweeper/Service/GameService.cs" Line="70" Column="10" />
+      <File FileName="Minesweeper/Service/FieldService.cs" Line="75" Column="54" />
+      <File FileName="Minesweeper/Model/Field.cs" />
+      <File FileName="MinesweeperTests/ValidateTests.cs" />
+      <File FileName="Minesweeper/Program.cs" />
+      <File FileName="Minesweeper/Model/Messages.cs" />
+      <File FileName="Minesweeper/Repository/CoordinateFactory.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Repository/ConsoleOutputRepository.cs" Line="30" Column="18" />
+      <File FileName="Minesweeper/Repository/ConsoleInputRepository.cs" Line="7" Column="9" />
+      <File FileName="Minesweeper/Repository/IIO.cs" Line="9" Column="1" />
+      <File FileName="Minesweeper/Model/Validation.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Model/SafeSquare.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Model/RandomNumberGenerator.cs" Line="1" Column="1" />
+      <File FileName="Minesweeper/Model/MineSquare.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,10 +24,10 @@
           <Node name="Minesweeper" expanded="True">
             <Node name="Minesweeper" expanded="True">
               <Node name="Controller" expanded="True" />
-              <Node name="Model" expanded="True" />
-              <Node name="Repository" expanded="True">
-                <Node name="ConsoleOutputRepository.cs" selected="True" />
+              <Node name="Model" expanded="True">
+                <Node name="MineSquare.cs" selected="True" />
               </Node>
+              <Node name="Repository" expanded="True" />
               <Node name="Service" expanded="True" />
             </Node>
             <Node name="MinesweeperTests" expanded="True" />

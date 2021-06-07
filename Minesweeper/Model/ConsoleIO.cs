@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Minesweeper.Repository
 {
-    public class ConsoleOutputRepository : IOutputRepository
+    public class ConsoleIO : IIO
     {
         public Dictionary<char, ConsoleColor> characterColour = new Dictionary<char, ConsoleColor>() {
             { '1', ConsoleColor.DarkBlue },
@@ -21,11 +21,6 @@ namespace Minesweeper.Repository
             Console.Write(message);
         }
 
-        public void WriteLine(string message)
-        {
-            Console.WriteLine(message);
-        }
-
         public void DisplayBoard(string message)
         {
             foreach(var letter in message)
@@ -37,6 +32,11 @@ namespace Minesweeper.Repository
                 }
                 Console.Write(letter);
             }
+        }
+
+        public string GetUserInput()
+        {
+            return Console.ReadLine();
         }
     }
 }

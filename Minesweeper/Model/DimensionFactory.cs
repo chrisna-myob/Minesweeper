@@ -1,14 +1,12 @@
 ﻿using System;
-using Microsoft.Extensions.Logging;
-using Minesweeper.Repository.Interfaces;
 
 namespace Minesweeper.Model
 {
-    public class DimensionRepository : IDimensionRepository
+    public class DimensionFactory
     {
-        public Dimension MakeDimension(string input)
+        public Dimension MakeDimension(string input, Validation validation)
         {
-            Validation.IsFieldDimensionInputValid(input);
+            validation.IsFieldDimensionInputValid(input);
 
             var dimensionArray = input.Split(',');
 

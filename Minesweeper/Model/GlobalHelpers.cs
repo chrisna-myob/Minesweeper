@@ -4,15 +4,15 @@ namespace Minesweeper
 {
     public static class GlobalHelpers
     {
-        public static List<Coordinate> GetAdjacentCoordinates(int x, int y, Dimension dimension)
+        public static List<Coordinate> GetAdjacentCoordinates(Coordinate coordinate, Dimension dimension)
         {
             var adjacentCoordinates = new List<Coordinate>();
 
-            for (var row = x - 1; row <= x + 1; row++)
+            for (var row = coordinate.X - 1; row <= coordinate.X + 1; row++)
             {
-                for (var col = y - 1; col <= y + 1; col++)
+                for (var col = coordinate.Y - 1; col <= coordinate.Y + 1; col++)
                 {
-                    if (row == x && col == y) continue;
+                    if (row == coordinate.X && col == coordinate.Y) continue;
                     else if (IsCoordinateValid(row, col, dimension))
                     {
                         adjacentCoordinates.Add(new Coordinate(row, col));

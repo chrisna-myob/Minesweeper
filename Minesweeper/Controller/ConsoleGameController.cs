@@ -5,10 +5,10 @@ namespace Minesweeper
 {
     public class ConsoleGameController
     {
-        private readonly IGameService _gameService;
+        private GameService _gameService;
         private GameState _state;
 
-        public ConsoleGameController(IGameService gameService)
+        public ConsoleGameController(GameService gameService)
         {
             _gameService = gameService;
             _state = GameState.PLAY;
@@ -29,14 +29,14 @@ namespace Minesweeper
                 try
                 {
                     _gameService.DisplayMessage(Messages.Difficulty);
-                    var difficulty = _gameService.GetUserInput();
-                    _gameService.ValidateDifficulty(difficulty);
+                    var difficultyInput = _gameService.GetUserInput();
+                    var difficultyLevel = _gameService.GetDifficulty(difficultyInput);
 
                     _gameService.DisplayMessage(Messages.EnterDimension);
                     var input = _gameService.GetUserInput();
 
-                    _gameService.InitialiseField(difficulty, input);
-                    _gameService.DisplayUncoveredBoard();
+                    _gameService.SetUpField(difficultyLevel, input);
+                    _gameService.DisplayBoard();
                     break;
                 }
                 catch (InvalidInputException exception)
@@ -54,8 +54,13 @@ namespace Minesweeper
                 {
                     _gameService.DisplayMessage(Messages.EnterCoordinate);
                     var input = _gameService.GetUserInput();
-                    _state = _gameService.GameRound(input);
-                    _gameService.DisplayBoard();
+                    if (input == "a") _gameService.DisplayUncoveredBoard();
+                    else
+                    {
+                        _state = _gameService.GameRound(input);
+                        _gameService.DisplayBoard();
+                    }
+                    
                 }
                 catch (InvalidInputException exception)
                 {

@@ -4,19 +4,19 @@ namespace Minesweeper
 {
     public class SafeSquare : ISquare
     {
-        private bool _show = false;
+        private bool _canBeDisplayed = false;
         private string _hint = "0";
 
-        public bool CanShow => _show;
+        public bool CanBeDisplayed => _canBeDisplayed;
 
         public void AddHint(int hint)
         {
             _hint = hint.ToString();
         }
 
-        public void SetSquareToShow()
+        public void Uncover()
         {
-            _show = true;
+            _canBeDisplayed = true;
         }
 
         public bool HasMine()

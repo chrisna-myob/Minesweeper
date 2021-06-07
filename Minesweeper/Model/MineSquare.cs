@@ -5,13 +5,13 @@ namespace Minesweeper
     public class MineSquare : ISquare
     {
         private string _character = "*";
-        private bool _show = false;
+        private bool _canBeDisplayed = false;
 
-        public bool CanShow => _show;
+        public bool CanBeDisplayed => _canBeDisplayed;
 
-        public void SetSquareToShow()
+        public void Uncover()
         {
-            _show = true;
+            _canBeDisplayed = true;
         }
 
         public bool HasMine()

@@ -1,14 +1,12 @@
 ﻿using System;
-using Microsoft.Extensions.Logging;
-using Minesweeper.Repository.Interfaces;
 
 namespace Minesweeper.Model
 {
-    public class CoordinateRepository : ICoordinateRepository
+    public class CoordinateFactory
     {
-        public Coordinate MakeCoordinate(string input, Dimension dimension)
+        public Coordinate MakeCoordinate(Dimension dimension, string input, Validation validation)
         {
-            Validation.IsCoordinateInputValid(dimension, input);
+            validation.IsCoordinateInputValid(dimension, input);
 
             var coordinateArray = input.Split(',');
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Minesweeper.Repository;
 using Minesweeper.Model;
-using Minesweeper.Repository.Interfaces;
 using Moq;
 using System.Linq;
 
@@ -13,12 +12,13 @@ namespace Minesweeper
         static void Main(string[] args)
         {
             var rng = new RandomNumberGenerator();
-            var builder = new FieldBuilder(rng);
+            var mineFactory = new MineCoordinateFactory(rng);
             var output = new ConsoleOutputRepository();
             var input = new ConsoleInputRepository();
-            var dimension = new DimensionRepository();
-            var coordinate = new CoordinateRepository();
-            var service = new GameService(input, builder, output, dimension, coordinate);
+            var dimension = new DimensionFactory();
+            var coordinate = new CoordinateFactory();
+            var validation = new Validation();
+            var service = new GameService(input, output, dimension, coordinate, validation, mineFactory);
             var game = new ConsoleGameController(service);
             game.Run();
         }

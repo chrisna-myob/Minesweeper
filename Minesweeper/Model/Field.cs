@@ -6,32 +6,52 @@ namespace Minesweeper
     public class Field
     {
         private Dimension _dimension;
-        private int _numberOfMines;
         private ISquare[,] _board;
         private List<Coordinate> _mineCoordinates;
-        private const string NO_HINT = "0";
 
         public Dimension Dimension => _dimension;
-        public int NumberOfMines => _numberOfMines;
+        public int NumberOfMines => _mineCoordinates.Count;
+        public List<Coordinate> MineCoordinates => _mineCoordinates;
 
-        public Field(Dimension dimension, int mines, ISquare[,] board, List<Coordinate> mineCoordinates)
+        public Field(Dimension dimension, List<Coordinate> mineCoordinates)
         {
             _dimension = dimension;
-            _numberOfMines = mines;
-            _board = board;
             _mineCoordinates = mineCoordinates;
+            _board = new ISquare[dimension.NumRows, dimension.NumCols];
+            InitialiseBoard();
+            CalculateHints();
         }
 
-        public bool CanShowSquare(Coordinate coord)
+        public bool SquareCanBeDisplayed(Coordinate coord)
         {
-            return _board[coord.X, coord.Y].CanShow;
+            return _board[coord.X, coord.Y].CanBeDisplayed;
         }
 
-        private ISquare GetSquareFromCoordinate(Coordinate coord)
+        public ISquare GetSquareFromCoordinate(Coordinate coord)
         {
             return _board[coord.X, coord.Y];
         }
-        
+
+        public void UncoverSquare(Coordinate coord)
+        {
+            _board[coord.X, coord.Y].Uncover();
+        }
+
+        public bool SquareHasMine(Coordinate coord)
+        {
+            return _board[coord.X, coord.Y].HasMine();
+        }
+
+        public string GetSquareValue(Coordinate coord)
+        {
+            return _board[coord.X, coord.Y].GetSquareValue();
+        }
+
+        public bool SquareHasHintOfZero(Coordinate coord)
+        {
+            return _board[coord.X, coord.Y].GetSquareValue() == "0";
+        }
+
         public override bool Equals(object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -58,109 +78,47 @@ namespace Minesweeper
             throw new NotImplementedException();
         }
 
-        public void SetAdjacentCoordinatesInFieldToShow(Coordinate coordinate)
+        private void InitialiseBoard()
         {
-            var square = GetSquareFromCoordinate(coordinate);
-            if (square.CanShow) return;
-            else
+            if (_mineCoordinates != null)
             {
-                square.SetSquareToShow();
-                if (square.GetSquareValue() != NO_HINT) return;
-                else
+                foreach (var mine in _mineCoordinates)
                 {
-                    var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(coordinate.X, coordinate.Y, Dimension);
-                    foreach (var coord in adjacentSquaresList)
-                    {
-                        SetAdjacentCoordinatesInFieldToShow(coord);
-                    }
+                    _board[mine.X, mine.Y] = new MineSquare();
+                }
+            }
+
+            for (var row = 0; row < Dimension.NumRows; row++)
+            {
+                for (var col = 0; col < Dimension.NumCols; col++)
+                {
+                    if (_board[row, col] == null) _board[row, col] = new SafeSquare();
                 }
             }
         }
 
-        public bool RemainingSquaresAreMines()
+        private void CalculateHints()
         {
-            var countOfMines = 0;
             for (var row = 0; row < Dimension.NumRows; row++)
             {
                 for (var col = 0; col < Dimension.NumCols; col++)
                 {
                     var coordinate = new Coordinate(row, col);
-                    var square = GetSquareFromCoordinate(coordinate);
-                    if (square.CanShow == false)
-                    {
-                        if (square.HasMine()) countOfMines++;
-                        else if (!square.HasMine()) return false;
-                    }
-
+                    var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(coordinate, Dimension);
+                    var mineCount = GetNumberOfAdjacentMines(adjacentSquaresList);
+                    if (mineCount > 0) _board[row, col].AddHint(mineCount);
                 }
             }
-            if (countOfMines == _numberOfMines) return true;
-            return false;
         }
 
-        public bool MineHasBeenUncovered()
+        private int GetNumberOfAdjacentMines(List<Coordinate> AdjacentSquaresList)
         {
-            foreach (var coord in _mineCoordinates)
+            var mineCount = 0;
+            foreach (var coord in AdjacentSquaresList)
             {
-                var square = GetSquareFromCoordinate(coord);
-                if (square.CanShow) return true;
+                if (SquareHasMine(coord)) mineCount++;
             }
-            return false;
-        }
-
-        public override string ToString()
-        {
-            var lineBreak = GlobalHelpers.Lines(Dimension.NumCols);
-            var stringBuilder = lineBreak;
-            for (var row = 0; row < Dimension.NumRows; row++)
-            {
-                stringBuilder += "|";
-                for (var col = 0; col < Dimension.NumCols; col++)
-                {
-                    var coord = new Coordinate(row, col);
-                    var square = GetSquareFromCoordinate(coord);
-
-                    if (square.CanShow)
-                    {
-                        if (square.GetSquareValue() == "0") stringBuilder += "   |";
-                        else stringBuilder += $" {square.GetSquareValue()} |";
-                    }
-                    else
-                    {
-                        stringBuilder += " . |";
-                    }
-
-                }
-                stringBuilder += Environment.NewLine;
-                stringBuilder += lineBreak;
-            }
-            return stringBuilder + "\n";
-        }
-
-        public string UncoveredBoardToString()
-        {
-            var lineBreak = GlobalHelpers.Lines(Dimension.NumCols);
-            var stringBuilder = lineBreak;
-            for (var row = 0; row < Dimension.NumRows; row++)
-            {
-                stringBuilder += "|";
-                for (var col = 0; col < Dimension.NumCols; col++)
-                {
-                    var coord = new Coordinate(row, col);
-                    var square = GetSquareFromCoordinate(coord);
-                    if (square != null)
-                    {
-                        stringBuilder += $" {square.GetSquareValue()} |";
-                    } else
-                    {
-                        stringBuilder += "   |";
-                    }
-                }
-                stringBuilder += Environment.NewLine;
-                stringBuilder += lineBreak;
-            }
-
-            return stringBuilder + "\n";
+            return mineCount;
         }
     }
 }
