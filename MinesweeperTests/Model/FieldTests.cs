@@ -10,19 +10,20 @@ namespace MinesweeperTests
     public class FieldTests
     {
         private readonly GridFactory _gridFactory;
+        private readonly List<Coordinate> mineCoordinateList;
 
         public FieldTests()
         {
             _gridFactory = new GridFactory();
+            mineCoordinateList = new List<Coordinate> { new Coordinate(0, 0) };
         }
 
         [Fact]
         public void SquareCanBeDisplayed_InputCoordinate_ReturnFalse()
         {
             var dimension = new Dimension(2, 2);
-            var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
-            var grid = _gridFactory.MakeGrid(dimension, coordinate);
-            var field = new Field(dimension, coordinate, grid);
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinateList);
+            var field = new Field(dimension, mineCoordinateList, grid);
 
             var actual = field.SquareHasBeenUncovered(new Coordinate(0, 1));
 
@@ -33,9 +34,8 @@ namespace MinesweeperTests
         public void SquareCanBeDisplayed_InputCoordinateToUncover_ReturnTrue()
         {
             var dimension = new Dimension(2, 2);
-            var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
-            var grid = _gridFactory.MakeGrid(dimension, coordinate);
-            var field = new Field(dimension, coordinate, grid);
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinateList);
+            var field = new Field(dimension, mineCoordinateList, grid);
             field.UncoverSquare(new Coordinate(0, 1));
 
             var actual = field.SquareHasBeenUncovered(new Coordinate(0, 1));
@@ -47,9 +47,8 @@ namespace MinesweeperTests
         public void SquareHasMine_InputCoordinate_ReturnTrue()
         {
             var dimension = new Dimension(2, 2);
-            var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
-            var grid = _gridFactory.MakeGrid(dimension, coordinate);
-            var field = new Field(dimension, coordinate, grid);
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinateList);
+            var field = new Field(dimension, mineCoordinateList, grid);
 
             var actual = field.SquareHasMine(new Coordinate(0, 0));
 
@@ -60,9 +59,8 @@ namespace MinesweeperTests
         public void SquareHasMine_InputCoordinate_ReturnFalse()
         {
             var dimension = new Dimension(2, 2);
-            var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
-            var grid = _gridFactory.MakeGrid(dimension, coordinate);
-            var field = new Field(dimension, coordinate, grid);
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinateList);
+            var field = new Field(dimension, mineCoordinateList, grid);
 
             var actual = field.SquareHasMine(new Coordinate(0, 1));
 
@@ -73,9 +71,8 @@ namespace MinesweeperTests
         public void GetSquareValue_InputCoordinate_ReturnStringOf1()
         {
             var dimension = new Dimension(2, 2);
-            var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
-            var grid = _gridFactory.MakeGrid(dimension, coordinate);
-            var field = new Field(dimension, coordinate, grid);
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinateList);
+            var field = new Field(dimension, mineCoordinateList, grid);
             var expected = "1";
 
             var actual = field.GetSquareValue(new Coordinate(0, 1));
@@ -87,9 +84,8 @@ namespace MinesweeperTests
         public void GetSquareAsString_InputCoordinateAdminView_ReturnStringOf1()
         {
             var dimension = new Dimension(2, 2);
-            var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
-            var grid = _gridFactory.MakeGrid(dimension, coordinate);
-            var field = new Field(dimension, coordinate, grid);
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinateList);
+            var field = new Field(dimension, mineCoordinateList, grid);
             var expected = " * |";
 
             var actual = field.GetSquareAsString(new Coordinate(0, 0), View.ADMIN);
@@ -101,9 +97,8 @@ namespace MinesweeperTests
         public void SquareHasNoHint_InputCoordinate_ReturnFalse()
         {
             var dimension = new Dimension(3, 3);
-            var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
-            var grid = _gridFactory.MakeGrid(dimension, coordinate);
-            var field = new Field(dimension, coordinate, grid);
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinateList);
+            var field = new Field(dimension, mineCoordinateList, grid);
 
             var actual = field.SquareHasNoHint(new Coordinate(0, 1));
 
@@ -114,10 +109,9 @@ namespace MinesweeperTests
         public void SquareHasNoHint_InputCoordinate_ReturnTrue()
         {
             var dimension = new Dimension(3, 3);
-            var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
-            var grid = _gridFactory.MakeGrid(dimension, coordinate);
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinateList);
 
-            var field = new Field(dimension, coordinate, grid);
+            var field = new Field(dimension, mineCoordinateList, grid);
 
             var actual = field.SquareHasNoHint(new Coordinate(0, 2));
 
@@ -128,9 +122,8 @@ namespace MinesweeperTests
         public void Field_SquaresHaveCorrectHintValue()
         {
             var dimension = new Dimension(2, 2);
-            var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
-            var grid = _gridFactory.MakeGrid(dimension, coordinate);
-            var field = new Field(dimension, coordinate, grid);
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinateList);
+            var field = new Field(dimension, mineCoordinateList, grid);
 
             Assert.Equal("1", field.GetSquareValue(new Coordinate(0, 1)));
             Assert.Equal("1", field.GetSquareValue(new Coordinate(1, 0)));

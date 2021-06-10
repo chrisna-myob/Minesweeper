@@ -43,7 +43,8 @@ namespace Minesweeper
 
         public string GetUserInput()
         {
-            return _io.GetUserInput();
+            var input = _io.GetUserInput();
+            return input.Trim();
         }
 
         public void SetUpField(DifficultyLevel difficulty, string userDimension)
@@ -61,7 +62,7 @@ namespace Minesweeper
 
         public GameState GameRound(string userInput)
         {
-            if (userInput == Messages.QUIT) return GameState.QUIT;
+            if (userInput == GlobalGameVariables.QUIT) return GameState.QUIT;
             HandleInput(userInput);
             return GetGameStatus();
         }

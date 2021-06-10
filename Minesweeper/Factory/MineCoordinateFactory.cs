@@ -42,7 +42,7 @@ namespace Minesweeper
         private int GetNumberOfMines(DifficultyLevel difficulty, Dimension dimension)
         {
             var numOfSquares = dimension.NumCols * dimension.NumRows;
-            var percentage = Messages.mineDifficultyPercentage[difficulty];
+            var percentage = GlobalGameVariables.mineDifficultyPercentage[difficulty];
 
             var numOfMines = Math.Floor(numOfSquares * percentage);
 

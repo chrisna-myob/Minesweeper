@@ -16,10 +16,10 @@ namespace Minesweeper
 
         public void Run()
         {
-            _gameService.DisplayMessage(Messages.Welcome);
+            _gameService.DisplayMessage(GlobalGameVariables.WelcomeMessage);
             SetUpLoop();
             GameLoop();
-            _gameService.DisplayMessage(Messages.gameResult[_state]);
+            _gameService.DisplayMessage(GlobalGameVariables.gameResult[_state]);
         }
 
         private void SetUpLoop()
@@ -28,11 +28,11 @@ namespace Minesweeper
             {
                 try
                 {
-                    _gameService.DisplayMessage(Messages.Difficulty);
+                    _gameService.DisplayMessage(GlobalGameVariables.InputDifficultyMessage);
                     var difficultyInput = _gameService.GetUserInput();
                     var difficultyLevel = _gameService.GetDifficulty(difficultyInput);
 
-                    _gameService.DisplayMessage(Messages.EnterDimension);
+                    _gameService.DisplayMessage(GlobalGameVariables.InputDimensionMessage);
                     var input = _gameService.GetUserInput();
 
                     _gameService.SetUpField(difficultyLevel, input);
@@ -52,7 +52,7 @@ namespace Minesweeper
             {
                 try
                 {
-                    _gameService.DisplayMessage(Messages.EnterCoordinate);
+                    _gameService.DisplayMessage(GlobalGameVariables.InputCoordinateMessage);
                     var input = _gameService.GetUserInput();
                     if (input == "a") _gameService.DisplayUncoveredBoard();
                     else

@@ -38,13 +38,16 @@ namespace MinesweeperTests
             Assert.Equal(expected, actual);
         }
 
-        [Fact]
-        public void GetUserInput__InputString_ReturnString()
+        [Theory]
+        [InlineData("Hello", "Hello")]
+        [InlineData(" Hello", "Hello")]
+        [InlineData("Hello ", "Hello")]
+        public void GetUserInput__InputString_ReturnString(string input, string expected)
         {
             var rng = new Mock<INumberGenerator>();
             var io = new Mock<IIO>();
-            io.SetupSequence(i => i.GetUserInput())
-                .Returns("Hello");
+            io.Setup(i => i.GetUserInput())
+                .Returns(input);
             var fieldService = new FieldService();
             var dimensionFactory = new DimensionFactory();
             var coordinateFactory = new CoordinateFactory();
@@ -55,7 +58,7 @@ namespace MinesweeperTests
 
             var actual = gameService.GetUserInput();
 
-            Assert.Equal("Hello", actual);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]

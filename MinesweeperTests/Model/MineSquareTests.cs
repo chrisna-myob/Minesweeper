@@ -9,7 +9,7 @@ namespace MinesweeperTests
         private const string MINE_CHARACTER = "*";
 
         [Fact]
-        public void CanBeDisplayed_ReturnFalse()
+        public void HasBeenUncovered_ReturnFalse()
         {
             var square = new MineSquare();
 
@@ -19,7 +19,7 @@ namespace MinesweeperTests
         }
 
         [Fact]
-        public void CanBeDisplayed_ReturnTrue()
+        public void HasBeenUncovered_ReturnTrue()
         {
             var square = new MineSquare();
             square.Uncover();

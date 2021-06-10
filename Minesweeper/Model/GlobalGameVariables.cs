@@ -18,7 +18,7 @@ namespace Minesweeper
         EASY, INTERMEDIATE, EXPERT
     }
 
-    public static class Messages
+    public static class GlobalGameVariables
     {
         public const string QUIT = "q";
 
@@ -34,9 +34,9 @@ namespace Minesweeper
             { DifficultyLevel.EXPERT, 0.17 }
         };
 
-        public static string Welcome = "Welcome to Minesweeper\n";
-        public static string EnterDimension = "Please enter the dimensions of your field row,column: ";
-        public static string EnterCoordinate = "Please enter a coordinate x,y or q to quit: ";
-        public static string Difficulty = "Please enter difficulty (EASY, INTERMEDIATE, EXPERT): ";
+        public static string WelcomeMessage = "Welcome to Minesweeper\n";
+        public static string InputDimensionMessage = "Please enter the dimensions of your field row,column: ";
+        public static string InputCoordinateMessage = "Please enter a coordinate x,y or q to quit: ";
+        public static string InputDifficultyMessage = "Please enter difficulty (EASY, INTERMEDIATE, EXPERT): ";
     }
 }

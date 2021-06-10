@@ -8,7 +8,7 @@ namespace MinesweeperTests
     public class SquareTests
     {
         [Fact]
-        public void CanBeDisplayed_ReturnFalse()
+        public void HasBeenUncovered_ReturnFalse()
         {
             var square = new SafeSquare();
 
@@ -18,7 +18,7 @@ namespace MinesweeperTests
         }
 
         [Fact]
-        public void CanBeDisplayed_ReturnTrue()
+        public void HasBeenUncovered_ReturnTrue()
         {
             var square = new SafeSquare();
             square.Uncover();

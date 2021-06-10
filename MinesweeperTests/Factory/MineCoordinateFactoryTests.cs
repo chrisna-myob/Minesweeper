@@ -7,10 +7,16 @@ namespace MinesweeperTests
 {
     public class MineCoordinateFactoryTests
     {
+        private readonly Mock<INumberGenerator> rng;
+
+        public MineCoordinateFactoryTests()
+        {
+            rng = new Mock<INumberGenerator>();
+        }
+
         [Fact]
         public void MakeUniqueMineCoordinates_InputEasyDifficultyAndDimension_VerifyReturnOfCoordinateListWithCountOf1()
         {
-            var rng = new Mock<INumberGenerator>();
             rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(0)
                 .Returns(0);
@@ -24,7 +30,6 @@ namespace MinesweeperTests
         [Fact]
         public void MakeUniqueMineCoordinates_InputEasyDifficultyAndDimension_VerifyReturnOfCoordinateListWithCount()
         {
-            var rng = new Mock<INumberGenerator>();
             rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(0)
                 .Returns(0)
@@ -40,7 +45,6 @@ namespace MinesweeperTests
         [Fact]
         public void MakeUniqueMineCoordinates_InputIntermediateDifficultyAndDimension_ReturnValidCoordinateList()
         {
-            var rng = new Mock<INumberGenerator>();
             rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(0)
                 .Returns(0)
@@ -58,7 +62,6 @@ namespace MinesweeperTests
         [Fact]
         public void MakeUniqueMineCoordinates_InputExpertDifficultyAndDimension_ReturnValidCoordinateList()
         {
-            var rng = new Mock<INumberGenerator>();
             rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(0)
                 .Returns(0)
