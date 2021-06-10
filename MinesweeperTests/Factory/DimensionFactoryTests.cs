@@ -1,6 +1,5 @@
 ﻿using Minesweeper;
 using Xunit;
-using Minesweeper.Model;
 
 namespace MinesweeperTests
 {
@@ -18,19 +17,19 @@ namespace MinesweeperTests
         [Fact]
         public void MakeDimension_InputValidStringAndDimension_ReturnCoordinate()
         {
-           var expected = new Dimension(1, 1);
+            var expected = new Dimension(1, 1);
 
-           var actual = dimensionFactory.MakeDimension("1,1", validation);
+            var actual = dimensionFactory.MakeDimension("1,1", validation);
 
-           Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void MakeDimension_InputInvalidStringAndDimension_ThrowInvalidInputException()
         {
-           var actual = Assert.Throws<InvalidInputException>(() => dimensionFactory.MakeDimension("-1,1", validation));
+            var actual = Assert.Throws<InvalidInputException>(() => dimensionFactory.MakeDimension("-1,1", validation));
 
-           Assert.Equal("Dimension cannot be negative\n", actual.Message);
+            Assert.Equal("Dimension cannot be negative\n", actual.Message);
         }
     }
 }

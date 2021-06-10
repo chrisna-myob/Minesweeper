@@ -29,4 +29,9 @@
   <ItemGroup>
     <None Include="..\.editorconfig" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Factory\" />
+    <Folder Include="Model\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
 </Project>

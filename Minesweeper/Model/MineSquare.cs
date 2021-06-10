@@ -5,13 +5,13 @@ namespace Minesweeper
     public class MineSquare : ISquare
     {
         private string _character = "*";
-        private bool _canBeDisplayed = false;
+        private bool _hasBeenUncovered = false;
 
-        public bool CanBeDisplayed => _canBeDisplayed;
+        public bool HasBeenUncovered => _hasBeenUncovered;
 
         public void Uncover()
         {
-            _canBeDisplayed = true;
+            _hasBeenUncovered = true;
         }
 
         public bool HasMine()
@@ -24,6 +24,21 @@ namespace Minesweeper
         public string GetSquareValue()
         {
             return _character;
+        }
+
+        public string GetSquareAsString(View view)
+        {
+            var squareAsString = "";
+            switch(view)
+            {
+                case View.ADMIN:
+                    squareAsString += $" {_character} |";
+                    break;
+                case View.PLAYER:
+                    squareAsString += _hasBeenUncovered ? $" {_character} |" : $" . |";
+                    break;
+            }
+            return squareAsString;
         }
     }
 }

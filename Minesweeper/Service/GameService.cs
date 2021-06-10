@@ -1,51 +1,62 @@
-﻿using Minesweeper.Model;
+﻿using Minesweeper.Factory;
 using Minesweeper.Repository;
 
 namespace Minesweeper
 {
     public class GameService
     {
-        private readonly IInputRepository _inputRepo;
-        private readonly IOutputRepository _outputRepo;
+        private readonly IIO _io;
         private FieldService _fieldService;
         private DimensionFactory _dimensionFactory;
         private CoordinateFactory _coordinateFactory;
         private Validation _validation;
         private MineCoordinateFactory _mineCoordinateFactory;
+        private GridFactory _gridFactory;
 
-        public GameService(IInputRepository inputRepo, IOutputRepository outputRepo, DimensionFactory dimensionFactory, CoordinateFactory coordinateFactory, Validation validation, MineCoordinateFactory mineCoordinateFactory)
+        public GameService(FieldService fieldService, IIO io, DimensionFactory dimensionFactory, CoordinateFactory coordinateFactory, Validation validation, MineCoordinateFactory mineCoordinateFactory, GridFactory gridFactory)
         {
-            _inputRepo = inputRepo;
-            _outputRepo = outputRepo;
+            _io = io;
             _dimensionFactory = dimensionFactory;
             _coordinateFactory = coordinateFactory;
             _validation = validation;
             _mineCoordinateFactory = mineCoordinateFactory;
+            _fieldService = fieldService;
+            _gridFactory = gridFactory;
         }
 
         public DifficultyLevel GetDifficulty(string input)
         {
             _validation.IsDifficultyLevelValid(input);
 
-            if (input == "EASY") return DifficultyLevel.EASY;
-            if (input == "INTERMEDIATE") return DifficultyLevel.INTERMEDIATE;
-            else return DifficultyLevel.EXPERT;
+            switch(input)
+            {
+                case "EASY":
+                    return DifficultyLevel.EASY;
+                case "INTERMEDIATE":
+                    return DifficultyLevel.INTERMEDIATE;
+                case "EXPERT":
+                    return DifficultyLevel.EXPERT;
+            }
+
+            return DifficultyLevel.EASY;
         }
 
         public string GetUserInput()
         {
-            return _inputRepo.GetUserInput();
+            return _io.GetUserInput();
         }
 
         public void SetUpField(DifficultyLevel difficulty, string userDimension)
         {
             var dimension = _dimensionFactory.MakeDimension(userDimension, _validation);
 
-            var coordinates = _mineCoordinateFactory.MakeUniqueMineCoordinates(difficulty, dimension);
+            var mineCoordinates = _mineCoordinateFactory.MakeUniqueMineCoordinates(difficulty, dimension);
 
-            var field = new Field(dimension, coordinates);
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinates);
 
-            _fieldService = new FieldService(field);
+            var _field = new Field(dimension, mineCoordinates, grid);
+
+            _fieldService.SetField(_field);
         }
 
         public GameState GameRound(string userInput)
@@ -55,10 +66,25 @@ namespace Minesweeper
             return GetGameStatus();
         }
 
+        public void DisplayMessage(string message)
+        {
+            _io.Write(message);
+        }
+
+        public void DisplayUncoveredBoard()
+        {
+            _io.DisplayBoard(_fieldService.BoardToString(View.ADMIN));
+        }
+
+        public void DisplayBoard()
+        {
+            _io.DisplayBoard(_fieldService.BoardToString(View.PLAYER));
+        }
+
         private void HandleInput(string userInput)
         {
-            var coord = MakeCoordinate(userInput);
-            _fieldService.HandleCoordinate(coord);
+            var coordinate = MakeCoordinate(userInput);
+            _fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate);
         }
 
         private Coordinate MakeCoordinate(string input)
@@ -74,21 +100,6 @@ namespace Minesweeper
             if (_fieldService.HasWon()) return GameState.WIN;
             if (_fieldService.HasLost()) return GameState.LOSE;
             return GameState.PLAY;
-        }
-
-        public void DisplayMessage(string message)
-        {
-            _outputRepo.Write(message);
-        }
-
-        public void DisplayUncoveredBoard()
-        {
-            _outputRepo.DisplayBoard(_fieldService.BoardToString(View.ADMIN));
-        }
-        
-        public void DisplayBoard()
-        {
-            _outputRepo.DisplayBoard(_fieldService.BoardToString(View.PLAYER));
         }
     }
 }

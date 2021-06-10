@@ -1,5 +1,4 @@
 ﻿using Minesweeper;
-using Minesweeper.Model;
 using Xunit;
 
 namespace MinesweeperTests

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.Logging;
-using Minesweeper.Model;
 
 namespace Minesweeper
 {
@@ -21,7 +19,7 @@ namespace Minesweeper
 
             if (!HasCorrectIntegerDimensions(dimensions))
             {
-                throw new InvalidInputException("Dimension values must be larger than 0\n");
+                throw new InvalidInputException("Dimension values must be between 1 - 100\n");
             }
         }
 
@@ -74,7 +72,7 @@ namespace Minesweeper
             var row = Int32.Parse(coordinateArray[0]);
             var column = Int32.Parse(coordinateArray[1]);
 
-            if (row - 1 < 0 || column - 1 < 0) return false;
+            if (row - 1 < 0 || column - 1 < 0 || row > 100 || column > 100) return false;
             return true;
         }
 

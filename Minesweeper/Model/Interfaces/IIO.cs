@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Minesweeper.Repository
+namespace Minesweeper
 {
     public interface IIO
     {

@@ -90,7 +90,6 @@ namespace MinesweeperTests
             {
                 new List<Coordinate> { new Coordinate(0, 0) }
             };
-
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

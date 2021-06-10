@@ -4,10 +4,10 @@ namespace Minesweeper
 {
     public class SafeSquare : ISquare
     {
-        private bool _canBeDisplayed = false;
-        private string _hint = "0";
+        private bool _hasBeenUncovered = false;
+        private string _hint = " ";
 
-        public bool CanBeDisplayed => _canBeDisplayed;
+        public bool HasBeenUncovered => _hasBeenUncovered;
 
         public void AddHint(int hint)
         {
@@ -16,7 +16,7 @@ namespace Minesweeper
 
         public void Uncover()
         {
-            _canBeDisplayed = true;
+            _hasBeenUncovered = true;
         }
 
         public bool HasMine()
@@ -27,6 +27,21 @@ namespace Minesweeper
         public string GetSquareValue()
         {
             return _hint;
+        }
+
+        public string GetSquareAsString(View view)
+        {
+            var squareAsString = "";
+            switch (view)
+            {
+                case View.ADMIN:
+                    squareAsString += $" {_hint} |";
+                    break;
+                case View.PLAYER:
+                    squareAsString += _hasBeenUncovered ? $" {_hint} |" : $" . |";
+                    break;
+            }
+            return squareAsString;
         }
     }
 }

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using Minesweeper;
 using Xunit;
 using Moq;
-using Minesweeper.Repository.Interfaces;
-using Minesweeper.Model;
+using Minesweeper.Factory;
 
 namespace MinesweeperTests
 {
@@ -23,66 +22,70 @@ namespace MinesweeperTests
         [Fact]
         public void GameEndsWithPlayerWinning()
         {
-            var builder = new FieldBuilder(rng.Object);
-            var output = new Mock<IOutputRepository>();
-            var input = new Mock<IInputRepository>();
-            input.SetupSequence(i => i.GetUserInput())
+            var io = new Mock<IIO>();
+            io.SetupSequence(i => i.GetUserInput())
                 .Returns("EASY")
                 .Returns("2,2")
                 .Returns("1,2")
                 .Returns("2,1")
                 .Returns("2,2");
-            var coordinate = new CoordinateRepository();
-            var dimensionRepo = new DimensionRepository();
-            var gameService = new GameService(input.Object, builder, output.Object, dimensionRepo, coordinate);
+            var fieldService = new FieldService();
+            var dimensionFactory = new DimensionFactory();
+            var coordinateFactory = new CoordinateFactory();
+            var validation = new Validation();
+            var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
+            var gridFactory = new GridFactory();
+            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
             var gameController = new ConsoleGameController(gameService);
 
             gameController.Run();
 
-            output.Verify(x => x.Write("You've won the game :)\n"), Times.Once);
+            io.Verify(x => x.Write("You've won the game :)\n"), Times.Once);
 
         }
 
         [Fact]
         public void GameEndsWithPlayerQuit()
         {
-            var builder = new FieldBuilder(rng.Object);
-            var output = new Mock<IOutputRepository>();
-            var input = new Mock<IInputRepository>();
-            input.SetupSequence(i => i.GetUserInput())
+            var io = new Mock<IIO>();
+            io.SetupSequence(i => i.GetUserInput())
                 .Returns("EASY")
                 .Returns("2,2")
                 .Returns("q");
-            var coordinate = new CoordinateRepository();
-            var dimensionRepo = new DimensionRepository();
-            var gameService = new GameService(input.Object, builder, output.Object, dimensionRepo, coordinate);
+            var fieldService = new FieldService();
+            var dimensionFactory = new DimensionFactory();
+            var coordinateFactory = new CoordinateFactory();
+            var validation = new Validation();
+            var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
+            var gridFactory = new GridFactory();
+            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
             var gameController = new ConsoleGameController(gameService);
 
             gameController.Run();
 
-            output.Verify(x => x.Write("You have quit the game.\n"), Times.Once);
-
+            io.Verify(x => x.Write("You have quit the game.\n"), Times.Once);
         }
 
         [Fact]
         public void GameEndsWithPlayerLosing()
         {
-            var builder = new FieldBuilder(rng.Object);
-            var output = new Mock<IOutputRepository>();
-            var input = new Mock<IInputRepository>();
-            input.SetupSequence(i => i.GetUserInput())
+            var io = new Mock<IIO>();
+            io.SetupSequence(i => i.GetUserInput())
                 .Returns("EASY")
                 .Returns("2,2")
                 .Returns("1,1");
-            var coordinate = new CoordinateRepository();
-            var dimensionRepo = new DimensionRepository();
-            var gameService = new GameService(input.Object, builder, output.Object, dimensionRepo, coordinate);
+            var fieldService = new FieldService();
+            var dimensionFactory = new DimensionFactory();
+            var coordinateFactory = new CoordinateFactory();
+            var validation = new Validation();
+            var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
+            var gridFactory = new GridFactory();
+            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
             var gameController = new ConsoleGameController(gameService);
 
             gameController.Run();
 
-            output.Verify(x => x.Write("You've lost :(\n"), Times.Once);
-
+            io.Verify(x => x.Write("You've lost :(\n"), Times.Once);
         }
     }
 }

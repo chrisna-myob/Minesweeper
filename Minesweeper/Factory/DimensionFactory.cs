@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Minesweeper.Model
+namespace Minesweeper
 {
     public class DimensionFactory
     {

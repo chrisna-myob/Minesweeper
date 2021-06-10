@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Minesweeper.Model
+namespace Minesweeper
 {
     public class MineCoordinateFactory
     {
