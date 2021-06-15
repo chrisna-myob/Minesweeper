@@ -1,5 +1,6 @@
 ﻿using Minesweeper.Factory;
 using Minesweeper.Repository;
+using Minesweeper.Service;
 
 namespace Minesweeper
 {
@@ -12,8 +13,9 @@ namespace Minesweeper
         private Validation _validation;
         private MineCoordinateFactory _mineCoordinateFactory;
         private GridFactory _gridFactory;
+        private CoordinateService _coordinateService;
 
-        public GameService(FieldService fieldService, IIO io, DimensionFactory dimensionFactory, CoordinateFactory coordinateFactory, Validation validation, MineCoordinateFactory mineCoordinateFactory, GridFactory gridFactory)
+        public GameService(FieldService fieldService, IIO io, DimensionFactory dimensionFactory, CoordinateFactory coordinateFactory, Validation validation, MineCoordinateFactory mineCoordinateFactory, GridFactory gridFactory, CoordinateService coordinateService)
         {
             _io = io;
             _dimensionFactory = dimensionFactory;
@@ -22,6 +24,7 @@ namespace Minesweeper
             _mineCoordinateFactory = mineCoordinateFactory;
             _fieldService = fieldService;
             _gridFactory = gridFactory;
+            _coordinateService = coordinateService;
         }
 
         public DifficultyLevel GetDifficulty(string input)
@@ -81,14 +84,14 @@ namespace Minesweeper
 
         public void DisplayBoard(GameState state)
         {
-            var view = state == GameState.ADMIN ? View.ADMIN : View.PLAYER;
+            var view = (state == GameState.ADMIN ? View.ADMIN : View.PLAYER);
             _io.DisplayBoard(_fieldService.BoardToString(view));
         }
 
         private void HandleInput(string userInput)
         {
             var coordinate = MakeCoordinate(userInput);
-            _fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate);
+            _fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate, _coordinateService);
         }
 
         private Coordinate MakeCoordinate(string input)

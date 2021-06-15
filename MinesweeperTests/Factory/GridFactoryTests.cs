@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Minesweeper;
 using Minesweeper.Factory;
+using Minesweeper.Service;
 using Xunit;
 
 namespace MinesweeperTests
@@ -13,7 +14,7 @@ namespace MinesweeperTests
             var dimension = new Dimension(2, 2);
             var mineCoordinates = new List<Coordinate> { new Coordinate(0, 0) };
             var expected = new ISquare[,] { { new MineSquare(), new SafeSquare() }, { new SafeSquare(), new SafeSquare() } };
-            var gridFactory = new GridFactory();
+            var gridFactory = new GridFactory(new CoordinateService());
 
             var actual = gridFactory.MakeGrid(dimension, mineCoordinates);
 
@@ -28,8 +29,7 @@ namespace MinesweeperTests
         {
             var dimension = new Dimension(2, 2);
             var mineCoordinates = new List<Coordinate> { new Coordinate(0, 0) };
-            var expected = new ISquare[,] { { new MineSquare(), new SafeSquare() }, { new SafeSquare(), new SafeSquare() } };
-            var gridFactory = new GridFactory();
+            var gridFactory = new GridFactory(new CoordinateService());
 
             var actual = gridFactory.MakeGrid(dimension, mineCoordinates);
 

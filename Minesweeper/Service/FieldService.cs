@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Minesweeper.Factory;
+using Minesweeper.Service;
 
 namespace Minesweeper
 {
@@ -49,7 +50,7 @@ namespace Minesweeper
 
         public string BoardToString(View view = View.PLAYER)
         {
-            var lineBreak = GlobalHelpers.Lines(GetDimension().NumCols);
+            var lineBreak = GetGridLine(GetDimension().NumCols);
             var stringBuilder = lineBreak;
             for (var row = 0; row < GetDimension().NumRows; row++)
             {
@@ -65,6 +66,19 @@ namespace Minesweeper
             return stringBuilder += Environment.NewLine;
         }
 
+
+
+        private string GetGridLine(int num)
+        {
+            var numberOfDashes = num * 3 + num - 1;
+            var stringBuilder = " ";
+            for (var i = 0; i < numberOfDashes; i++)
+            {
+                stringBuilder += "-";
+            }
+            return stringBuilder += " \n";
+        }
+
         public void CoordinateHasAlreadyBeenUncovered(Coordinate coord)
         {
             if (_field.SquareHasBeenUncovered(coord))
@@ -73,7 +87,7 @@ namespace Minesweeper
             }
         }
 
-        public void SetAdjacentCoordinatesToBeUncovered(Coordinate coordinate)
+        public void SetAdjacentCoordinatesToBeUncovered(Coordinate coordinate, CoordinateService coordinateService)
         {
             if (_field.SquareHasBeenUncovered(coordinate)) return;
             else
@@ -82,10 +96,10 @@ namespace Minesweeper
                 if (_field.SquareHasNoHint(coordinate) == false) return;
                 else
                 {
-                    var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(coordinate, _field.Dimension);
+                    var adjacentSquaresList = coordinateService.GetAdjacentCoordinates(coordinate, _field.Dimension);
                     foreach (var coord in adjacentSquaresList)
                     {
-                        SetAdjacentCoordinatesToBeUncovered(coord);
+                        SetAdjacentCoordinatesToBeUncovered(coord, coordinateService);
                     }
                 }
             }

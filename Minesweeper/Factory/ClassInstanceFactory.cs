@@ -1,6 +1,7 @@
 ﻿using System;
 using Minesweeper.Factory;
 using Minesweeper.Repository;
+using Minesweeper.Service;
 
 namespace Minesweeper
 {
@@ -14,6 +15,8 @@ namespace Minesweeper
 
         private static GameService GetGameServiceInstance()
         {
+            var coordinateService = CreateCoordinateServiceClass();
+
             return new GameService(
                 CreateFieldService(),
                 CreateIOClass(),
@@ -21,13 +24,19 @@ namespace Minesweeper
                 CreateCoordinateFactoryClass(),
                 CreateValidationClass(),
                 CreateMineCoordinateFactoryClass(),
-                CreateGridFactoryClass()
+                CreateGridFactoryClass(coordinateService),
+                coordinateService
             );
         }
 
-        private static GridFactory CreateGridFactoryClass()
+        private static CoordinateService CreateCoordinateServiceClass()
         {
-            return new GridFactory();
+            return new CoordinateService();
+        }
+
+        private static GridFactory CreateGridFactoryClass(CoordinateService coordinateService)
+        {
+            return new GridFactory(coordinateService);
         }
 
         private static FieldService CreateFieldService()

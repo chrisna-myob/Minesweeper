@@ -3,6 +3,7 @@ using Minesweeper;
 using System.Collections.Generic;
 using Minesweeper.Factory;
 using Moq;
+using Minesweeper.Service;
 
 namespace MinesweeperTests
 {
@@ -12,7 +13,7 @@ namespace MinesweeperTests
 
         public FieldServiceTests()
         {
-            _gridFactory = new GridFactory();
+            _gridFactory = new GridFactory(new CoordinateService());
         }
 
         [Fact]
@@ -36,11 +37,13 @@ namespace MinesweeperTests
             var dimension = new Dimension(2, 2);
             var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, coordinate);
+            var coordinateService = new CoordinateService();
             var field = new Field(dimension, coordinate, grid);
             var fieldService = new FieldService();
             fieldService.SetField(field);
+            
 
-            fieldService.SetAdjacentCoordinatesToBeUncovered(new Coordinate(0, 1));
+            fieldService.SetAdjacentCoordinatesToBeUncovered(new Coordinate(0, 1), coordinateService);
             var actual = field.SquareHasBeenUncovered(new Coordinate(0, 1));
 
             Assert.True(actual);
@@ -53,10 +56,11 @@ namespace MinesweeperTests
             var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, coordinate);
             var field = new Field(dimension, coordinate, grid);
+            var coordinateService = new CoordinateService();
             var fieldService = new FieldService();
             fieldService.SetField(field);
 
-            fieldService.SetAdjacentCoordinatesToBeUncovered(new Coordinate(0, 2));
+            fieldService.SetAdjacentCoordinatesToBeUncovered(new Coordinate(0, 2), coordinateService);
 
             Assert.True(field.SquareHasBeenUncovered(new Coordinate(0, 1)));
             Assert.True(field.SquareHasBeenUncovered(new Coordinate(1, 1)));
@@ -73,14 +77,15 @@ namespace MinesweeperTests
             var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
             var field = new Field(dimension, mineCoordinate, grid);
+            var coordinateService = new CoordinateService();
             var fieldService = new FieldService();
             fieldService.SetField(field);
             var coordinate = new Coordinate(0, 1);
             var coordinate2 = new Coordinate(1, 0);
             var coordinate3 = new Coordinate(1, 1);
-            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate);
-            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate2);
-            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate3);
+            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate, coordinateService);
+            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate2, coordinateService);
+            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate3, coordinateService);
 
             var actual = fieldService.HasWon();
 

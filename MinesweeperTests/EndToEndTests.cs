@@ -4,6 +4,7 @@ using Minesweeper;
 using Xunit;
 using Moq;
 using Minesweeper.Factory;
+using Minesweeper.Service;
 
 namespace MinesweeperTests
 {
@@ -34,8 +35,9 @@ namespace MinesweeperTests
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            var coordinateService = new CoordinateService();
+            var gridFactory = new GridFactory(coordinateService);
+            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory, coordinateService);
             var gameController = new ConsoleGameController(gameService);
 
             gameController.Run();
@@ -57,8 +59,9 @@ namespace MinesweeperTests
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            var coordinateService = new CoordinateService();
+            var gridFactory = new GridFactory(coordinateService);
+            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory, coordinateService);
             var gameController = new ConsoleGameController(gameService);
 
             gameController.Run();
@@ -79,8 +82,9 @@ namespace MinesweeperTests
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            var coordinateService = new CoordinateService();
+            var gridFactory = new GridFactory(coordinateService);
+            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory, coordinateService);
             var gameController = new ConsoleGameController(gameService);
 
             gameController.Run();
