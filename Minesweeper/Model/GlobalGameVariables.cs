@@ -10,7 +10,7 @@ namespace Minesweeper
 
     public enum GameState
     {
-        PLAY, QUIT, LOSE, WIN
+        PLAY, QUIT, LOSE, WIN, ADMIN
     }
 
     public enum DifficultyLevel
@@ -21,6 +21,7 @@ namespace Minesweeper
     public static class GlobalGameVariables
     {
         public const string QUIT = "q";
+        public const string ADMIN = "a";
 
         public static Dictionary<GameState, string> gameResult = new Dictionary<GameState, string>() {
             { GameState.QUIT, "You have quit the game.\n" },

@@ -28,7 +28,7 @@ namespace Minesweeper
         {
             _validation.IsDifficultyLevelValid(input);
 
-            switch(input)
+            switch (input)
             {
                 case "EASY":
                     return DifficultyLevel.EASY;
@@ -36,12 +36,12 @@ namespace Minesweeper
                     return DifficultyLevel.INTERMEDIATE;
                 case "EXPERT":
                     return DifficultyLevel.EXPERT;
+                default:
+                    return DifficultyLevel.EASY;
             }
-
-            return DifficultyLevel.EASY;
         }
 
-        public string GetUserInput()
+        public string GetTrimmedUserInput()
         {
             var input = _io.GetUserInput();
             return input.Trim();
@@ -62,9 +62,16 @@ namespace Minesweeper
 
         public GameState GameRound(string userInput)
         {
-            if (userInput == GlobalGameVariables.QUIT) return GameState.QUIT;
-            HandleInput(userInput);
-            return GetGameStatus();
+            switch(userInput)
+            {
+                case GlobalGameVariables.QUIT:
+                    return GameState.QUIT;
+                case GlobalGameVariables.ADMIN:
+                    return GameState.ADMIN;
+                default:
+                    HandleInput(userInput);
+                    return GetGameStatus();
+            }
         }
 
         public void DisplayMessage(string message)
@@ -72,14 +79,10 @@ namespace Minesweeper
             _io.Write(message);
         }
 
-        public void DisplayUncoveredBoard()
+        public void DisplayBoard(GameState state)
         {
-            _io.DisplayBoard(_fieldService.BoardToString(View.ADMIN));
-        }
-
-        public void DisplayBoard()
-        {
-            _io.DisplayBoard(_fieldService.BoardToString(View.PLAYER));
+            var view = state == GameState.ADMIN ? View.ADMIN : View.PLAYER;
+            _io.DisplayBoard(_fieldService.BoardToString(view));
         }
 
         private void HandleInput(string userInput)
@@ -99,7 +102,7 @@ namespace Minesweeper
         private GameState GetGameStatus()
         {
             if (_fieldService.HasWon()) return GameState.WIN;
-            if (_fieldService.HasLost()) return GameState.LOSE;
+            else if (_fieldService.HasLost()) return GameState.LOSE;
             return GameState.PLAY;
         }
     }

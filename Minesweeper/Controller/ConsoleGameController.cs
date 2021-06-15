@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System;
-
+﻿
 namespace Minesweeper
 {
     public class ConsoleGameController
@@ -29,14 +27,14 @@ namespace Minesweeper
                 try
                 {
                     _gameService.DisplayMessage(GlobalGameVariables.InputDifficultyMessage);
-                    var difficultyInput = _gameService.GetUserInput();
+                    var difficultyInput = _gameService.GetTrimmedUserInput();
                     var difficultyLevel = _gameService.GetDifficulty(difficultyInput);
 
                     _gameService.DisplayMessage(GlobalGameVariables.InputDimensionMessage);
-                    var input = _gameService.GetUserInput();
+                    var input = _gameService.GetTrimmedUserInput();
 
                     _gameService.SetUpField(difficultyLevel, input);
-                    _gameService.DisplayBoard();
+                    _gameService.DisplayBoard(_state);
                     break;
                 }
                 catch (InvalidInputException exception)
@@ -53,14 +51,9 @@ namespace Minesweeper
                 try
                 {
                     _gameService.DisplayMessage(GlobalGameVariables.InputCoordinateMessage);
-                    var input = _gameService.GetUserInput();
-                    if (input == "a") _gameService.DisplayUncoveredBoard();
-                    else
-                    {
-                        _state = _gameService.GameRound(input);
-                        _gameService.DisplayBoard();
-                    }
-                    
+                    var input = _gameService.GetTrimmedUserInput();
+                    _state = _gameService.GameRound(input);
+                    _gameService.DisplayBoard(_state);
                 }
                 catch (InvalidInputException exception)
                 {
