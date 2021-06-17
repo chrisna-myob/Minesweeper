@@ -8,6 +8,12 @@ namespace Minesweeper
     public class FieldService
     {
         private Field _field;
+        private CoordinateService _coordinateService;
+
+        public FieldService(CoordinateService coordinateService)
+        {
+            _coordinateService = coordinateService;
+        }
 
         public void SetField(Field field)
         {
@@ -87,7 +93,7 @@ namespace Minesweeper
             }
         }
 
-        public void SetAdjacentCoordinatesToBeUncovered(Coordinate coordinate, CoordinateService coordinateService)
+        public void SetAdjacentCoordinatesToBeUncovered(Coordinate coordinate)
         {
             if (_field.SquareHasBeenUncovered(coordinate)) return;
             else
@@ -96,10 +102,10 @@ namespace Minesweeper
                 if (_field.SquareHasNoHint(coordinate) == false) return;
                 else
                 {
-                    var adjacentSquaresList = coordinateService.GetAdjacentCoordinates(coordinate, _field.Dimension);
+                    var adjacentSquaresList = _coordinateService.GetAdjacentCoordinates(coordinate, _field.Dimension);
                     foreach (var coord in adjacentSquaresList)
                     {
-                        SetAdjacentCoordinatesToBeUncovered(coord, coordinateService);
+                        SetAdjacentCoordinatesToBeUncovered(coord);
                     }
                 }
             }

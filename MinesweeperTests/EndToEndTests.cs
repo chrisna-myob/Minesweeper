@@ -30,14 +30,14 @@ namespace MinesweeperTests
                 .Returns("1,2")
                 .Returns("2,1")
                 .Returns("2,2");
-            var fieldService = new FieldService();
+            var coordinateService = new CoordinateService();
+            var fieldService = new FieldService(coordinateService);
             var dimensionFactory = new DimensionFactory();
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var coordinateService = new CoordinateService();
             var gridFactory = new GridFactory(coordinateService);
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory, coordinateService);
+            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
             var gameController = new ConsoleGameController(gameService);
 
             gameController.Run();
@@ -54,14 +54,14 @@ namespace MinesweeperTests
                 .Returns("EASY")
                 .Returns("2,2")
                 .Returns("q");
-            var fieldService = new FieldService();
+            var coordinateService = new CoordinateService();
+            var fieldService = new FieldService(coordinateService);
             var dimensionFactory = new DimensionFactory();
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var coordinateService = new CoordinateService();
             var gridFactory = new GridFactory(coordinateService);
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory, coordinateService);
+            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
             var gameController = new ConsoleGameController(gameService);
 
             gameController.Run();
@@ -77,14 +77,14 @@ namespace MinesweeperTests
                 .Returns("EASY")
                 .Returns("2,2")
                 .Returns("1,1");
-            var fieldService = new FieldService();
+            var coordinateService = new CoordinateService();
+            var fieldService = new FieldService(coordinateService);
             var dimensionFactory = new DimensionFactory();
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var coordinateService = new CoordinateService();
             var gridFactory = new GridFactory(coordinateService);
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory, coordinateService);
+            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
             var gameController = new ConsoleGameController(gameService);
 
             gameController.Run();

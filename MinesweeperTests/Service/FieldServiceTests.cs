@@ -10,10 +10,12 @@ namespace MinesweeperTests
     public class FieldServiceTests
     {
         private readonly GridFactory _gridFactory;
+        private readonly CoordinateService _coordinateService;
 
         public FieldServiceTests()
         {
-            _gridFactory = new GridFactory(new CoordinateService());
+            _coordinateService = new CoordinateService();
+            _gridFactory = new GridFactory(_coordinateService);
         }
 
         [Fact]
@@ -23,7 +25,7 @@ namespace MinesweeperTests
             var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, coordinate);
             var field = new Field(dimension, coordinate, grid);
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
 
             var actual = fieldService.GetDimension();
@@ -37,13 +39,12 @@ namespace MinesweeperTests
             var dimension = new Dimension(2, 2);
             var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, coordinate);
-            var coordinateService = new CoordinateService();
             var field = new Field(dimension, coordinate, grid);
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
             
 
-            fieldService.SetAdjacentCoordinatesToBeUncovered(new Coordinate(0, 1), coordinateService);
+            fieldService.SetAdjacentCoordinatesToBeUncovered(new Coordinate(0, 1));
             var actual = field.SquareHasBeenUncovered(new Coordinate(0, 1));
 
             Assert.True(actual);
@@ -56,11 +57,10 @@ namespace MinesweeperTests
             var coordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, coordinate);
             var field = new Field(dimension, coordinate, grid);
-            var coordinateService = new CoordinateService();
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
 
-            fieldService.SetAdjacentCoordinatesToBeUncovered(new Coordinate(0, 2), coordinateService);
+            fieldService.SetAdjacentCoordinatesToBeUncovered(new Coordinate(0, 2));
 
             Assert.True(field.SquareHasBeenUncovered(new Coordinate(0, 1)));
             Assert.True(field.SquareHasBeenUncovered(new Coordinate(1, 1)));
@@ -77,15 +77,14 @@ namespace MinesweeperTests
             var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
             var field = new Field(dimension, mineCoordinate, grid);
-            var coordinateService = new CoordinateService();
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
             var coordinate = new Coordinate(0, 1);
             var coordinate2 = new Coordinate(1, 0);
             var coordinate3 = new Coordinate(1, 1);
-            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate, coordinateService);
-            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate2, coordinateService);
-            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate3, coordinateService);
+            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate);
+            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate2);
+            fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate3);
 
             var actual = fieldService.HasWon();
 
@@ -99,7 +98,7 @@ namespace MinesweeperTests
             var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
             var field = new Field(dimension, mineCoordinate, grid);
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
 
             var actual = fieldService.HasWon();
@@ -114,7 +113,7 @@ namespace MinesweeperTests
             var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
             var field = new Field(dimension, mineCoordinate, grid);
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
 
             var actual = fieldService.HasLost();
@@ -129,7 +128,7 @@ namespace MinesweeperTests
             var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
             var field = new Field(dimension, mineCoordinate, grid);
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
             var coordinate = new Coordinate(0, 0);
             field.UncoverSquare(coordinate);
@@ -147,7 +146,7 @@ namespace MinesweeperTests
             var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
             var field = new Field(dimension, mineCoordinate, grid);
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
             field.UncoverSquare(coordinate);
 
@@ -163,7 +162,7 @@ namespace MinesweeperTests
             var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
             var field = new Field(dimension, mineCoordinate, grid);
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
 
             var actual = fieldService.BoardToString(View.PLAYER);
@@ -179,7 +178,7 @@ namespace MinesweeperTests
             var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
             var field = new Field(dimension, mineCoordinate, grid);
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
             var coordinate = new Coordinate(0, 1);
             field.UncoverSquare(coordinate);
@@ -197,7 +196,7 @@ namespace MinesweeperTests
             var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
             var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
             var field = new Field(dimension, mineCoordinate, grid);
-            var fieldService = new FieldService();
+            var fieldService = new FieldService(_coordinateService);
             fieldService.SetField(field);
 
             var actual = fieldService.BoardToString(View.ADMIN);

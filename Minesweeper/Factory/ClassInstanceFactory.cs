@@ -18,14 +18,13 @@ namespace Minesweeper
             var coordinateService = CreateCoordinateServiceClass();
 
             return new GameService(
-                CreateFieldService(),
+                CreateFieldService(coordinateService),
                 CreateIOClass(),
                 CreateDimensionFactoryClass(),
                 CreateCoordinateFactoryClass(),
                 CreateValidationClass(),
                 CreateMineCoordinateFactoryClass(),
-                CreateGridFactoryClass(coordinateService),
-                coordinateService
+                CreateGridFactoryClass(coordinateService)
             );
         }
 
@@ -39,9 +38,9 @@ namespace Minesweeper
             return new GridFactory(coordinateService);
         }
 
-        private static FieldService CreateFieldService()
+        private static FieldService CreateFieldService(CoordinateService coordinateService)
         {
-            return new FieldService();
+            return new FieldService(coordinateService);
         }
 
         private static IIO CreateIOClass()
