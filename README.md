@@ -18,6 +18,7 @@ Minesweeper is a single-player puzzle game where the aim is to find all the mine
 - Player can quit 
 - Uncovered board can be shown
 - Satisfies rules for the game
+
 ADDITIONAL: Difficulty Level
 
 ## Rules
