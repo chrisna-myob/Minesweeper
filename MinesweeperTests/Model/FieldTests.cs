@@ -4,6 +4,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using Minesweeper.Factory;
+using Minesweeper.Service;
 
 namespace MinesweeperTests
 {
@@ -14,7 +15,7 @@ namespace MinesweeperTests
 
         public FieldTests()
         {
-            _gridFactory = new GridFactory();
+            _gridFactory = new GridFactory(new CoordinateService());
             mineCoordinateList = new List<Coordinate> { new Coordinate(0, 0) };
         }
 

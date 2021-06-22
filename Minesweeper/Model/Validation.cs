@@ -5,6 +5,14 @@ namespace Minesweeper
 {
     public class Validation
     {
+        public void CoordinateHasAlreadyBeenUncovered(bool result)
+        {
+            if (result)
+            {
+                throw new InvalidInputException("You have already entered this coordinate.\n");
+            }
+        }
+
         public void IsFieldDimensionInputValid(String dimensions)
         {
             if (HasNegativeNumber(dimensions))

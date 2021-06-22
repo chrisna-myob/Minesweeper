@@ -3,76 +3,24 @@ using Moq;
 using Minesweeper;
 using Xunit;
 using Minesweeper.Factory;
+using Minesweeper.Service;
 
 namespace MinesweeperTests
 {
     public class GameServiceTests
     {
-        [Theory]
-        [InlineData("EASY", DifficultyLevel.EASY)]
-        [InlineData("INTERMEDIATE", DifficultyLevel.INTERMEDIATE)]
-        [InlineData("EXPERT", DifficultyLevel.EXPERT)]
-        public void InitialiseField_VerifyFunctionIsAccessed(string input, DifficultyLevel expected)
-        {
-            var rng = new Mock<INumberGenerator>();
-            rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(0)
-                .Returns(0);
-            var io = new Mock<IIO>();
-            io.SetupSequence(i => i.GetUserInput())
-                .Returns("EASY")
-                .Returns("2,2")
-                .Returns("1,2")
-                .Returns("2,1")
-                .Returns("2,2");
-            var fieldService = new FieldService();
-            var dimensionFactory = new DimensionFactory();
-            var coordinateFactory = new CoordinateFactory();
-            var validation = new Validation();
-            var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
-
-            var actual = gameService.GetDifficulty(input);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Theory]
-        [InlineData("Hello", "Hello")]
-        [InlineData(" Hello", "Hello")]
-        [InlineData("Hello ", "Hello")]
-        public void GetUserInput__InputString_ReturnString(string input, string expected)
-        {
-            var rng = new Mock<INumberGenerator>();
-            var io = new Mock<IIO>();
-            io.Setup(i => i.GetUserInput())
-                .Returns(input);
-            var fieldService = new FieldService();
-            var dimensionFactory = new DimensionFactory();
-            var coordinateFactory = new CoordinateFactory();
-            var validation = new Validation();
-            var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
-
-            var actual = gameService.GetUserInput();
-
-            Assert.Equal(expected, actual);
-        }
-
         [Fact]
         public void GameRound_InputQ_ReturnQuitState()
         {
             var rng = new Mock<INumberGenerator>();
-            var io = new Mock<IIO>();
-            var fieldService = new FieldService();
+            var coordinateService = new CoordinateService();
+            var fieldService = new FieldService(coordinateService);
             var dimensionFactory = new DimensionFactory();
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            var gridFactory = new GridFactory(coordinateService);
+            var gameService = new GameService(fieldService, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
 
             var actual = gameService.GameRound("q");
 
@@ -86,15 +34,15 @@ namespace MinesweeperTests
             rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(0)
                 .Returns(0);
-            var io = new Mock<IIO>();
-            var fieldService = new FieldService();
+            var coordinateService = new CoordinateService();
+            var fieldService = new FieldService(coordinateService);
             var dimensionFactory = new DimensionFactory();
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
-            gameService.SetUpField(DifficultyLevel.EASY, "2,2");
+            var gridFactory = new GridFactory(coordinateService);
+            var gameService = new GameService(fieldService, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            gameService.SetUpField("EASY", "2,2");
 
             var actual = gameService.GameRound("1,2");
 
@@ -108,15 +56,15 @@ namespace MinesweeperTests
             rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(0)
                 .Returns(0);
-            var io = new Mock<IIO>();
-            var fieldService = new FieldService();
+            var coordinateService = new CoordinateService();
+            var fieldService = new FieldService(coordinateService);
             var dimensionFactory = new DimensionFactory();
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
-            gameService.SetUpField(DifficultyLevel.EASY, "2,2");
+            var gridFactory = new GridFactory(coordinateService);
+            var gameService = new GameService(fieldService, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            gameService.SetUpField("EASY", "2,2");
             gameService.GameRound("2,1");
             gameService.GameRound("2,2");
 
@@ -132,15 +80,15 @@ namespace MinesweeperTests
             rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(0)
                 .Returns(0);
-            var io = new Mock<IIO>();
-            var fieldService = new FieldService();
+            var coordinateService = new CoordinateService();
+            var fieldService = new FieldService(coordinateService);
             var dimensionFactory = new DimensionFactory();
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
-            gameService.SetUpField(DifficultyLevel.EASY, "2,2");
+            var gridFactory = new GridFactory(coordinateService);
+            var gameService = new GameService(fieldService, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            gameService.SetUpField("EASY", "2,2");
 
             var actual = gameService.GameRound("1,1");
 
@@ -148,44 +96,51 @@ namespace MinesweeperTests
         }
 
         [Fact]
-        public void DisplayMessage_InputQ_ReturnQuitState()
+        public void GetBoard_InputGameStatePLAY_ReturnStringOfBoard()
         {
             var rng = new Mock<INumberGenerator>();
-            var io = new Mock<IIO>();
-            var fieldService = new FieldService();
+            var coordinateService = new CoordinateService();
+            var fieldService = new FieldService(coordinateService);
             var dimensionFactory = new DimensionFactory();
             var coordinateFactory = new CoordinateFactory();
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
-
-            gameService.DisplayMessage("q");
-
-            io.Verify(i => i.Write(It.IsAny<string>()), Times.Once());
-        }
-
-        [Fact]
-        public void DisplayBoard_InputQ_ReturnQuitState()
-        {
-            var rng = new Mock<INumberGenerator>();
-            var io = new Mock<IIO>();
-            var fieldService = new FieldService();
-            var dimensionFactory = new DimensionFactory();
-            var coordinateFactory = new CoordinateFactory();
-            var validation = new Validation();
-            var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
-            var gridFactory = new GridFactory();
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
             var mineCoordinates = new List<Coordinate> { new Coordinate(0, 0) };
+            var gridFactory = new GridFactory(coordinateService);
+            var gameService = new GameService(fieldService, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
             var grid = new ISquare[,] { { new MineSquare(), new SafeSquare() }, { new SafeSquare(), new SafeSquare() } };
             var field = new Field(new Dimension(2, 2), mineCoordinates, grid);
             fieldService.SetField(field);
+            var expected = " ------- \n| . | . |\n ------- \n| . | . |\n ------- \n\n";
 
-            gameService.DisplayBoard();
+            var actual = gameService.GetBoard(GameState.PLAY);
 
-            io.Verify(i => i.DisplayBoard(It.IsAny<string>()), Times.Once());
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void GetBoard_InputGameStateADMIN_ReturnStringOfBoard()
+        {
+            var rng = new Mock<INumberGenerator>();
+            var coordinateService = new CoordinateService();
+            var fieldService = new FieldService(coordinateService);
+            var dimensionFactory = new DimensionFactory();
+            var coordinateFactory = new CoordinateFactory();
+            var validation = new Validation();
+            var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
+            var mineCoordinates = new List<Coordinate> { new Coordinate(0, 0) };
+            var gridFactory = new GridFactory(coordinateService);
+            var gameService = new GameService(fieldService, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            var grid = new ISquare[,] { { new MineSquare(), new SafeSquare() }, { new SafeSquare(), new SafeSquare() } };
+            var field = new Field(new Dimension(2, 2), mineCoordinates, grid);
+            gameService.SetUpField("EASY", "2,2");
+            var expected = " ------- \n| * | 1 |\n ------- \n| 1 | 1 |\n ------- \n\n";
+
+            var actual = gameService.GetBoard(GameState.ADMIN);
+
+            Assert.Equal(expected, actual);
         }
 
     }
 }
+

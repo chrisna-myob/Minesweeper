@@ -36,7 +36,7 @@ namespace Minesweeper.Repository
 
         public string GetUserInput()
         {
-            return Console.ReadLine();
+            return Console.ReadLine().Trim();
         }
     }
 }

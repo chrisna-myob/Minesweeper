@@ -81,5 +81,13 @@ namespace MineTrialTests
             var exception = Assert.Throws<InvalidInputException>(() => validation.IsCoordinateInputValid(dimension, coordinate));
             Assert.Equal("Coordinate must be in the format x,y with integer values\n", exception.Message);
         }
+
+        [Fact]
+        public void CoordinateHasAlreadyBeenUncovered_InputTrue_ThrowInvalidInputException()
+        {
+            var actual = Assert.Throws<InvalidInputException>(() => validation.CoordinateHasAlreadyBeenUncovered(true));
+
+            Assert.Equal("You have already entered this coordinate.\n", actual.Message);
+        }
     }
 }

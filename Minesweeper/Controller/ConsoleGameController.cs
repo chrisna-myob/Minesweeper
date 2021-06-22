@@ -4,20 +4,22 @@ namespace Minesweeper
     public class ConsoleGameController
     {
         private GameService _gameService;
+        private IIO _io;
         private GameState _state;
 
-        public ConsoleGameController(GameService gameService)
+        public ConsoleGameController(GameService gameService, IIO io)
         {
             _gameService = gameService;
+            _io = io;
             _state = GameState.PLAY;
         }
 
         public void Run()
         {
-            _gameService.DisplayMessage(GlobalGameVariables.WelcomeMessage);
+            _io.Write(GlobalGameVariables.WelcomeMessage);
             SetUpLoop();
             GameLoop();
-            _gameService.DisplayMessage(GlobalGameVariables.gameResult[_state]);
+            _io.Write(GlobalGameVariables.gameResult[_state]);
         }
 
         private void SetUpLoop()
@@ -26,20 +28,20 @@ namespace Minesweeper
             {
                 try
                 {
-                    _gameService.DisplayMessage(GlobalGameVariables.InputDifficultyMessage);
-                    var difficultyInput = _gameService.GetTrimmedUserInput();
-                    var difficultyLevel = _gameService.GetDifficulty(difficultyInput);
+                    _io.Write(GlobalGameVariables.InputDifficultyMessage);
+                    var difficultyInput = _io.GetUserInput();
 
-                    _gameService.DisplayMessage(GlobalGameVariables.InputDimensionMessage);
-                    var input = _gameService.GetTrimmedUserInput();
+                    _io.Write(GlobalGameVariables.InputDimensionMessage);
+                    var input = _io.GetUserInput();
 
-                    _gameService.SetUpField(difficultyLevel, input);
-                    _gameService.DisplayBoard(_state);
+                    _gameService.SetUpField(difficultyInput, input);
+                    var board = _gameService.GetBoard(_state);
+                    _io.DisplayBoard(board);
                     break;
                 }
                 catch (InvalidInputException exception)
                 {
-                    _gameService.DisplayMessage(exception.Message);
+                    _io.Write(exception.Message);
                 }
             }
         }
@@ -50,14 +52,15 @@ namespace Minesweeper
             {
                 try
                 {
-                    _gameService.DisplayMessage(GlobalGameVariables.InputCoordinateMessage);
-                    var input = _gameService.GetTrimmedUserInput();
+                    _io.Write(GlobalGameVariables.InputCoordinateMessage);
+                    var input = _io.GetUserInput();
                     _state = _gameService.GameRound(input);
-                    _gameService.DisplayBoard(_state);
+                    var board = _gameService.GetBoard(_state);
+                    _io.DisplayBoard(board);
                 }
                 catch (InvalidInputException exception)
                 {
-                    _gameService.DisplayMessage(exception.Message);
+                    _io.Write(exception.Message);
                 }
             }
         }
