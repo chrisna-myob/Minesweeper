@@ -9,8 +9,8 @@ Minesweeper is a single-player puzzle game where the aim is to find all the mine
 - Dimension of field is valid such that 1 <= row <= 100 and 1 <= y <= 100
 - All squares are initially represented by “.”
 - A square is either a:
-    - safe square which is blank or represented by a numerical hint
-    - a mine which is represented by “*”
+    - Safe square which is blank or represented by a numerical hint
+    - Mine square which is represented by “*”
 - Mines are placed randomly on the field
 - Player can input a coordinate (e.g. 1,3) to reveal a square
 - Coordinate (x,y) is valid such that 1 <= x <= row and 1 <= y <= column and
