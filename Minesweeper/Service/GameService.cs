@@ -25,9 +25,9 @@ namespace Minesweeper
 
         public void SetUpField(string difficultyInput, string dimensionInput)
         {
-            var difficultyLevel = GetDifficulty(TrimInput(difficultyInput));
+            var difficultyLevel = GetDifficulty(difficultyInput);
 
-            var dimension = _dimensionFactory.MakeDimension(TrimInput(dimensionInput), _validation);
+            var dimension = _dimensionFactory.MakeDimension(dimensionInput, _validation);
 
             var mineCoordinates = _mineCoordinateFactory.MakeUniqueMineCoordinates(difficultyLevel, dimension);
 
@@ -36,11 +36,6 @@ namespace Minesweeper
             var _field = new Field(dimension, mineCoordinates, grid);
 
             _fieldService.SetField(_field);
-        }
-
-        private string TrimInput(string userInput)
-        {
-            return userInput.Trim();
         }
 
         private DifficultyLevel GetDifficulty(string userInput)
@@ -62,16 +57,14 @@ namespace Minesweeper
 
         public GameState GameRound(string userInput)
         {
-            var input = TrimInput(userInput);
-
-            switch(input)
+            switch(userInput)
             {
                 case GlobalGameVariables.QUIT:
                     return GameState.QUIT;
                 case GlobalGameVariables.ADMIN:
                     return GameState.ADMIN;
                 default:
-                    HandleInput(input);
+                    HandleInput(userInput);
                     return GetGameStatus();
             }
         }
@@ -84,7 +77,7 @@ namespace Minesweeper
 
         private void HandleInput(string userInput)
         {
-            var coordinate = MakeCoordinate(TrimInput(userInput));
+            var coordinate = MakeCoordinate(userInput);
             _fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate);
         }
 
