@@ -15,5 +15,6 @@
     <Folder Include="Controller\" />
     <Folder Include="Factory\" />
     <Folder Include="Factory\Interfaces\" />
+    <Folder Include="IO\" />
   </ItemGroup>
 </Project>

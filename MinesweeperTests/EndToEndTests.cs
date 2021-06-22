@@ -11,6 +11,7 @@ namespace MinesweeperTests
     public class EndToEndTests
     {
         private readonly Mock<INumberGenerator> rng;
+        private readonly Mock<IIO> io;
 
         public EndToEndTests()
         {
@@ -18,12 +19,12 @@ namespace MinesweeperTests
             rng.SetupSequence(i => i.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(0)
                 .Returns(0);
+            io = new Mock<IIO>();
         }
 
         [Fact]
         public void GameEndsWithPlayerWinning()
         {
-            var io = new Mock<IIO>();
             io.SetupSequence(i => i.GetUserInput())
                 .Returns("EASY")
                 .Returns("2,2")
@@ -37,8 +38,8 @@ namespace MinesweeperTests
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
             var gridFactory = new GridFactory(coordinateService);
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
-            var gameController = new ConsoleGameController(gameService);
+            var gameService = new GameService(fieldService, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            var gameController = new ConsoleGameController(gameService, io.Object);
 
             gameController.Run();
 
@@ -49,7 +50,6 @@ namespace MinesweeperTests
         [Fact]
         public void GameEndsWithPlayerQuit()
         {
-            var io = new Mock<IIO>();
             io.SetupSequence(i => i.GetUserInput())
                 .Returns("EASY")
                 .Returns("2,2")
@@ -61,8 +61,8 @@ namespace MinesweeperTests
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
             var gridFactory = new GridFactory(coordinateService);
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
-            var gameController = new ConsoleGameController(gameService);
+            var gameService = new GameService(fieldService, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            var gameController = new ConsoleGameController(gameService, io.Object);
 
             gameController.Run();
 
@@ -72,7 +72,6 @@ namespace MinesweeperTests
         [Fact]
         public void GameEndsWithPlayerLosing()
         {
-            var io = new Mock<IIO>();
             io.SetupSequence(i => i.GetUserInput())
                 .Returns("EASY")
                 .Returns("2,2")
@@ -84,8 +83,8 @@ namespace MinesweeperTests
             var validation = new Validation();
             var mineCoordinateFactory = new MineCoordinateFactory(rng.Object);
             var gridFactory = new GridFactory(coordinateService);
-            var gameService = new GameService(fieldService, io.Object, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
-            var gameController = new ConsoleGameController(gameService);
+            var gameService = new GameService(fieldService, dimensionFactory, coordinateFactory, validation, mineCoordinateFactory, gridFactory);
+            var gameController = new ConsoleGameController(gameService, io.Object);
 
             gameController.Run();
 

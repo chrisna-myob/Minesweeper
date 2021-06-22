@@ -6,7 +6,6 @@ namespace Minesweeper
 {
     public class GameService
     {
-        private IIO _io;
         private FieldService _fieldService;
         private DimensionFactory _dimensionFactory;
         private CoordinateFactory _coordinateFactory;
@@ -14,9 +13,8 @@ namespace Minesweeper
         private MineCoordinateFactory _mineCoordinateFactory;
         private GridFactory _gridFactory;
 
-        public GameService(FieldService fieldService, IIO io, DimensionFactory dimensionFactory, CoordinateFactory coordinateFactory, Validation validation, MineCoordinateFactory mineCoordinateFactory, GridFactory gridFactory)
+        public GameService(FieldService fieldService, DimensionFactory dimensionFactory, CoordinateFactory coordinateFactory, Validation validation, MineCoordinateFactory mineCoordinateFactory, GridFactory gridFactory)
         {
-            _io = io;
             _dimensionFactory = dimensionFactory;
             _coordinateFactory = coordinateFactory;
             _validation = validation;
@@ -25,11 +23,31 @@ namespace Minesweeper
             _gridFactory = gridFactory;
         }
 
-        public DifficultyLevel GetDifficulty(string input)
+        public void SetUpField(string difficultyInput, string dimensionInput)
         {
-            _validation.IsDifficultyLevelValid(input);
+            var difficultyLevel = GetDifficulty(TrimInput(difficultyInput));
 
-            switch (input)
+            var dimension = _dimensionFactory.MakeDimension(TrimInput(dimensionInput), _validation);
+
+            var mineCoordinates = _mineCoordinateFactory.MakeUniqueMineCoordinates(difficultyLevel, dimension);
+
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinates);
+
+            var _field = new Field(dimension, mineCoordinates, grid);
+
+            _fieldService.SetField(_field);
+        }
+
+        private string TrimInput(string userInput)
+        {
+            return userInput.Trim();
+        }
+
+        private DifficultyLevel GetDifficulty(string userInput)
+        {
+            _validation.IsDifficultyLevelValid(userInput);
+
+            switch (userInput)
             {
                 case "EASY":
                     return DifficultyLevel.EASY;
@@ -42,61 +60,40 @@ namespace Minesweeper
             }
         }
 
-        public string GetTrimmedUserInput()
-        {
-            var input = _io.GetUserInput();
-            return input.Trim();
-        }
-
-        public void SetUpField(DifficultyLevel difficulty, string userDimension)
-        {
-            var dimension = _dimensionFactory.MakeDimension(userDimension, _validation);
-
-            var mineCoordinates = _mineCoordinateFactory.MakeUniqueMineCoordinates(difficulty, dimension);
-
-            var grid = _gridFactory.MakeGrid(dimension, mineCoordinates);
-
-            var _field = new Field(dimension, mineCoordinates, grid);
-
-            _fieldService.SetField(_field);
-        }
-
         public GameState GameRound(string userInput)
         {
-            switch(userInput)
+            var input = TrimInput(userInput);
+
+            switch(input)
             {
                 case GlobalGameVariables.QUIT:
                     return GameState.QUIT;
                 case GlobalGameVariables.ADMIN:
                     return GameState.ADMIN;
                 default:
-                    HandleInput(userInput);
+                    HandleInput(input);
                     return GetGameStatus();
             }
         }
 
-        public void DisplayMessage(string message)
-        {
-            _io.Write(message);
-        }
-
-        public void DisplayBoard(GameState state)
+        public string GetBoard(GameState state)
         {
             var view = (state == GameState.ADMIN ? View.ADMIN : View.PLAYER);
-            _io.DisplayBoard(_fieldService.BoardToString(view));
+            return _fieldService.BoardToString(view);
         }
 
         private void HandleInput(string userInput)
         {
-            var coordinate = MakeCoordinate(userInput);
+            var coordinate = MakeCoordinate(TrimInput(userInput));
             _fieldService.SetAdjacentCoordinatesToBeUncovered(coordinate);
         }
 
-        private Coordinate MakeCoordinate(string input)
+        private Coordinate MakeCoordinate(string userInput)
         {
             var dimension = _fieldService.GetDimension();
-            var coord = _coordinateFactory.MakeCoordinate(dimension, input, _validation);
-            _fieldService.CoordinateHasAlreadyBeenUncovered(coord);
+            var coord = _coordinateFactory.MakeCoordinate(dimension, userInput, _validation);
+            var result = _fieldService.HasCoordinateHasAlreadyBeenUncovered(coord);
+            _validation.CoordinateHasAlreadyBeenUncovered(result);
             return coord;
         }
 

@@ -85,12 +85,9 @@ namespace Minesweeper
             return stringBuilder += " \n";
         }
 
-        public void CoordinateHasAlreadyBeenUncovered(Coordinate coord)
+        public bool HasCoordinateHasAlreadyBeenUncovered(Coordinate coord)
         {
-            if (_field.SquareHasBeenUncovered(coord))
-            {
-                throw new InvalidInputException("You have already entered this coordinate.\n");
-            }
+            return _field.SquareHasBeenUncovered(coord);
         }
 
         public void SetAdjacentCoordinatesToBeUncovered(Coordinate coordinate)

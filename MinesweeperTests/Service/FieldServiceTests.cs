@@ -139,22 +139,6 @@ namespace MinesweeperTests
         }
 
         [Fact]
-        public void CoordinateHasAlreadyBeenUsed_InputCoordinateThatCanAlreadyBeShown_ThrowInvalidInputException()
-        {
-            var coordinate = new Coordinate(0, 1);
-            var dimension = new Dimension(2, 2);
-            var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
-            var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
-            var field = new Field(dimension, mineCoordinate, grid);
-            var fieldService = new FieldService(_coordinateService);
-            fieldService.SetField(field);
-            field.UncoverSquare(coordinate);
-
-            var exception = Assert.Throws<InvalidInputException>(() => fieldService.CoordinateHasAlreadyBeenUncovered(coordinate));
-            Assert.Equal("You have already entered this coordinate.\n", exception.Message);
-        }
-
-        [Fact]
         public void BoardToString_InputPlayerView_ReturnCorrectString()
         {
             var expected = " ------- \n| . | . |\n ------- \n| . | . |\n ------- \n\n";
@@ -202,6 +186,39 @@ namespace MinesweeperTests
             var actual = fieldService.BoardToString(View.ADMIN);
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CoordinateHasAlreadyBeenUncovered_ReturnTrue()
+        {
+            var coordinate = new Coordinate(0, 1);
+            var dimension = new Dimension(2, 2);
+            var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
+            var field = new Field(dimension, mineCoordinate, grid);
+            var fieldService = new FieldService(_coordinateService);
+            fieldService.SetField(field);
+            field.UncoverSquare(coordinate);
+
+            var actual = fieldService.HasCoordinateHasAlreadyBeenUncovered(coordinate);
+
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void CoordinateHasAlreadyBeenUncovered_ReturnFalse()
+        {
+            var coordinate = new Coordinate(0, 1);
+            var dimension = new Dimension(2, 2);
+            var mineCoordinate = new List<Coordinate> { new Coordinate(0, 0) };
+            var grid = _gridFactory.MakeGrid(dimension, mineCoordinate);
+            var field = new Field(dimension, mineCoordinate, grid);
+            var fieldService = new FieldService(_coordinateService);
+            fieldService.SetField(field);
+
+            var actual = fieldService.HasCoordinateHasAlreadyBeenUncovered(coordinate);
+
+            Assert.False(actual);
         }
     }
 }

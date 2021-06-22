@@ -10,7 +10,7 @@ namespace Minesweeper
         public static ConsoleGameController GetGameControllerInstance()
         {
             var gameService = GetGameServiceInstance();
-            return new ConsoleGameController(gameService);
+            return new ConsoleGameController(gameService, CreateIOClass());
         }
 
         private static GameService GetGameServiceInstance()
@@ -19,7 +19,6 @@ namespace Minesweeper
 
             return new GameService(
                 CreateFieldService(coordinateService),
-                CreateIOClass(),
                 CreateDimensionFactoryClass(),
                 CreateCoordinateFactoryClass(),
                 CreateValidationClass(),
