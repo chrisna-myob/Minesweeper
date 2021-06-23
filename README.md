@@ -29,6 +29,6 @@ ADDITIONAL: Difficulty Level
 
 ## Running the Application
 
-1. git clone this repository
-2. Go to the correct directory using the command: cd Minesweeper/Minesweeper
-3. To run the application type the command: dotnet run
+1. `git clone` this repository
+2. Go to the correct directory using the command: `cd Minesweeper/Minesweeper`
+3. To run the application type the command: `dotnet run`
