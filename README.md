@@ -35,4 +35,4 @@ ADDITIONAL: Difficulty Level
 
 ## Example Game
 
-<img src="https://drive.google.com/uc?export=view&id=1zAOEIclAVP2jk2-pF4NjhLA7gmx_iHut" width="400px">
+<img src="https://drive.google.com/uc?export=view&id=1zAOEIclAVP2jk2-pF4NjhLA7gmx_iHut" width="500px">
