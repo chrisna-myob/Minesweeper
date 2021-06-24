@@ -32,3 +32,7 @@ ADDITIONAL: Difficulty Level
 1. `git clone` this repository
 2. Go to the correct directory using the command: `cd Minesweeper/Minesweeper`
 3. To run the application type the command: `dotnet run`
+
+## Example Game
+
+<img src="https://drive.google.com/file/d/1zAOEIclAVP2jk2-pF4NjhLA7gmx_iHut/view?usp=sharing">
