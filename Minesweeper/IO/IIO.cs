@@ -5,7 +5,7 @@ namespace Minesweeper
     {
         void Write(string message);
 
-        void DisplayBoard(string message);
+        void DisplayGrid(string message);
 
         string GetUserInput();
     }

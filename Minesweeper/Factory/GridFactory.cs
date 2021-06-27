@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Minesweeper.Service;
 
 namespace Minesweeper.Factory
 {
     public class GridFactory
     {
+        private CoordinateService _coordinateService;
+
+        public GridFactory(CoordinateService coordinateService)
+        {
+            _coordinateService = coordinateService;
+        }
+
         public ISquare[,] MakeGrid(Dimension dimension, List<Coordinate> mineCoordinates)
         {
             var grid = new ISquare[dimension.NumRows, dimension.NumCols];
@@ -34,7 +42,7 @@ namespace Minesweeper.Factory
                 for (var col = 0; col < dimension.NumCols; col++)
                 {
                     var coordinate = new Coordinate(row, col);
-                    var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(coordinate, dimension);
+                    var adjacentSquaresList = _coordinateService.GetAdjacentCoordinates(coordinate, dimension);
                     var mineCount = GetNumberOfAdjacentMines(grid, adjacentSquaresList);
                     if (mineCount > 0) grid[row, col].AddHint(mineCount);
                 }

@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Minesweeper.Factory;
+using Minesweeper.Service;
 
 namespace Minesweeper
 {
     public class FieldService
     {
         private Field _field;
+        private CoordinateService _coordinateService;
+
+        public FieldService(CoordinateService coordinateService)
+        {
+            _coordinateService = coordinateService;
+        }
 
         public void SetField(Field field)
         {
@@ -34,8 +41,7 @@ namespace Minesweeper
 
                 }
             }
-            if (countOfMines == _field.NumberOfMines) return true;
-            return false;
+            return countOfMines == _field.NumberOfMines;
         }
 
         public bool HasLost()
@@ -47,9 +53,9 @@ namespace Minesweeper
             return false;
         }
 
-        public string BoardToString(View view = View.PLAYER)
+        public string GridToString(View view = View.PLAYER)
         {
-            var lineBreak = GlobalHelpers.Lines(GetDimension().NumCols);
+            var lineBreak = GetGridLine(GetDimension().NumCols);
             var stringBuilder = lineBreak;
             for (var row = 0; row < GetDimension().NumRows; row++)
             {
@@ -65,12 +71,22 @@ namespace Minesweeper
             return stringBuilder += Environment.NewLine;
         }
 
-        public void CoordinateHasAlreadyBeenUncovered(Coordinate coord)
+
+
+        private string GetGridLine(int num)
         {
-            if (_field.SquareHasBeenUncovered(coord))
+            var numberOfDashes = num * 3 + num - 1;
+            var stringBuilder = " ";
+            for (var i = 0; i < numberOfDashes; i++)
             {
-                throw new InvalidInputException("You have already entered this coordinate.\n");
+                stringBuilder += "-";
             }
+            return stringBuilder += " \n";
+        }
+
+        public bool HasCoordinateHasAlreadyBeenUncovered(Coordinate coord)
+        {
+            return _field.SquareHasBeenUncovered(coord);
         }
 
         public void SetAdjacentCoordinatesToBeUncovered(Coordinate coordinate)
@@ -82,7 +98,7 @@ namespace Minesweeper
                 if (_field.SquareHasNoHint(coordinate) == false) return;
                 else
                 {
-                    var adjacentSquaresList = GlobalHelpers.GetAdjacentCoordinates(coordinate, _field.Dimension);
+                    var adjacentSquaresList = _coordinateService.GetAdjacentCoordinates(coordinate, _field.Dimension);
                     foreach (var coord in adjacentSquaresList)
                     {
                         SetAdjacentCoordinatesToBeUncovered(coord);

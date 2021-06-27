@@ -6,7 +6,7 @@ namespace MinesweeperTests
     public class DimensionTests
     {
         [Fact]
-        public void Dimension_InputRowAndColumnIntegers()
+        public void Dimension_InputRowAndColumnIntegers_VerifyEqualDimension()
         {
             var row = 4;
             var column = 5;

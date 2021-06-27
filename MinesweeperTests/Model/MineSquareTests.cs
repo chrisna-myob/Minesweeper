@@ -4,16 +4,20 @@ using Minesweeper;
 
 namespace MinesweeperTests
 {
-    public class MineTrialTests
+    public class MineSquareTests
     {
         private const string MINE_CHARACTER = "*";
+        private readonly MineSquare _square;
+
+        public MineSquareTests()
+        {
+            _square = new MineSquare();
+        }
 
         [Fact]
         public void HasBeenUncovered_ReturnFalse()
         {
-            var square = new MineSquare();
-
-            var actual = square.HasBeenUncovered;
+            var actual = _square.HasBeenUncovered;
 
             Assert.False(actual);
         }
@@ -21,10 +25,9 @@ namespace MinesweeperTests
         [Fact]
         public void HasBeenUncovered_ReturnTrue()
         {
-            var square = new MineSquare();
-            square.Uncover();
+            _square.Uncover();
 
-            var actual = square.HasBeenUncovered;
+            var actual = _square.HasBeenUncovered;
 
             Assert.True(actual);
         }
@@ -32,9 +35,7 @@ namespace MinesweeperTests
         [Fact]
         public void HasMine_ReturnTrue()
         {
-            var square = new MineSquare();
-
-            var actual = square.HasMine();
+            var actual = _square.HasMine();
 
             Assert.True(actual);
         }
@@ -42,42 +43,30 @@ namespace MinesweeperTests
         [Fact]
         public void GetSquareValue_ReturnMineCharacter()
         {
-            var square = new MineSquare();
-
-            var actual = square.GetSquareValue();
+            var actual = _square.GetSquareValue();
 
             Assert.Equal(MINE_CHARACTER, actual);
         }
 
-        [Fact]
-        public void GetSquareAsString_InputPlayerViewWithCoveredSquare_ReturnValidString()
+        [Theory]
+        [InlineData(View.PLAYER, " . |")]
+        [InlineData(View.ADMIN, " * |")]
+        public void GetSquareAsString_InputViewWithCoveredSquare_ReturnValidString(View view, string expected)
         {
-            var square = new MineSquare();
+            var actual = _square.GetSquareAsString(view);
 
-            var actual = square.GetSquareAsString(View.PLAYER);
-
-            Assert.Equal(" . |", actual);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void GetSquareAsString_InputPlayerViewWithUncoveredSquare_ReturnValidString()
         {
-            var square = new MineSquare();
-            square.Uncover();
+            _square.Uncover();
 
-            var actual = square.GetSquareAsString(View.PLAYER);
-
-            Assert.Equal(" * |", actual);
-        }
-
-        [Fact]
-        public void GetSquareAsString_InputAdminView_ReturnValidString()
-        {
-            var square = new MineSquare();
-
-            var actual = square.GetSquareAsString(View.ADMIN);
+            var actual = _square.GetSquareAsString(View.PLAYER);
 
             Assert.Equal(" * |", actual);
         }
+
     }
 }

@@ -5,6 +5,14 @@ namespace Minesweeper
 {
     public class Validation
     {
+        public void CoordinateHasAlreadyBeenUncovered(bool result)
+        {
+            if (result)
+            {
+                throw new InvalidInputException("You have already entered this coordinate.\n");
+            }
+        }
+
         public void IsFieldDimensionInputValid(String dimensions)
         {
             if (HasNegativeNumber(dimensions))
@@ -72,7 +80,7 @@ namespace Minesweeper
             var row = Int32.Parse(coordinateArray[0]);
             var column = Int32.Parse(coordinateArray[1]);
 
-            if (row - 1 < 0 || column - 1 < 0 || row > 100 || column > 100) return false;
+            if (row - 1 <= 0 || column - 1 <= 0 || row > 100 || column > 100) return false;
             return true;
         }
 

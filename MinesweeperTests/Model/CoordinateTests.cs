@@ -7,12 +7,12 @@ namespace MinesweeperTests
     public class CoordinateTests
     {
         [Fact]
-        public void Coordinate_InputIntegerXAndIntegerY_ReturnCoordinate()
+        public void Coordinate_InputIntegerXAndIntegerY_VerifyCoordinateIsCorrect()
         {
-            var coordinate = new Coordinate(0, 0);
+            var actual = new Coordinate(0, 0);
 
-            Assert.Equal(0, coordinate.X);
-            Assert.Equal(0, coordinate.Y);
+            Assert.Equal(0, actual.X);
+            Assert.Equal(0, actual.Y);
         }
     }
 }

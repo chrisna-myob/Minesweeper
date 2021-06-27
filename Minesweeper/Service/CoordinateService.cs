@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace Minesweeper
+namespace Minesweeper.Service
 {
-    public static class GlobalHelpers
+    public class CoordinateService
     {
-        public static List<Coordinate> GetAdjacentCoordinates(Coordinate coordinate, Dimension dimension)
+        public List<Coordinate> GetAdjacentCoordinates(Coordinate coordinate, Dimension dimension)
         {
             var adjacentCoordinates = new List<Coordinate>();
 
@@ -23,26 +24,10 @@ namespace Minesweeper
             return adjacentCoordinates;
         }
 
-        private static bool IsCoordinateValid(int x, int y, Dimension dimension)
+        private bool IsCoordinateValid(int x, int y, Dimension dimension)
         {
             if ((x >= 0 && x < dimension.NumRows) && (y >= 0 && y < dimension.NumCols)) return true;
             return false;
-        }
-
-        public static string Lines(int num)
-        {
-            var stringBuilder = " ";
-            for (var i = 0; i < num; i++)
-            {
-                stringBuilder += "---";
-            }
-
-            for (var i = 0; i < num - 1; i++)
-            {
-                stringBuilder += "-";
-            }
-
-            return stringBuilder += " \n";
         }
     }
 }

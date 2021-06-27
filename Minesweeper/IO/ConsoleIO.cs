@@ -21,7 +21,7 @@ namespace Minesweeper.Repository
             Console.Write(message);
         }
 
-        public void DisplayBoard(string message)
+        public void DisplayGrid(string message)
         {
             foreach(var letter in message)
             {
@@ -36,7 +36,7 @@ namespace Minesweeper.Repository
 
         public string GetUserInput()
         {
-            return Console.ReadLine();
+            return Console.ReadLine().Trim();
         }
     }
 }

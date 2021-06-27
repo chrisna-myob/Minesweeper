@@ -17,9 +17,9 @@ namespace MinesweeperTests
         [Fact]
         public void MakeDimension_InputValidStringAndDimension_ReturnCoordinate()
         {
-            var expected = new Dimension(1, 1);
+            var expected = new Dimension(2, 2);
 
-            var actual = dimensionFactory.MakeDimension("1,1", validation);
+            var actual = dimensionFactory.MakeDimension("2,2", validation);
 
             Assert.Equal(expected, actual);
         }

@@ -9,10 +9,12 @@ namespace MineTrialTests
     public class ValidationTests
     {
         private readonly Validation validation;
+        private readonly Dimension _dimension;
 
         public ValidationTests()
         {
             validation = new Validation();
+            _dimension = new Dimension(3, 3);
         }
 
         [Theory]
@@ -51,9 +53,8 @@ namespace MineTrialTests
         [InlineData("-1,-1")]
         public void IsCoordinateInputValid_InputNegativeCoordinate_ThrowInvalidInputException(string coordinate)
         {
-            var dimension = new Dimension(3, 3);
+            var exception = Assert.Throws<InvalidInputException>(() => validation.IsCoordinateInputValid(_dimension, coordinate));
 
-            var exception = Assert.Throws<InvalidInputException>(() => validation.IsCoordinateInputValid(dimension, coordinate));
             Assert.Equal("Coordinate cannot be negative\n", exception.Message);
         }
 
@@ -64,9 +65,8 @@ namespace MineTrialTests
         [InlineData("1,0")]
         public void IsCoordinateInputValid_InputCoordinateSmallerOrLargerThanDimensions_ThrowInvalidInputException(string coordinate)
         {
-            var dimension = new Dimension(3, 3);
+            var exception = Assert.Throws<InvalidInputException>(() => validation.IsCoordinateInputValid(_dimension, coordinate));
 
-            var exception = Assert.Throws<InvalidInputException>(() => validation.IsCoordinateInputValid(dimension, coordinate));
             Assert.Equal("Coordinate must be within the field bounds\n", exception.Message);
         }
 
@@ -76,10 +76,17 @@ namespace MineTrialTests
         [InlineData("a,b")]
         public void IsCoordinateInputValid_InputCoordinateWithIncorrectFormat_ThrowInvalidInputException(string coordinate)
         {
-            var dimension = new Dimension(3, 3);
+            var exception = Assert.Throws<InvalidInputException>(() => validation.IsCoordinateInputValid(_dimension, coordinate));
 
-            var exception = Assert.Throws<InvalidInputException>(() => validation.IsCoordinateInputValid(dimension, coordinate));
             Assert.Equal("Coordinate must be in the format x,y with integer values\n", exception.Message);
+        }
+
+        [Fact]
+        public void CoordinateHasAlreadyBeenUncovered_InputTrue_ThrowInvalidInputException()
+        {
+            var actual = Assert.Throws<InvalidInputException>(() => validation.CoordinateHasAlreadyBeenUncovered(true));
+
+            Assert.Equal("You have already entered this coordinate.\n", actual.Message);
         }
     }
 }
