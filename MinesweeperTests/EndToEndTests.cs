@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Minesweeper;
+﻿using Minesweeper;
 using Xunit;
 using Moq;
 using Minesweeper.Factory;
@@ -53,7 +51,7 @@ namespace MinesweeperTests
                 .Returns("EASY")
                 .Returns("2,2")
                 .Returns("q");
-            
+
             gameController.Run();
 
             io.Verify(x => x.Write("You have quit the game.\n"), Times.Once);

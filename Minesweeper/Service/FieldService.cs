@@ -41,6 +41,7 @@ namespace Minesweeper
 
                 }
             }
+
             return countOfMines == _field.NumberOfMines;
         }
 
