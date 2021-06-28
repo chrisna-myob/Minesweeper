@@ -37,7 +37,7 @@ namespace Minesweeper
 
         public static string WelcomeMessage = "Welcome to Minesweeper\n";
         public static string InputDimensionMessage = "Please enter the dimensions of your field row,column: ";
-        public static string InputCoordinateMessage = "Please enter a coordinate x,y or q to quit: ";
+        public static string InputCoordinateMessage = "Please enter a coordinate row,column or q to quit: ";
         public static string InputDifficultyMessage = "Please enter difficulty (EASY, INTERMEDIATE, EXPERT): ";
     }
 }
