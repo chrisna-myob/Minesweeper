@@ -36,7 +36,7 @@ namespace MineTrialTests
         {
             var exception = Assert.Throws<InvalidInputException>(() => validation.IsFieldDimensionInputValid(dimension));
 
-            Assert.Equal("Dimension must be in the format x,y with integer values\n", exception.Message);
+            Assert.Equal("Dimension must be in the format row,column with integer values\n", exception.Message);
         }
 
         [Theory]
@@ -78,7 +78,7 @@ namespace MineTrialTests
         {
             var exception = Assert.Throws<InvalidInputException>(() => validation.IsCoordinateInputValid(_dimension, coordinate));
 
-            Assert.Equal("Coordinate must be in the format x,y with integer values\n", exception.Message);
+            Assert.Equal("Coordinate must be in the format row,column with integer values\n", exception.Message);
         }
 
         [Fact]

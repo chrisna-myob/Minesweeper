@@ -22,7 +22,7 @@ namespace Minesweeper
 
             if (!InCorrectFormat(dimensions))
             {
-                throw new InvalidInputException("Dimension must be in the format x,y with integer values\n");
+                throw new InvalidInputException("Dimension must be in the format row,column with integer values\n");
             }
 
             if (!HasCorrectIntegerDimensions(dimensions))
@@ -40,7 +40,7 @@ namespace Minesweeper
 
             if (!InCorrectFormat(coordinate))
             {
-                throw new InvalidInputException("Coordinate must be in the format x,y with integer values\n");
+                throw new InvalidInputException("Coordinate must be in the format row,column with integer values\n");
             }
 
             if (!InputIsWithinFieldBounds(dimension, coordinate))
